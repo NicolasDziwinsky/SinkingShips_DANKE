@@ -1,0 +1,72 @@
+@startuml
+package "Battleship Game" {
+    class MainMenuController {
+        + startNewGame()
+        + loadGame()
+        + exitGame()
+    }
+
+    class ShipPlacementController {
+        + rotateShip()
+        + nextPlayer()
+        + placeShip()
+    }
+
+    class GameController {
+        + handlePlayerTurn()
+        + handleAITurn()
+        + checkVictory(): boolean
+    }
+
+    class AITurnController {
+        + executeTurn()
+    }
+
+    class MenuController {
+        + openMenu()
+        + saveGame()
+        + exitToMainMenu()
+        + exitToDesktop()
+    }
+
+    class GameBoard {
+        + grid : Cell[][]
+        + placeShip(ship: Ship, x: int, y: int, direction: Direction)
+        + isHit(x: int, y: int): boolean
+        + markHit(x: int, y: int)
+    }
+
+    class Player {
+        + name : String
+        + isAI : boolean
+        + gameBoard : GameBoard
+        + takeTurn(opponentBoard: GameBoard)
+    }
+
+    class Ship {
+        + length : int
+        + orientation : Direction
+        + isSunk(): boolean
+        + getCoordinates(): List<Cell>
+    }
+
+    class Cell {
+        + x : int
+        + y : int
+        + isOccupied : boolean
+        + isHit : boolean
+    }
+
+    MainMenuController --> ShipPlacementController : "starts"
+    ShipPlacementController --> GameController : "notifies"
+    GameController --> GameBoard : "manages"
+    GameController --> Player : "manages"
+    GameController --> AITurnController : "delegates"
+    GameBoard --> Cell : "contains"
+    GameBoard --> Ship : "places"
+    Player --> GameBoard : "owns"
+    MenuController --> GameController : "interacts"
+    MenuController --> MainMenuController : "returns"
+    Ship --> Cell : "occupies"
+}
+@enduml
