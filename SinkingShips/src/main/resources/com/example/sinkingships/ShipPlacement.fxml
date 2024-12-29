@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.ShipPlacement">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
    <children>
       <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="1080.0" prefWidth="1920.0">
          <children>
@@ -21,7 +20,7 @@
                <children>
                   <VBox layoutX="14.0" layoutY="14.0" prefHeight="720.0" prefWidth="694.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" text="&lt; Back">
+                        <Button mnemonicParsing="false" onAction="#switchToNewGame" text="&lt; Back">
                            <font>
                               <Font size="27.0" />
                            </font>
@@ -50,7 +49,7 @@
                   </HBox>
                   <VBox alignment="BOTTOM_RIGHT" layoutX="1542.0" layoutY="629.0" prefHeight="437.0" prefWidth="364.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Start Game / Next Player">
+                        <Button fx:id="StartGame" mnemonicParsing="false" onAction="#switchToGame" text="Start Game / Next Player">
                            <font>
                               <Font size="27.0" />
                            </font>

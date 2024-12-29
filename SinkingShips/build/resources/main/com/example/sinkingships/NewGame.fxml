@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,13 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.NewGame">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0">
          <children>
             <VBox layoutX="14.0" layoutY="14.0" prefHeight="720.0" prefWidth="694.0" spacing="20.0">
                <children>
-                  <Button fx:id="Back" mnemonicParsing="false" text="&lt; Back">
+                  <Button fx:id="Back" mnemonicParsing="false" onAction="#switchToMainMenu" text="&lt; Back">
                      <font>
                         <Font size="27.0" />
                      </font>
@@ -53,22 +52,14 @@
                         <HBox alignment="CENTER" prefHeight="208.0" prefWidth="545.0" style="-fx-background-color: lightgrey;">
                            <children>
                               <Button fx:id="Image1Back" mnemonicParsing="false" text="&lt;" />
-                              <ImageView fx:id="Image1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../../../../Downloads/be0ba52eabf900ab863c5e87b6e46f3d.jpg" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="Image1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                               <Button fx:id="Image1Forward" mnemonicParsing="false" text="&gt;" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="208.0" prefWidth="545.0" style="-fx-background-color: lightgrey;">
                            <children>
                               <Button fx:id="Image2Back" mnemonicParsing="false" text="&lt;" />
-                              <ImageView fx:id="Image2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../../../../Downloads/be0ba52eabf900ab863c5e87b6e46f3d.jpg" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="Image2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                               <Button fx:id="Image2Forward" mnemonicParsing="false" text="&gt;" />
                            </children>
                         </HBox>
@@ -115,7 +106,7 @@
             </VBox>
             <VBox alignment="BOTTOM_RIGHT" layoutX="1542.0" layoutY="629.0" prefHeight="437.0" prefWidth="364.0" spacing="20.0">
                <children>
-                  <Button fx:id="StartShortGame" mnemonicParsing="false" text="Start Short Game">
+                  <Button fx:id="StartShortGame" mnemonicParsing="false" onAction="#switchToShipPlacement" text="Start Short Game">
                      <font>
                         <Font size="27.0" />
                      </font>
