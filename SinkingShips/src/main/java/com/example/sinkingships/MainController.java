@@ -11,41 +11,22 @@ import javafx.stage.Stage;
 
 public class MainController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    public SceneSwitcher SceneSwitcher = new SceneSwitcher();
 
-
+    //This block abstracts the scene switching, which is actually handled by the SceneSwitcher
     public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SceneSwitcher.switchToMainMenu(event);
     }
-
     public void switchToNewGame(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("NewGame.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SceneSwitcher.switchToNewGame(event);
     }
-
     public void switchToShipPlacement(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ShipPlacement.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SceneSwitcher.switchToShipPlacement(event);
+    }
+    public void switchToGame(ActionEvent event) throws IOException {
+        SceneSwitcher.switchToGame(event);
     }
 
-    public void switchToGame(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Game.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+
 
 }
