@@ -18,6 +18,20 @@ public class Cell {
         this.isHit = true;
     }
 
+    public String getStatusSymbol() {
+        //Used for the Text version of the Gameboard
+        if (isOccupied && isHit) {
+            return "X";
+        }
+        if (isOccupied) {
+            return "O";
+        }
+        if (isHit) {
+            return "/";
+        }
+
+        return " ";
+    }
 
     public int getX() {
         return x;
@@ -32,4 +46,6 @@ public class Cell {
     public boolean IsHit() {
         return isHit;
     }
+
+
 }

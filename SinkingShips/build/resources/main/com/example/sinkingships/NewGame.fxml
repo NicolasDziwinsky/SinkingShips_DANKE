@@ -111,7 +111,7 @@
                         <Font size="27.0" />
                      </font>
                   </Button>
-                  <Button fx:id="StartLongGame" mnemonicParsing="false" text="Start Long Game">
+                  <Button fx:id="StartLongGame" mnemonicParsing="false" onAction="#generatePlayers" text="Start Long Game">
                      <font>
                         <Font size="27.0" />
                      </font>

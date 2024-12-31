@@ -6,10 +6,10 @@ public class Player {
     private boolean isAI;
     private GameBoard gameBoard;
 
-    public Player(String name, boolean isAI, GameBoard gameBoard) {
+    public Player(String name, boolean isAI) {
         this.name = name;
         this.isAI = isAI;
-        this.gameBoard = gameBoard;
+        this.gameBoard = new GameBoard();
     }
 
     public String getName() {
@@ -20,6 +20,10 @@ public class Player {
     }
     public GameBoard getGameBoard() {
         return gameBoard;
+    }
+
+    public String playerInfo() {
+        return this.getName() + " is Ai: " + this.isAI().toString();
     }
 
     public void takeTurn(GameBoard OpponentBoard) {
