@@ -1,10 +1,17 @@
 package com.example.sinkingships;
 
-public class GameBoard {
-    private Cell grid[] = new Cell[100];
+import java.util.ArrayList;
+import java.util.List;
 
+public class GameBoard {
+    //contains all Cells of the Grid
+    private Cell grid[] = new Cell[100];
+    //Contains all Ships of the Field
+    public List<Ship> ShipList = new ArrayList<Ship>();
+
+    //Fills the grid array with the corresponding nodes with the correct coordinates
     public GameBoard() {
-        //Fills the grid array with the corresponding nodes with the correct coordinates
+
         int x = 1;
         int y = 1;
         int i = 0;
@@ -55,8 +62,8 @@ public class GameBoard {
 
     }
 
+    //find the cell with the corresponding Coordinates
     public Cell getCell(int x, int y) {
-        //find the cell with the corresponding Coordinates
         for (Cell c : grid) {
             if (x == c.getX() && y == c.getY()) {
                 return c;
@@ -65,6 +72,7 @@ public class GameBoard {
         return null;
     }
 
+    //returns the complete cell array
     public Cell[] getCells() {
         return grid;
     }
@@ -74,29 +82,38 @@ public class GameBoard {
         //return true is placement was successful, false if placement would not work (out of bounds, another ship in the way)
 
         //If placement was successful, add all nodes that the ship would occupy, and add them to the ships node list
+        //Horizontal: Left to right
+        //Vertical: Top to Bottom
+
+
+        int X = targetCell.getX();
+        int Y = targetCell.getY();
+
+        int i = 0;
+        while (i < ship.getLength()) {
+            //Horizontal
+            if (ship.getOrrientation() == true) {
+                ship.coordinates.add(getCell(X, Y));
+                X++;
+            }
+            //Vertical
+            if (ship.getOrrientation() == false) {
+                ship.coordinates.add(getCell(X, Y));
+                Y++;
+            }
+            i++;
+
+        }
+
+        for (Cell c : ship.coordinates) {
+            c.setOccupied();
+        }
+
+        ShipList.add(ship);
         return true;
     }
 
-    public boolean markHit(Cell targetCell) {
-        //if target was a occupied space,(which should be defined in the target Cell) mark the node as hit then return true
-        if (targetCell.isOccupied() == true) {
-            targetCell.setIsHit();
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    //Stupid, because you can just "getCell().isHit(), i will leave it tho
-    public boolean isHit(int x, int y) {
-        Cell cell = getCell(x, y);
-
-        if (cell.IsHit()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
 

@@ -15,15 +15,26 @@ public class Player {
     public String getName() {
         return name;
     }
-    public Boolean isAI() {
-        return isAI;
-    }
     public GameBoard getGameBoard() {
         return gameBoard;
     }
+    public Boolean isAI() {
+        return isAI;
+    }
 
+    //Just used for Debugging
     public String playerInfo() {
         return this.getName() + " is Ai: " + this.isAI().toString();
+    }
+
+    //Only checks Cells that are contained in ships
+    public boolean checkIfLost() {
+        for (Ship ship : gameBoard.ShipList) {
+            if (!ship.checkIfSunk()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void takeTurn(GameBoard OpponentBoard) {

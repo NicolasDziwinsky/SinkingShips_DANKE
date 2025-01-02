@@ -27,11 +27,7 @@ public class MainController {
     public MainMenuController MainMenuController = new MainMenuController();
 
 
-
-    public String boardInfo() {
-        return null;
-    }
-
+    //This function is currently filled with examples for people to better understand
     public void generatePlayers() {
         //Generates Players and adds them to Players[]
         Player Player1 = new Player(Name1.getText(), false);
@@ -51,6 +47,26 @@ public class MainController {
         Players[0].getGameBoard().getCell(2, 4).setIsHit();
         Players[0].getGameBoard().getCell(3, 4).setIsHit();
         Players[0].getGameBoard().getCell(4, 4).setIsHit();
+
+        //example of placing a ship on the board
+        Ship shipHorizontal = new Ship(3, true);
+        Players[0].getGameBoard().placeShip(shipHorizontal, Players[0].getGameBoard().getCell(5, 8));
+
+        Ship shipVertical = new Ship(4, false);
+        Players[0].getGameBoard().placeShip(shipVertical, Players[0].getGameBoard().getCell(9, 5));
+
+        //example of checking if "shipVertical" is sunk
+        Players[0].getGameBoard().getCell(9, 5).setIsHit();
+        Players[0].getGameBoard().getCell(9, 6).setIsHit();
+        Players[0].getGameBoard().getCell(9, 7).setIsHit();
+        Players[0].getGameBoard().getCell(9, 8).setIsHit();
+
+        System.out.println("Is Ship Sunk?: " + shipVertical.checkIfSunk());
+
+        //example of checking if Player Lost
+        //It only checks ships, not any other occupied cells
+        System.out.println("Player 1 Lost?: " + Players[0].checkIfLost());
+
 
         //Outputs the Gameboard of Player1 in a comprehensible form into the Terminal
         Players[0].getGameBoard().outputTextVersion();
