@@ -1,17 +1,15 @@
 package com.example.sinkingships;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
 
 //all major logic should happen here, because in here all created objects can interact with one another
 public class MainController {
@@ -21,57 +19,70 @@ public class MainController {
     public TextField Name2;
     @FXML
     public CheckBox AiCheckbox;
+    @FXML
+    public GridPane PlacementGridFX;
+    @FXML
+    public GridPane ContainerGrid;
+    @FXML
+    public Label PlayerNamePlacement;
+    @FXML
+    public Button StartGame;
+    @FXML
+    public GridPane Map1;
+    @FXML
+    public GridPane Map2;
 
-    public Player Players[] = new Player[2];
+    public int gridCounter = 0;
     public SceneSwitcher SceneSwitcher = new SceneSwitcher();
-    public MainMenuController MainMenuController = new MainMenuController();
-
 
     //This function is currently filled with examples for people to better understand
-    public void generatePlayers() {
-        //Generates Players and adds them to Players[]
-        Player Player1 = new Player(Name1.getText(), false);
-        Player Player2 = new Player(Name2.getText(), AiCheckbox.isSelected());
-        Players[0] = Player1;
-        Players[1] = Player2;
+    public void generatePlayersTest() {
+        //Generates Players and adds them to the GameInstance
+        Game.returnGame().setPlayer1(new Player(Name1.getText(), false));
+        Game.returnGame().setPlayer2(new Player(Name1.getText(), false));
+
 
         //Output general Player info
-        System.out.println(Players[0].playerInfo());
-        System.out.println(Players[1].playerInfo());
+        System.out.println(Game.returnGame().getPlayer1().playerInfo());
+        System.out.println(Game.returnGame().getPlayer1().playerInfo());
 
         //Example how to manipulate the individual nodes of the gameboard
-        Players[0].getGameBoard().getCell(2, 4).setOccupied();
-        Players[0].getGameBoard().getCell(2, 5).setOccupied();
-        Players[0].getGameBoard().getCell(2, 6).setOccupied();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(2, 4).setOccupied();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(2, 5).setOccupied();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(2, 6).setOccupied();
 
-        Players[0].getGameBoard().getCell(2, 4).setIsHit();
-        Players[0].getGameBoard().getCell(3, 4).setIsHit();
-        Players[0].getGameBoard().getCell(4, 4).setIsHit();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(2, 4).setIsHit();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(3, 4).setIsHit();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(4, 4).setIsHit();
 
         //example of placing a ship on the board
         Ship shipHorizontal = new Ship(3, true);
-        Players[0].getGameBoard().placeShip(shipHorizontal, Players[0].getGameBoard().getCell(5, 8));
+        Game.returnGame().getPlayer1().getGameBoard().placeShip(shipHorizontal, Game.returnGame().getPlayer1().getGameBoard().getCell(5, 8));
 
         Ship shipVertical = new Ship(4, false);
-        Players[0].getGameBoard().placeShip(shipVertical, Players[0].getGameBoard().getCell(9, 5));
+        Game.returnGame().getPlayer1().getGameBoard().placeShip(shipVertical, Game.returnGame().getPlayer1().getGameBoard().getCell(9, 5));
 
         //example of checking if "shipVertical" is sunk
-        Players[0].getGameBoard().getCell(9, 5).setIsHit();
-        Players[0].getGameBoard().getCell(9, 6).setIsHit();
-        Players[0].getGameBoard().getCell(9, 7).setIsHit();
-        Players[0].getGameBoard().getCell(9, 8).setIsHit();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(9, 5).setIsHit();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(9, 6).setIsHit();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(9, 7).setIsHit();
+        Game.returnGame().getPlayer1().getGameBoard().getCell(9, 8).setIsHit();
 
         System.out.println("Is Ship Sunk?: " + shipVertical.checkIfSunk());
 
         //example of checking if Player Lost
         //It only checks ships, not any other occupied cells
-        System.out.println("Player 1 Lost?: " + Players[0].checkIfLost());
+        System.out.println("Player 1 Lost?: " + Game.returnGame().getPlayer1().checkIfLost());
 
 
         //Outputs the Gameboard of Player1 in a comprehensible form into the Terminal
-        Players[0].getGameBoard().outputTextVersion();
+        Game.returnGame().getPlayer1().getGameBoard().outputTextVersion();
     }
 
+    public void generatePlayers() {
+        Game.returnGame().setPlayer1(new Player(Name1.getText(), false));
+        Game.returnGame().setPlayer2(new Player(Name2.getText(), false));
+    }
 
     //This block abstracts the scene switching, which is actually handled by the SceneSwitcher
     public void switchToMainMenu(ActionEvent event) throws IOException {
@@ -80,11 +91,47 @@ public class MainController {
     public void switchToNewGame(ActionEvent event) throws IOException {
         SceneSwitcher.switchToNewGame(event);
     }
-    public void switchToShipPlacement(ActionEvent event) throws IOException {
+    public void switchToShipPlacement(ActionEvent event) throws IOException, InterruptedException {
+        generatePlayers();
         SceneSwitcher.switchToShipPlacement(event);
     }
-    public void switchToGame(ActionEvent event) throws IOException {
+    public EventHandler<ActionEvent> switchToGame(ActionEvent event) throws IOException {
         SceneSwitcher.switchToGame(event);
+        return null;
+    }
+
+    //Sets up the Placement Grid for the User, the first one is for player 1, second one for player 2
+    public void initPlacementGrid(int Player) {
+        if (Player == 0) {
+            Game.returnGame().getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.returnGame().getPlayer1().getGameBoard());
+            PlayerNamePlacement.setText(Game.returnGame().getPlayer1().getName());
+        } else {
+            Game.returnGame().getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.returnGame().getPlayer2().getGameBoard());
+            PlayerNamePlacement.setText(Game.returnGame().getPlayer2().getName());
+
+        }
+    }
+
+    public void nextGrid(ActionEvent event) throws IOException {
+        if (gridCounter == 0) {
+            StartGame.setText("Next Player");
+
+        } else if (gridCounter == 1) {
+            Game.returnGame().getPlayer1().getGameBoard().placementGrid.resetField();
+            StartGame.setText("Start Game");
+        } else if (gridCounter == 2) {
+            switchToGame(event);
+        }
+        initPlacementGrid(gridCounter);
+        gridCounter++;
+    }
+
+
+    public void StartGame() {
+        Game game = Game.returnGame();
+        game.getPlayer1().gameGrid = new GameGrid(Map1, game.getPlayer1(), true);
+        game.getPlayer2().gameGrid = new GameGrid(Map2, game.getPlayer2(), true);
+
     }
 
 

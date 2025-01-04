@@ -8,6 +8,7 @@ public class GameBoard {
     private Cell grid[] = new Cell[100];
     //Contains all Ships of the Field
     public List<Ship> ShipList = new ArrayList<Ship>();
+    public PlacementGrid placementGrid;
 
     //Fills the grid array with the corresponding nodes with the correct coordinates
     public GameBoard() {
@@ -34,7 +35,6 @@ public class GameBoard {
     //Not the best looking code, but it gets the job done
     public void outputTextVersion() {
         String Numbers[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-
         System.out.println("   A  B  C  D  E  F  G  H  I  J");
 
         int i = 0;
@@ -50,8 +50,6 @@ public class GameBoard {
             }
 
             if (i != 9) {
-                getCell(i+1, y).setOccupied();
-                getCell(i+1, y).setIsHit();
                 System.out.println(Numbers[i] + " " + Line);
             } else {
                 System.out.println(Numbers[i] + Line);

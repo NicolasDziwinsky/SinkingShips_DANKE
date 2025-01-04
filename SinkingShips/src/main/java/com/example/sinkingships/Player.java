@@ -5,6 +5,7 @@ public class Player {
     private String name;
     private boolean isAI;
     private GameBoard gameBoard;
+    public GameGrid gameGrid;
 
     public Player(String name, boolean isAI) {
         this.name = name;
@@ -18,6 +19,11 @@ public class Player {
     public GameBoard getGameBoard() {
         return gameBoard;
     }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
     public Boolean isAI() {
         return isAI;
     }
