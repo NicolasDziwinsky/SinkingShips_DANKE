@@ -20,7 +20,9 @@ public class SceneSwitcher {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -29,7 +31,9 @@ public class SceneSwitcher {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
+
     }
 
     public void switchToShipPlacement(ActionEvent event) throws IOException {
@@ -37,6 +41,7 @@ public class SceneSwitcher {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
@@ -45,6 +50,7 @@ public class SceneSwitcher {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
