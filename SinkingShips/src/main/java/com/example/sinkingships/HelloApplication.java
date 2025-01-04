@@ -14,6 +14,8 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
         stage.setTitle("SinkingShips");
         stage.setScene(scene);
+        stage.setMaximized(true);
+        System.out.println(stage.getHeight() + " " + stage.getWidth());
         stage.show();
     }
 
