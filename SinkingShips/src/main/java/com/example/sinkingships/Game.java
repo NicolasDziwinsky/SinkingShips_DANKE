@@ -1,17 +1,20 @@
 package com.example.sinkingships;
 
 import javafx.scene.control.Button;
-
+/**
+ * //Singleton
+ *     //used to share data between scenes
+ */
 public class Game {
-    //Singleton
-    //used to share data between scenes
 
     private static final Game game = new Game();
 
     private Game() {}
     private Player Player1;
     private Player Player2;
-
+    /**
+     *     //used to access the object
+     */
     public static Game returnGame() {
         return game;
     }

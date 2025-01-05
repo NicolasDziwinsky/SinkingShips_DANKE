@@ -9,8 +9,11 @@ public class Ship {
     public List<Cell> coordinates = new ArrayList<Cell>();
 
     private int length;
+    /**
+     * True: Horizontal
+     * False: Vertical
+     */
     private boolean orientation;
-    //Note: True is horizontal;
     private boolean sunk = false;
 
     public Ship(int length, boolean orientation) {
@@ -18,7 +21,10 @@ public class Ship {
         this.orientation = orientation;
     }
 
-    //Used to Place the Ship on the Field
+    /**
+     * Used to place Ships on the Field
+     * Prefered Version is the PlaceShip Function in the GameBoard option
+     */
     public boolean setCoordinates(Cell startLocation, GameBoard gameBoard) {
         //Horizontal: Left to right
         //Vertical: Top to Bottom
@@ -46,7 +52,9 @@ public class Ship {
         }
         return true;
     }
-
+    /**
+     * If all Nodes are Hit, then returns true
+     */
     public boolean checkIfSunk() {
         for (Cell c : this.coordinates) {
             if (!c.IsHit()) {

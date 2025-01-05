@@ -35,7 +35,9 @@ public class MainController {
     public int gridCounter = 0;
     public SceneSwitcher SceneSwitcher = new SceneSwitcher();
 
-    //This function is currently filled with examples for people to better understand
+    /**
+     * Test Function
+     */
     public void generatePlayersTest() {
         //Generates Players and adds them to the GameInstance
         Game.returnGame().setPlayer1(new Player(Name1.getText(), false));
@@ -78,7 +80,9 @@ public class MainController {
         //Outputs the Gameboard of Player1 in a comprehensible form into the Terminal
         Game.returnGame().getPlayer1().getGameBoard().outputTextVersion();
     }
-
+    /**
+     * Generates two players and adds them to the Game object
+     */
     public void generatePlayers() {
         Game.returnGame().setPlayer1(new Player(Name1.getText(), false));
         Game.returnGame().setPlayer2(new Player(Name2.getText(), false));
@@ -100,7 +104,11 @@ public class MainController {
         return null;
     }
 
-    //Sets up the Placement Grid for the User, the first one is for player 1, second one for player 2
+
+    /**
+     * //Sets up the Placement Grid for the User, the first one is for player 1, second one for player 2
+     * //Potential for improvement
+     */
     public void initPlacementGrid(int Player) {
         if (Player == 0) {
             Game.returnGame().getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.returnGame().getPlayer1().getGameBoard());
@@ -111,7 +119,10 @@ public class MainController {
 
         }
     }
-
+    /**
+     * //Sets up the Placement Grid for the User, the first one is for player 1, second one for player 2
+     * //Potential for improvement
+     */
     public void nextGrid(ActionEvent event) throws IOException {
         if (gridCounter == 0) {
             StartGame.setText("Next Player");
@@ -125,8 +136,9 @@ public class MainController {
         initPlacementGrid(gridCounter);
         gridCounter++;
     }
-
-
+    /**
+     * Initializes both gamefields
+     */
     public void StartGame() {
         Game game = Game.returnGame();
         game.getPlayer1().gameGrid = new GameGrid(Map1, game.getPlayer1(), true);

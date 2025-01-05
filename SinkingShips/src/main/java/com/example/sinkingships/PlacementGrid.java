@@ -3,10 +3,17 @@ package com.example.sinkingships;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
+/**
+ * Used to initialize and interact with the JavaFX Grid, and place down occupied cells
+ */
 public class PlacementGrid {
     GameBoard gameBoard;
     private GridPane gridPane;
 
+
+    /**
+     * Class constructor, also adds a button to every single cell to make them interactable
+     */
     PlacementGrid(GridPane GridPane, GameBoard gameBoard) {
         this.gridPane = GridPane;
         this.gameBoard = gameBoard;
@@ -39,14 +46,18 @@ public class PlacementGrid {
     }
 
 
-
+    /**
+     * The code to be run when a cell is pressed, in this case the cell will be marked as occupied
+     */
     public void onPress(int x, int y) {
         gameBoard.getCell(x, y).setOccupied();
         gameBoard.outputTextVersion();
 
         gameBoard.getCell(x, y).fxButton.setOpacity(100);
     }
-
+    /**
+     * Currently all cells will be reset
+     */
     public void resetField() {
         for (Cell cell : gameBoard.getCells()) {
             cell.fxButton.setOpacity(0);

@@ -1,5 +1,7 @@
 package com.example.sinkingships;
-
+/**
+ * Currently all cells will be reset
+ */
 public class Player {
 
     private String name;
@@ -16,6 +18,7 @@ public class Player {
     public String getName() {
         return name;
     }
+
     public GameBoard getGameBoard() {
         return gameBoard;
     }
@@ -28,12 +31,16 @@ public class Player {
         return isAI;
     }
 
-    //Just used for Debugging
+    /**
+     * Used for debugging
+     */
     public String playerInfo() {
         return this.getName() + " is Ai: " + this.isAI().toString();
     }
 
-    //Only checks Cells that are contained in ships
+    /**
+     * Checks if all cells of all ships on the players gameboard are hit, if yes, returns true
+     */
     public boolean checkIfLost() {
         for (Ship ship : gameBoard.ShipList) {
             if (!ship.checkIfSunk()) {

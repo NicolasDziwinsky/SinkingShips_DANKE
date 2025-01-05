@@ -20,7 +20,9 @@ public class Cell {
         this.isHit = true;
     }
 
-    //Used for the Text version of the Gameboard
+    /**
+     *Used for the Text version of the Gameboard
+     */
     public String getStatusSymbol() {
         if (isOccupied && isHit) {
             return "X";

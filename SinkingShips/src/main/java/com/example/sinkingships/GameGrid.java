@@ -7,7 +7,9 @@ public class GameGrid {
     GridPane gridPane;
     GameBoard gameBoard;
 
-
+    /**
+     * Initializes the Gamefield for the specified player
+     */
     public GameGrid(GridPane gridPane, Player player, boolean shown) {
         this.gridPane = gridPane;
         this.gameBoard = player.getGameBoard();
@@ -39,6 +41,9 @@ public class GameGrid {
         }
     }
 
+    /**
+     * On press, sets the pressed cell to hit
+     */
     public void onPress(int x, int y, Player player) {
 
         Cell cell = player.getGameBoard().getCell(x, y);

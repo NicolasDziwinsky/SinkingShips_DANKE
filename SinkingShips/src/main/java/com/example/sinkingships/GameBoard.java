@@ -10,7 +10,7 @@ public class GameBoard {
     public List<Ship> ShipList = new ArrayList<Ship>();
     public PlacementGrid placementGrid;
 
-    //Fills the grid array with the corresponding nodes with the correct coordinates
+
     public GameBoard() {
 
         int x = 1;
@@ -31,8 +31,11 @@ public class GameBoard {
         }
     }
 
-    //Outputs a Textversion of the Gameboard, with hit and occupied cells visualized
-    //Not the best looking code, but it gets the job done
+
+    /**
+     * Outputs a Textversion of the Gameboard, with hit and occupied cells visualized.
+     * Not the best looking code, but it gets the job done
+     */
     public void outputTextVersion() {
         String Numbers[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         System.out.println("   A  B  C  D  E  F  G  H  I  J");
@@ -60,7 +63,9 @@ public class GameBoard {
 
     }
 
-    //find the cell with the corresponding Coordinates
+    /**
+     * return the cell with the corresponding Coordinates
+     */
     public Cell getCell(int x, int y) {
         for (Cell c : grid) {
             if (x == c.getX() && y == c.getY()) {
@@ -70,19 +75,23 @@ public class GameBoard {
         return null;
     }
 
-    //returns the complete cell array
+    /**
+     * returns the complete cell array
+     */
     public Cell[] getCells() {
         return grid;
     }
 
+
+    /**
+     * //place Ship object at target Cell, direction is defined in Ship Object
+     *         //return true is placement was successful, false if placement would not work (out of bounds, another ship in the way)
+     *
+     *         //If placement was successful, add all nodes that the ship would occupy, and add them to the ships node list
+     *         //Horizontal: Left to right
+     *         //Vertical: Top to Bottom
+     */
     public boolean placeShip(Ship ship, Cell targetCell) {
-        //place Ship object at target Cell, direction is defined in Ship Object
-        //return true is placement was successful, false if placement would not work (out of bounds, another ship in the way)
-
-        //If placement was successful, add all nodes that the ship would occupy, and add them to the ships node list
-        //Horizontal: Left to right
-        //Vertical: Top to Bottom
-
 
         int X = targetCell.getX();
         int Y = targetCell.getY();
