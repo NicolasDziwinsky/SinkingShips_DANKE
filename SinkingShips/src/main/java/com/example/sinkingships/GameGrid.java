@@ -48,8 +48,9 @@ public class GameGrid {
     public void onPress(int x, int y, Player player) {
         Cell cell = player.getGameBoard().getCell(x, y);
 
-        if (cell.setIsHit()) {
-            Game.returnGame().HitHappened(x, y);
+        if (!cell.IsHit() && Game.returnGame().getTurn() != 2) {
+            cell.setIsHit();
+            Game.returnGame().HitHappened();
         } else {
             System.out.println("Already Hit");
         }
@@ -57,7 +58,7 @@ public class GameGrid {
 
 
         //Test Funktion
-        cell.fxButton.setOpacity(100);
+
         if(cell.isOccupied()) {
             cell.fxButton.setText("Hit");
         }

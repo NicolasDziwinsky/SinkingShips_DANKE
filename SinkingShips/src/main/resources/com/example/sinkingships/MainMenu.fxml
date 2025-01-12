@@ -17,7 +17,7 @@
                   <Font size="27.0" />
                </font>
             </Button>
-            <Button fx:id="LoadGame" mnemonicParsing="false" text="Load Game">
+            <Button fx:id="LoadGame" mnemonicParsing="false"  text="Load Game">
                <font>
                   <Font size="27.0" />
                </font>
