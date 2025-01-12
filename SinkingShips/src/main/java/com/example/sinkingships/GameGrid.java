@@ -6,11 +6,12 @@ import javafx.scene.layout.GridPane;
 public class GameGrid {
     GridPane gridPane;
     GameBoard gameBoard;
+    //boolean hidden
 
     /**
      * Initializes the Gamefield for the specified player
      */
-    public GameGrid(GridPane gridPane, Player player, boolean shown) {
+    public GameGrid(GridPane gridPane, Player player) {
         this.gridPane = gridPane;
         this.gameBoard = player.getGameBoard();
 
@@ -45,14 +46,23 @@ public class GameGrid {
      * On press, sets the pressed cell to hit
      */
     public void onPress(int x, int y, Player player) {
-
         Cell cell = player.getGameBoard().getCell(x, y);
-        cell.setIsHit();
+
+        if (cell.setIsHit()) {
+            Game.returnGame().HitHappened(x, y);
+        } else {
+            System.out.println("Already Hit");
+        }
+
+
+
+        //Test Funktion
         cell.fxButton.setOpacity(100);
         if(cell.isOccupied()) {
             cell.fxButton.setText("Hit");
         }
         System.out.println(player.getName());
         player.getGameBoard().outputTextVersion();
+        //
     }
 }

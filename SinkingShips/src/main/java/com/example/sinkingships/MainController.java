@@ -110,13 +110,13 @@ public class MainController {
      * //Potential for improvement
      */
     public void initPlacementGrid(int Player) {
+        Game game = Game.returnGame();
         if (Player == 0) {
-            Game.returnGame().getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.returnGame().getPlayer1().getGameBoard());
+            game.getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, game.getPlayer1().getGameBoard());
             PlayerNamePlacement.setText(Game.returnGame().getPlayer1().getName());
         } else {
-            Game.returnGame().getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.returnGame().getPlayer2().getGameBoard());
+            game.getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, game.getPlayer2().getGameBoard());
             PlayerNamePlacement.setText(Game.returnGame().getPlayer2().getName());
-
         }
     }
     /**
@@ -124,11 +124,11 @@ public class MainController {
      * //Potential for improvement
      */
     public void nextGrid(ActionEvent event) throws IOException {
+        Game game = Game.returnGame();
         if (gridCounter == 0) {
             StartGame.setText("Next Player");
-
         } else if (gridCounter == 1) {
-            Game.returnGame().getPlayer1().getGameBoard().placementGrid.resetField();
+            game.getPlayer1().getGameBoard().placementGrid.resetField();
             StartGame.setText("Start Game");
         } else if (gridCounter == 2) {
             switchToGame(event);
@@ -141,9 +141,8 @@ public class MainController {
      */
     public void StartGame() {
         Game game = Game.returnGame();
-        game.getPlayer1().gameGrid = new GameGrid(Map1, game.getPlayer1(), true);
-        game.getPlayer2().gameGrid = new GameGrid(Map2, game.getPlayer2(), true);
-
+        game.getPlayer1().gameGrid = new GameGrid(Map1, game.getPlayer1());
+        game.getPlayer2().gameGrid = new GameGrid(Map2, game.getPlayer2());
     }
 
 
