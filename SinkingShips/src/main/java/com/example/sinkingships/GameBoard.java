@@ -9,6 +9,9 @@ public class GameBoard {
     //Contains all Ships of the Field
     public List<Ship> ShipList = new ArrayList<Ship>();
     public PlacementGrid placementGrid;
+    public Ship[] placementShips =
+            {new Ship(1, true), new Ship(2, true), new Ship(3, true), new Ship(4, true)};
+    private int shipCounter = 0;
 
 
     public GameBoard() {
@@ -114,10 +117,17 @@ public class GameBoard {
 
         for (Cell c : ship.coordinates) {
             c.setOccupied();
+            c.fxButton.setOpacity(100);
         }
 
         ShipList.add(ship);
         return true;
+    }
+
+    public boolean placeNextShip(Cell targetCell) {
+        boolean returnMessage = placeShip(placementShips[shipCounter], targetCell);
+        shipCounter += 1;
+        return returnMessage;
     }
 
 
