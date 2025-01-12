@@ -11,7 +11,7 @@ public class GameBoard {
     public PlacementGrid placementGrid;
     public Ship[] placementShips =
             {new Ship(1, true), new Ship(2, true), new Ship(3, true), new Ship(4, true)};
-    private int shipCounter = 0;
+    public int shipCounter = 0;
 
 
     public GameBoard() {
@@ -103,11 +103,17 @@ public class GameBoard {
         while (i < ship.getLength()) {
             //Horizontal
             if (ship.getOrrientation() == true) {
+                if (getCell(X, Y) == null) {
+                    return false;
+                }
                 ship.coordinates.add(getCell(X, Y));
                 X++;
             }
             //Vertical
             if (ship.getOrrientation() == false) {
+                if (getCell(X, Y) == null) {
+                    return false;
+                }
                 ship.coordinates.add(getCell(X, Y));
                 Y++;
             }
@@ -126,7 +132,9 @@ public class GameBoard {
 
     public boolean placeNextShip(Cell targetCell) {
         boolean returnMessage = placeShip(placementShips[shipCounter], targetCell);
-        shipCounter += 1;
+        if (returnMessage) {
+            shipCounter += 1;
+        }
         return returnMessage;
     }
 

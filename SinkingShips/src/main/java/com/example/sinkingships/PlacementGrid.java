@@ -52,7 +52,6 @@ public class PlacementGrid {
     public void onPress(int x, int y) {
         gameBoard.placeNextShip(gameBoard.getCell(x, y));
         gameBoard.outputTextVersion();
-        gameBoard.getCell(x, y).fxButton.setOpacity(100);
     }
     /**
      * Currently all cells will be reset

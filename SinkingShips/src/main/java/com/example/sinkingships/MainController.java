@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
 //all major logic should happen here, because in here all created objects can interact with one another
@@ -138,6 +140,7 @@ public class MainController {
         initPlacementGrid(gridCounter);
         gridCounter++;
     }
+
     /**
      * Initializes both gamefields
      */
