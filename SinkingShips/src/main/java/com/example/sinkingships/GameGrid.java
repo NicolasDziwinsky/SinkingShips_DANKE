@@ -26,6 +26,9 @@ public class GameGrid {
             button.setPrefSize(80,80);
             button.setOpacity(0);
 
+            // Adds a class so you can do some css styling
+            button.getStyleClass().add("gameCellButton");
+
             int finalX = x;
             int finalY = y;
             button.onActionProperty().set(event -> {onPress(finalX, finalY, player);});
