@@ -28,6 +28,10 @@
     -fx-font-weight: 400;
 }
 
+.decorations {
+    z-index: 1000;
+}
+
 /* Basic Buttons */
 .mainMenuButton {
     -fx-font-size: 1.6em;
@@ -36,7 +40,7 @@
     -fx-border-color: rgba(0,0,0,0);
     -fx-background-color: none;
     -fx-font-family: "Rubik Medium";
-    -fx-text-fill: rgba(0,0,64,255);
+    -fx-text-fill: rgba(0,0,100,255);
     -fx-padding: 0px;
     -fx-margin: 0px;
 }
@@ -47,14 +51,14 @@
     -fx-border-color: rgba(0,0,0,0);
     -fx-background-color: none;
     -fx-font-family: "Rubik Bold";
-    -fx-text-fill: rgba(0,0,64,255);
+    -fx-text-fill: rgba(0,0,100,255);
     -fx-padding: 0px;
     -fx-margin: 0px;
 }
 .mainMenuButton:hover,
 .backButton:hover,
 #Credits:hover {
-    -fx-background-image: url("img/ship_4a.png");
+    -fx-background-image: url("img/scribble.png");
     -fx-background-color: none;
     -fx-background-position: center;
     -fx-background-size: auto 100%;
@@ -67,7 +71,7 @@
     -fx-border-color: rgba(0,0,0,0);
     -fx-background-color: none;
     -fx-font-family: "Rubik Bold";
-    -fx-text-fill: rgba(0,0,64,255);
+    -fx-text-fill: rgba(0,0,100,255);
     -fx-padding: 0px;
     -fx-margin: 0px;
     -fx-alignment: center-right;
@@ -80,7 +84,8 @@
 .soundSettings .label {
     -fx-font-size: 1em;
     -fx-font-family: "Rubik Medium";
-    -fx-text-fill: rgba(0,0,64,255);
+    -fx-text-fill: rgba(0,0,100,255);
+    -fx-padding: 0px 12px 0px 0px;
 }
 .soundSettings .volumeButton {
     -fx-background-image: url("img/sound_on.png");
@@ -93,21 +98,23 @@
     -fx-background-image: url("img/sound_off.png");
 }
 .soundSettings .slider .track {
-    -fx-border-width: 2px 0px;
-    -fx-border-style: solid;
-    -fx-border-color: rgba(0,0,64,255);
-    -fx-background-color: rgba(0,0,0,0);
-    -fx-pref-height: 12px;
+    -fx-background-image: url("img/slider_track.png");
+    -fx-background-color: none;
+    -fx-background-position: center;
+    -fx-background-size: 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-pref-height: 24px;
 }
 .soundSettings .slider .thumb {
-    -fx-background-image: url("img/sound_mid.png");
+    -fx-background-image: url("img/slider_thumb.png");
     -fx-background-color: none;
     -fx-background-position: center;
     -fx-background-size: auto 100%;
     -fx-background-repeat: no-repeat;
-    -fx-pref-height: 32px;
+    -fx-pref-height: 36px;
 }
 
+/* New Game Stuff */
 #Image1Back,
 #Image2Back {
     -fx-background-image: url("img/arrow_left.png");
@@ -115,6 +122,10 @@
     -fx-background-position: center;
     -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
+}
+#Image1Back:hover,
+#Image2Back:hover {
+    -fx-background-image: url("img/arrow_left_hover.png");
 }
 #Image1Forward,
 #Image2Forward {
@@ -124,27 +135,33 @@
     -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
 }
+#Image1Forward:hover,
+#Image2Forward:hover {
+    -fx-background-image: url("img/arrow_right_hover.png");
+}
 
 .standardText {
     -fx-font-size: 1em;
     -fx-font-family: "Rubik Medium";
-    -fx-text-fill: rgba(0,0,64,255);
+    -fx-text-fill: rgba(0,0,100,255);
 }
 .standardTextInput {
     -fx-font-size: 1.6em;
     -fx-font-family: "Rubik Medium";
-    -fx-text-fill: rgba(0,0,64,255);
+    -fx-text-fill: rgba(0,0,100,255);
     -fx-prompt-text-fill: rgba(160,160,180,255);
+    -fx-background-image: url("img/inputbox_border.png");
     -fx-background-color: none;
-    -fx-border-width: 5px;
-    -fx-border-style: solid;
-    -fx-border-color: rgba(0,0,64,255);
+    -fx-background-position: center;
+    -fx-background-size: 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-padding: 24px 24px 24px 40px;
 }
 
 .standardCheckbox {
     -fx-font-size: 1em;
     -fx-font-family: "Rubik Regular";
-    -fx-text-fill: rgba(0,0,64,255);
+    -fx-text-fill: rgba(0,0,100,255);
 }
 .standardCheckbox .box {
     -fx-background-image: url("img/check_false.png");
@@ -162,7 +179,27 @@
     -fx-background-image: url("img/check_true.png");
 }
 
-.gameCellButton,
+/*.gameCellButton,
 .placementCellButton {
-    
+    -fx-background-image: url("img/cell.png");
+    -fx-background-color: none;
+    -fx-background-position: center;
+    -fx-background-size: 100%;
+    -fx-background-repeat: no-repeat;
+}
+.gameCellButton:hover,
+.placementCellButton:hover {
+    -fx-background-image: url("img/cell_hover.png");
+}*/
+
+#PlacementGridFX,
+#ContainerGrid,
+#Map1,
+#Map2 {
+    -fx-background-image: url("img/grid.png");
+    -fx-background-color: none;
+    -fx-background-position: center;
+    -fx-background-size: 100%;
+    -fx-background-repeat: no-repeat;
+    -fx-padding: 16px;
 }

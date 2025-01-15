@@ -15,47 +15,64 @@
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.sinkingships.MainController">
 
+   <ImageView styleClass="decorations" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="450.0" fitHeight="300.0" fitWidth="300.0"
+              pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/deco/deco_tictactoe.png" backgroundLoading="true"/>
+   </ImageView>
+   <ImageView styleClass="decorations" AnchorPane.topAnchor="300.0" AnchorPane.leftAnchor="20.0" fitHeight="200.0" fitWidth="200.0"
+              pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/deco/deco_smile.png" backgroundLoading="true"/>
+   </ImageView>
+   <ImageView styleClass="decorations" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="600.0" fitHeight="200.0" fitWidth="200.0"
+              pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/deco/deco_birds.png" backgroundLoading="true"/>
+   </ImageView>
+   <ImageView styleClass="decorations" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="100.0" fitHeight="200.0" fitWidth="200.0"
+              pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/deco/deco_ra.png" backgroundLoading="true"/>
+   </ImageView>
+
    <VBox AnchorPane.topAnchor="8.0" AnchorPane.leftAnchor="24.0" spacing="20.0">
       <Button fx:id="Back" styleClass="backButton" mnemonicParsing="false" onAction="#switchToMainMenu" text="&lt; Back"/>
    </VBox>
 
    <VBox AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0">
-      <HBox styleClass="soundSettings" spacing="8.0">
+      <HBox styleClass="soundSettings">
          <Label text="Music"/>
          <Button fx:id="SoundMusicReset" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider prefWidth="200.0" value="100.0"/>
+         <Slider prefWidth="150.0" value="100.0"/>
       </HBox>
-      <HBox styleClass="soundSettings" spacing="8.0">
+      <HBox styleClass="soundSettings">
          <Label text="Sounds"/>
          <Button fx:id="SoundEffectReset" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider prefWidth="200.0" value="100.0"/>
+         <Slider prefWidth="150.0" value="100.0"/>
       </HBox>
    </VBox>
 
-   <VBox AnchorPane.leftAnchor="256.0" AnchorPane.topAnchor="192.0">
+   <VBox AnchorPane.leftAnchor="256.0" AnchorPane.topAnchor="160.0">
       <HBox>
          <Button fx:id="Image1Back" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
          <ImageView fx:id="Image1" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../img/canon_1.png"/>
+            <Image url="@../../../img/canon_3_paper.png"/>
          </ImageView>
          <Button fx:id="Image1Forward" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
       </HBox>
-      <VBox spacing="8.0">
+      <VBox spacing="8.0" alignment="CENTER">
          <Label styleClass="standardText" text="Player 1"/>
-         <TextField styleClass="standardTextInput" fx:id="Name1" promptText="[name]" prefWidth="400.0"/>
+         <TextField styleClass="standardTextInput" fx:id="Name1" promptText="[name]" prefHeight="150.0" prefWidth="400.0"/>
       </VBox>
    </VBox>
-   <VBox AnchorPane.rightAnchor="256.0" AnchorPane.topAnchor="192.0">
+   <VBox AnchorPane.rightAnchor="256.0" AnchorPane.topAnchor="160.0">
       <HBox>
          <Button fx:id="Image2Back" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
          <ImageView fx:id="Image2" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../img/canon_2_flip.png"/>
+            <Image url="@../../../img/canon_2_flip_paper.png"/>
          </ImageView>
          <Button fx:id="Image2Forward" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
       </HBox>
-      <VBox spacing="8.0">
+      <VBox spacing="8.0" alignment="CENTER">
          <Label styleClass="standardText" text="Player 2"/>
-         <TextField styleClass="standardTextInput" fx:id="Name2" promptText="[name]" prefWidth="400.0"/>
+         <TextField styleClass="standardTextInput" fx:id="Name2" promptText="[name]" prefHeight="150.0" prefWidth="400.0"/>
          <CheckBox fx:id="AiCheckbox" styleClass="standardCheckbox" mnemonicParsing="false" text="AI Player"/>
       </VBox>
    </VBox>

@@ -65,6 +65,9 @@ public class SceneSwitcher {
         // Setting a custom cursor
         javafx.scene.image.Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_noborder.png")));
         scene.setCursor(new ImageCursor(imageForCursor, 48, 48));
+
+        // Set the icon for the program
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/img/icon_small.png"))));
     }
 
 }
