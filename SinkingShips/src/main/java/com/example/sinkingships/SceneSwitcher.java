@@ -44,13 +44,6 @@ public class SceneSwitcher {
     public void switchToGame(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Game.fxml"));
         setUpNewScene(event);
-
-        scene.setOnKeyPressed(event2 -> {
-            if (event2.getCode() == KeyCode.F) {
-                System.out.println("Enter key was pressed in the scene!");
-                Game.returnGame().HitHappened();
-            }
-        });
         stage.setScene(scene);
         stage.show();
     }

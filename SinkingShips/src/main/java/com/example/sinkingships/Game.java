@@ -1,6 +1,10 @@
 package com.example.sinkingships;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
 /**
  * //Singleton
  *     //used to share data between scenes
@@ -46,46 +50,54 @@ public class Game {
     public boolean HitHappened() {
         System.out.println("Hit Happened ");
 
-
-        if(turn > 4 ){
-            turn = 1;
-        }
-
-
-
-        switch (turn) {
-            case 1:
-                showShips(getPlayer1(), true);
+        /*switch (turn) {
+            case :
                 if(Game.returnGame().getPlayer1().checkIfLost()){
                     System.out.println("Player 2 wins.");
                     return true;
-
                 }
+                System.out.println("Zwischenzug");
                 break;
+
+
             case 2,4:
                 //Zwischenzug
-                showShips(getPlayer1(), false);
-                showShips(getPlayer2(), false);
                 //display text
+                if (turn == 2) {
+                    System.out.println("Player2's Turn");
+                } else {
+                    System.out.println("Player1's Turn");
+                }
                 break;
+
+
             case 3:
-                showShips(getPlayer2(), true);
                 if(Game.returnGame().getPlayer2().checkIfLost()){
                     System.out.println("Player 1 wins.");
                     return true;
 
                 }
+                System.out.println("Zwischenzug");
+        }*/
 
-
+        System.out.println(turn);
+        if (turn%2 != 0) {
+            toggleField(Player2, true);
+            toggleField(Player1, false);
+            turn +=1;
+        } else {
+            toggleField(Player1, true);
+            toggleField(Player2, false);
+            turn +=1;
         }
-        turn++;
-
 
 
         return true;
     }
 
-
+    //funktion
+    //rand x
+    //rand y
 
 
     public void showShips(Player player, boolean shown){
@@ -102,8 +114,18 @@ public class Game {
             }
         }
 
+    }
 
+    public void toggleField(Player player, boolean activate){
+        GameBoard gameBoard = player.getGameBoard();
 
+        for(Cell cell:gameBoard.getCells()){
+            if(activate){
+                cell.fxButton.setDisable(false);
+            }else {
+                cell.fxButton.setDisable(true);
+            }
+        }
 
     }
 

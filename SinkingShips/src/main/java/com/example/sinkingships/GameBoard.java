@@ -103,7 +103,7 @@ public class GameBoard {
         while (i < ship.getLength()) {
             //Horizontal
             if (ship.getOrrientation() == true) {
-                if (getCell(X, Y) == null) {
+                if (getCell(X, Y) == null || getCell(X,Y).isOccupied()) {
                     return false;
                 }
                 ship.coordinates.add(getCell(X, Y));
@@ -123,7 +123,6 @@ public class GameBoard {
 
         for (Cell c : ship.coordinates) {
             c.setOccupied();
-            c.fxButton.setOpacity(100);
         }
 
         ShipList.add(ship);
