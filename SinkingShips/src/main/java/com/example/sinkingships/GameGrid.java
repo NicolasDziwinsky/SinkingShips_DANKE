@@ -1,6 +1,8 @@
 package com.example.sinkingships;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class GameGrid {
@@ -34,6 +36,7 @@ public class GameGrid {
             button.onActionProperty().set(event -> {onPress(finalX, finalY, player);});
             gridPane.add(button, x-1, y-1);
             player.getGameBoard().getCell(finalX, finalY).fxButton = button;
+            player.getGameBoard().getCell(finalX, finalY).fxButton.setDisable(true);
 
             if (x == 10) {
                 x = 1;
@@ -51,8 +54,16 @@ public class GameGrid {
     public void onPress(int x, int y, Player player) {
         Cell cell = player.getGameBoard().getCell(x, y);
 
-        if (!cell.IsHit() && Game.returnGame().getTurn() != 2) {
+        if (!cell.IsHit()) {
             cell.setIsHit();
+            /*
+            Image image = new Image(String.valueOf(getClass().getResource("/img/target_hit1.jpg")));
+            ImageView HitImage = new ImageView();
+            HitImage.setImage(image);
+            HitImage.setFitHeight(70);
+            HitImage.setFitWidth(70);
+            gridPane.add(HitImage, x-1, y-1);
+            */
             Game.returnGame().HitHappened();
         } else {
             System.out.println("Already Hit");

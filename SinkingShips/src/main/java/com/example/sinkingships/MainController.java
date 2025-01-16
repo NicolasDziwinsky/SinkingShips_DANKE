@@ -214,7 +214,7 @@ public class MainController {
      */
     public void generatePlayers() {
         Game.returnGame().setPlayer1(new Player(Name1.getText(), false));
-        Game.returnGame().setPlayer2(new Player(Name2.getText(), false));
+        Game.returnGame().setPlayer2(new Player(Name2.getText(), AiCheckbox.isSelected()));
     }
 
     //This block abstracts the scene switching, which is actually handled by the SceneSwitcher
@@ -275,6 +275,7 @@ public class MainController {
         Game game = Game.returnGame();
         game.getPlayer1().gameGrid = new GameGrid(Map1, game.getPlayer1());
         game.getPlayer2().gameGrid = new GameGrid(Map2, game.getPlayer2());
+        game.HitHappened();
     }
 
 
