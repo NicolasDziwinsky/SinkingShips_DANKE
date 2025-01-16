@@ -19,20 +19,28 @@ public class SceneSwitcher {
     Scene scene;
     Parent root;
 
+    Soundboard soundboardForIntros = new Soundboard();
 
     public void switchToMainMenu(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         setUpNewScene(event);
+
+        // Plays random 'Krizelshiff' soundbyte
+        soundboardForIntros.playKrizelshiff();
     }
 
     public void switchToNewGame(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("NewGame.fxml"));
         setUpNewScene(event);
+        soundboardForIntros.playPaper();
     }
 
     public void switchToShipPlacement(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("ShipPlacement.fxml"));
         setUpNewScene(event);
+
+        // Plays random 'Ran an's gekrizel' soundbyte
+        soundboardForIntros.playCueGo();
     }
 
     public void switchToGame(ActionEvent event) throws IOException {
@@ -45,6 +53,9 @@ public class SceneSwitcher {
                 Game.returnGame().HitHappened();
             }
         });
+
+        // Plays random 'Ran an's gekrizel' soundbyte
+        soundboardForIntros.playCueGo();
     }
 
     private void setUpNewScene(ActionEvent event){
@@ -55,7 +66,7 @@ public class SceneSwitcher {
         scene = new Scene(root, screenSize.width-100, screenSize.height-100);
 
         // Setting a custom cursor
-        javafx.scene.image.Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_noborder.png")));
+        Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_noborder.png")));
         scene.setCursor(new ImageCursor(imageForCursor, 48, 48));
 
         // Set the icon for the program

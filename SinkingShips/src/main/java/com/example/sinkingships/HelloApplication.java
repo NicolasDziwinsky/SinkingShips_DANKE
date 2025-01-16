@@ -29,14 +29,19 @@ public class HelloApplication extends Application {
         // Set the icon for the program
         stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/img/icon_small.png"))));
 
+        // Plays random 'Krizelshiff' soundbyte
+        Soundboard soundboardForIntro = new Soundboard();
+        soundboardForIntro.playKrizelshiff();
+
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.F) {
                 System.out.println("Enter key was pressed in the scene!");
             }
         });
 
-        stage.setTitle("KRIZL SHIFF");
+        stage.setTitle("KRIZLSHIFF");
         stage.setScene(scene);
+
         // Emma turned off the maximized setting for now ;)
         //stage.setMaximized(true);
         System.out.println(stage.getHeight() + " " + stage.getWidth());

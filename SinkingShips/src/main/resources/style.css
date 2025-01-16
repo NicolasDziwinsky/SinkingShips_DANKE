@@ -61,7 +61,7 @@
     -fx-background-image: url("img/scribble.png");
     -fx-background-color: none;
     -fx-background-position: center;
-    -fx-background-size: auto 100%;
+    -fx-background-size: contain;
     -fx-background-repeat: no-repeat;
 }
 #Credits {
