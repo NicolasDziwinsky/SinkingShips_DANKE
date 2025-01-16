@@ -1,6 +1,9 @@
 package com.example.sinkingships;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Random;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,12 +12,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+
+import javax.print.attribute.standard.Media;
+import javax.sound.sampled.*;
 
 //all major logic should happen here, because in here all created objects can interact with one another
 public class MainController {
+    @FXML
+    public AnchorPane RootPane;
     @FXML
     public TextField Name1;
     @FXML
@@ -33,9 +43,126 @@ public class MainController {
     public GridPane Map1;
     @FXML
     public GridPane Map2;
+    @FXML
+    public ImageView GunPlayer1;
+    @FXML
+    public ImageView GunPlayer2;
 
     public int gridCounter = 0;
     public SceneSwitcher SceneSwitcher = new SceneSwitcher();
+
+    /**
+     * Everything in this block is to try out stuff with the moving canons and playing sounds
+     */
+    @FXML
+    public void initialize() {
+        // Runs the method to rotate guns every time the mouse cursor is moved inside the root pane
+        // If the parameter given to this method is 'null' it removes the method that makes the gun follow the cursor
+        // Suggestion: Only the gun of the active player should follow the cursor
+        // setOnMouseMoved only works as long as the cursor doesn't enter a button, so for every button the methods need to be run separately
+        if(GunPlayer2 != null) {
+            GunPlayer2.setOpacity(0.6);
+            RootPane.setOnMouseMoved(this::autoRotateLeftGun);
+            RootPane.setOnMouseClicked(this::testShooting);
+        }
+    }
+    private void testShooting(MouseEvent mouseEvent) {
+        Thread testThread = new Thread(this::testShootingThread);
+        testThread.start();
+    }
+    private void testShootingThread(){
+        if(GunPlayer1 != null){
+            GunPlayer1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon_3_paper_boom.png"))));
+        }
+
+        // Playing around with playing sounds at random
+        try {
+            URL audioFile = getClass().getResource("/audio/boom.wav");
+            Random random = new Random();
+            int shot = random.nextInt(3);
+            if(shot == 1){
+                audioFile = getClass().getResource("/audio/boom2.wav");
+            }
+            if(shot == 2) {
+                audioFile = getClass().getResource("/audio/boom3.wav");
+            }
+            if(shot == 0) {
+                audioFile = getClass().getResource("/audio/boom.wav");
+            }
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            //FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            //gainControl.setValue(random.nextFloat(0.0f,1.0f));
+            //float range = gainControl.getMaximum() - gainControl.getMinimum();
+            //float gain = (range * random.nextFloat(0.5f,1.0f)) + gainControl.getMinimum();
+            //gainControl.setValue(gain);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Waiting for 200 milliseconds before switching out the sprite again
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        if(GunPlayer1 != null){
+            GunPlayer1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon_3_paper_long.png"))));
+        }
+    }
+    private void autoRotateBothGuns(MouseEvent eventFromMouse) {
+        autoRotateLeftGun(eventFromMouse);
+        autoRotateRightGun(eventFromMouse);
+    }
+    public void autoRotateLeftGun(MouseEvent eventFromMouse) {
+        double gunCenterX = GunPlayer1.getLayoutX() + GunPlayer1.getFitWidth() / 2;
+        double gunCenterY = GunPlayer1.getLayoutY() + GunPlayer1.getFitHeight() / 2;
+        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
+
+        // Keeps the gun from rotating beyond a certain threshold
+        if (gunAngle > 80){
+            gunAngle = 80;
+        }
+        if (gunAngle < -80){
+            gunAngle = -80;
+        }
+
+        GunPlayer1.setRotate(gunAngle);
+    }
+    public void autoRotateRightGun(MouseEvent eventFromMouse) {
+        double gunCenterX = GunPlayer2.getLayoutX() + GunPlayer2.getFitWidth() / 2;
+        double gunCenterY = GunPlayer2.getLayoutY() + GunPlayer2.getFitHeight() / 2;
+        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
+
+        // Keeps the gun from rotating beyond a certain threshold
+        if (gunAngle < 100 && gunAngle >= 0){
+            gunAngle = 100;
+        }
+        if (gunAngle > -100 && gunAngle < 0){
+            gunAngle = -100;
+        }
+
+        GunPlayer2.setRotate(gunAngle + 180); // the 180 degrees are added so the gun is looking in the right direction
+    }
+    /***
+     * Calculates the angle at which an image has to be rotated so it follows the mouse cursor
+     * @param imageCenterX Center of the image to rotate
+     * @param imageCenterY Center of the image to rotate
+     * @param eventFromMouse The mouse event to get the cursor position
+     * @return The angle for the Image
+     */
+    private double getAngleForImage(double imageCenterX, double imageCenterY, MouseEvent eventFromMouse) {
+        double deltaX = eventFromMouse.getX() - imageCenterX;
+        double deltaY = eventFromMouse.getY() - imageCenterY;
+        double imageAngle = Math.toDegrees(Math.atan2(deltaY, deltaX));
+        return imageAngle;
+    }
 
     /**
      * Test Function

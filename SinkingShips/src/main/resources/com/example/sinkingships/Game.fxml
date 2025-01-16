@@ -10,7 +10,9 @@
 <?import javafx.scene.control.Slider?>
 
 <?import javafx.scene.layout.VBox?>
-<AnchorPane stylesheets="@../../../style.css" prefHeight="1080.0" prefWidth="1920.0"
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane fx:id="RootPane" stylesheets="@../../../style.css" prefHeight="1080.0" prefWidth="1920.0"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.sinkingships.MainController">
 
@@ -56,6 +58,10 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
       </rowConstraints>
    </GridPane>
+   <ImageView fx:id="GunPlayer1" AnchorPane.leftAnchor="598.0" AnchorPane.topAnchor="314.0"
+              fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/canon_3_paper_long.png"/>
+   </ImageView>
 
    <GridPane fx:id="Map2" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="64.0"
              gridLinesVisible="true" prefHeight="700.0" prefWidth="700.0">
@@ -84,6 +90,10 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
       </rowConstraints>
    </GridPane>
+   <ImageView fx:id="GunPlayer2" AnchorPane.rightAnchor="698.0" AnchorPane.topAnchor="314.0"
+              fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/canon_2_flip.png"/>
+   </ImageView>
 
    <Button fx:id="StartGame" AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="24.0"
            styleClass="mainMenuButton" mnemonicParsing="false" onAction="#StartGame" text="Start"/>

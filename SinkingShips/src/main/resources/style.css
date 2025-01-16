@@ -139,7 +139,6 @@
 #Image2Forward:hover {
     -fx-background-image: url("img/arrow_right_hover.png");
 }
-
 .standardText {
     -fx-font-size: 1em;
     -fx-font-family: "Rubik Medium";
@@ -157,7 +156,10 @@
     -fx-background-repeat: no-repeat;
     -fx-padding: 24px 24px 24px 40px;
 }
-
+.context-menu {
+    -fx-font-size: 0.8em;
+    visibility: hidden;
+}
 .standardCheckbox {
     -fx-font-size: 1em;
     -fx-font-family: "Rubik Regular";
@@ -178,6 +180,11 @@
 .standardCheckbox:selected .box {
     -fx-background-image: url("img/check_true.png");
 }
+
+/*
+#GunPlayer2 {
+    -fx-opacity: 0.5;
+}*/
 
 /*.gameCellButton,
 .placementCellButton {

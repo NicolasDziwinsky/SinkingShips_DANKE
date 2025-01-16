@@ -23,22 +23,16 @@ public class SceneSwitcher {
     public void switchToMainMenu(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         setUpNewScene(event);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void switchToNewGame(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("NewGame.fxml"));
         setUpNewScene(event);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void switchToShipPlacement(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("ShipPlacement.fxml"));
         setUpNewScene(event);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void switchToGame(ActionEvent event) throws IOException {
@@ -51,8 +45,6 @@ public class SceneSwitcher {
                 Game.returnGame().HitHappened();
             }
         });
-        stage.setScene(scene);
-        stage.show();
     }
 
     private void setUpNewScene(ActionEvent event){
@@ -68,6 +60,8 @@ public class SceneSwitcher {
 
         // Set the icon for the program
         stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/img/icon_small.png"))));
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
