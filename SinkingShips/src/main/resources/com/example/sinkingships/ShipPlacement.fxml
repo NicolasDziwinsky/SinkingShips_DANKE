@@ -10,6 +10,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane fx:id="RootPane" stylesheets="@../../../style.css" prefHeight="800.0" prefWidth="1200.0"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.sinkingships.MainController">
@@ -36,7 +38,7 @@
     </VBox>
 
     <HBox AnchorPane.topAnchor="64.0" AnchorPane.leftAnchor="80.0" prefHeight="800.0" prefWidth="800.0">
-        <GridPane fx:id="PlacementGridFX" gridLinesVisible="true" prefHeight="800.0" prefWidth="800.0">
+        <GridPane fx:id="PlacementGridFX" prefHeight="800.0" prefWidth="800.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -64,7 +66,7 @@
         </GridPane>
     </HBox>
 
-    <GridPane fx:id="ContainerGrid" gridLinesVisible="true" layoutX="960.0" layoutY="230.0"
+    <GridPane fx:id="ContainerGrid" layoutX="960.0" layoutY="230.0"
               prefHeight="570.0" prefWidth="570.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>

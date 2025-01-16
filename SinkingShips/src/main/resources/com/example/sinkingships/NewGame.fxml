@@ -53,7 +53,7 @@
       <HBox>
          <Button fx:id="Image1Back" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
          <ImageView fx:id="Image1" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../img/canon_3_paper.png"/>
+            <Image url="@../../../img/canon/canon_3_paper_square.png"/>
          </ImageView>
          <Button fx:id="Image1Forward" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
       </HBox>
@@ -66,7 +66,7 @@
       <HBox>
          <Button fx:id="Image2Back" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
          <ImageView fx:id="Image2" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../img/canon_2_flip_paper.png"/>
+            <Image url="@../../../img/canon/canon_2_flip_paper_square.png"/>
          </ImageView>
          <Button fx:id="Image2Forward" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
       </HBox>

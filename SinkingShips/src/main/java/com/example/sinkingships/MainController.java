@@ -47,6 +47,12 @@ public class MainController {
     public ImageView GunPlayer1;
     @FXML
     public ImageView GunPlayer2;
+    @FXML
+    public ImageView GunMenu1;
+    @FXML
+    public ImageView GunMenu2;
+    @FXML
+    public ImageView GunMenu3;
 
     public int gridCounter = 0;
     public SceneSwitcher SceneSwitcher = new SceneSwitcher();
@@ -65,6 +71,10 @@ public class MainController {
             RootPane.setOnMouseMoved(this::autoRotateLeftGun);
             RootPane.setOnMouseClicked(this::testShooting);
         }
+        if(GunMenu1 != null){
+            RootPane.setOnMouseMoved(this::autoRotateAllMenuGuns);
+            RootPane.setOnMouseClicked(this::testShooting);
+        }
     }
     private void testShooting(MouseEvent mouseEvent) {
         Thread testThread = new Thread(this::testShootingThread);
@@ -72,7 +82,22 @@ public class MainController {
     }
     private void testShootingThread(){
         if(GunPlayer1 != null){
-            GunPlayer1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon_3_paper_boom.png"))));
+            GunPlayer1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper_boom.png"))));
+        }
+        if(GunMenu1 != null && GunMenu2 != null && GunMenu3 != null) {
+            Random rand = new Random();
+            int check = rand.nextInt(3);
+            switch (check) {
+                case 0:
+                    GunMenu1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper_boom.png"))));
+                    break;
+                case 1:
+                    GunMenu2.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper_boom.png"))));
+                    break;
+                case 2:
+                    GunMenu3.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper_boom.png"))));
+                    break;
+            }
         }
 
         // Playing around with playing sounds at random
@@ -113,7 +138,16 @@ public class MainController {
             Thread.currentThread().interrupt();
         }
         if(GunPlayer1 != null){
-            GunPlayer1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon_3_paper_long.png"))));
+            GunPlayer1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper.png"))));
+        }
+        if(GunMenu1 != null){
+            GunMenu1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper.png"))));
+        }
+        if(GunMenu2 != null){
+            GunMenu2.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper.png"))));
+        }
+        if(GunMenu3 != null){
+            GunMenu3.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper.png"))));
         }
     }
     private void autoRotateBothGuns(MouseEvent eventFromMouse) {
@@ -149,6 +183,56 @@ public class MainController {
         }
 
         GunPlayer2.setRotate(gunAngle + 180); // the 180 degrees are added so the gun is looking in the right direction
+    }
+    public void autoRotateAllMenuGuns(MouseEvent eventFromMouse) {
+        autoRotateMenuGun1(eventFromMouse);
+        autoRotateMenuGun2(eventFromMouse);
+        autoRotateMenuGun3(eventFromMouse);
+    }
+    public void autoRotateMenuGun1(MouseEvent eventFromMouse) {
+        double gunCenterX = GunMenu1.getLayoutX() + GunMenu1.getFitWidth() / 2;
+        double gunCenterY = GunMenu1.getLayoutY() + GunMenu1.getFitHeight() / 2;
+        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
+
+        // Keeps the gun from rotating beyond a certain threshold
+        if (gunAngle < 150 && gunAngle >= 0){
+            gunAngle = 150;
+        }
+        if (gunAngle > -120 && gunAngle < 0){
+            gunAngle = -120;
+        }
+
+        GunMenu1.setRotate(gunAngle + 180);
+    }
+    public void autoRotateMenuGun2(MouseEvent eventFromMouse) {
+        double gunCenterX = GunMenu2.getLayoutX() + GunMenu2.getFitWidth() / 2;
+        double gunCenterY = GunMenu2.getLayoutY() + GunMenu2.getFitHeight() / 2;
+        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
+
+        // Keeps the gun from rotating beyond a certain threshold
+        if (gunAngle < 120 && gunAngle >= 0){
+            gunAngle = 120;
+        }
+        if (gunAngle > -150 && gunAngle < 0){
+            gunAngle = -150;
+        }
+
+        GunMenu2.setRotate(gunAngle + 180);
+    }
+    public void autoRotateMenuGun3(MouseEvent eventFromMouse) {
+        double gunCenterX = GunMenu3.getLayoutX() + GunMenu3.getFitWidth() / 2;
+        double gunCenterY = GunMenu3.getLayoutY() + GunMenu3.getFitHeight() / 2;
+        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
+
+        // Keeps the gun from rotating beyond a certain threshold
+        if (gunAngle > 40){
+            gunAngle = 40;
+        }
+        if (gunAngle < -70){
+            gunAngle = -70;
+        }
+
+        GunMenu3.setRotate(gunAngle);
     }
     /***
      * Calculates the angle at which an image has to be rotated so it follows the mouse cursor

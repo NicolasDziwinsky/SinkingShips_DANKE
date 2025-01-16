@@ -70,6 +70,19 @@
       </HBox>
    </VBox>
 
+   <ImageView fx:id="GunMenu1" AnchorPane.rightAnchor="190.0" AnchorPane.bottomAnchor="250.0"
+              fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/canon/canon_1_flip_paper.png"/>
+   </ImageView>
+   <ImageView fx:id="GunMenu2" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="110.0"
+              fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/canon/canon_2_flip_paper.png"/>
+   </ImageView>
+   <ImageView fx:id="GunMenu3" AnchorPane.leftAnchor="220.0" AnchorPane.bottomAnchor="250.0"
+              fitHeight="140.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../../../img/canon/canon_3_paper.png"/>
+   </ImageView>
+
    <Button fx:id="Credits" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="24.0"
            mnemonicParsing="false" text="Credits"/>
    <ImageView fx:id="SubTitle" AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="24.0" fitHeight="100.0" fitWidth="250.0"
