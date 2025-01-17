@@ -2,6 +2,7 @@ package com.example.sinkingships;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -19,6 +20,7 @@ public class Game {
     public boolean gameOver = false;
     private Cell lastCellHit;
     private ArrayList<Cell> cellsHit = new ArrayList<Cell>();
+    public Random rand = new Random();
     /**
      *     //used to access the object
      */
@@ -54,49 +56,40 @@ public class Game {
         //1 = nicht occupied aber valid
         //2 = nicht valid
 
+
         if(Player2.isAI() && !Player1.isAI()){
             if (!gameOver) {
                 System.out.println("Hit Happened ");
                 System.out.println(turn);
                 if (turn % 2 != 0) {
+                    turn += 1;
                     //Player 1 turn
                     toggleField(Player2, true);
                     toggleField(Player1, false);
 
-                } else {
+
+                } else{
+                    turn += 1;
                     //Player 2 turn
-                    System.out.println("Hallo");
-                    int randInt = getCoordinate();
                     Cell[] cells = getPlayer1().getGameBoard().getCells();
-                    boolean validFound = false;
 
-                    if(!cellsHit.isEmpty() ){
-                        while (!validFound){
-                            randInt = getCoordinate();
-                            for(Cell cell:cellsHit){
-                                if(Arrays.asList(cells).contains(cell)){
-                                    validFound = true;
-                                }
-                            }
-                        }
+
+                    if (cellsHit.isEmpty()) {
+                        cellsHit.addAll(Arrays.asList(cells));
                     }
 
+                    Object randResult[] = randomCell(cellsHit.toArray(new Cell[cellsHit.size()]));
 
-                    int value = getPlayer1().gameGrid.onPress(cells[randInt].getX(), cells[randInt].getY(), getPlayer1());
+                    Cell randCell = (Cell) randResult[0];
+                    int randInt = (int) randResult[1];
 
-
-                    if(value == 0){
-                        cellsHit.add(cells[randInt]);
-
-                    }else if(value == 1) {
-                        cellsHit.add(cells[randInt]);
+                    if(getPlayer1().gameGrid.onPress(randCell, getPlayer1()) == 0){
+                        cellsHit.remove(cellsHit.get(randInt));
+                        System.out.println("Hit");
+                    }else {
+                        cellsHit.remove(cellsHit.get(randInt));
+                        System.out.println("No Hit");
                     }
-
-
-
-
-
-
 
                 }
 
@@ -110,7 +103,9 @@ public class Game {
                     return true;
                 }
 
-                turn += 1;
+                getPlayer1().getGameBoard().outputTextVersion();
+                getPlayer2().getGameBoard().outputTextVersion();
+                //turn += 1;
                 return true;
             }
 
@@ -150,45 +145,12 @@ public class Game {
     //rand x
     //rand y
 
-    public void AiTurn(){
-        //make hit at random cell
-        //if cell is already hit AiTurn()
-        GameBoard gameBoard = getPlayer1().getGameBoard();
-        Cell[] cell = gameBoard.getCells();
-        int coordinate = getCoordinate();
 
-
-        if(cell[coordinate].IsHit()){
-            AiTurn();
-            return;
-        }else {
-            if(cell[coordinate].isOccupied()){
-
-            }else {
-                //make turn normally
-            }
-        }
-
-        //if cell is valid mark cell as hit
-        //if cell was occupied
-          //make next guess to be adjacent
-    }
-
-    public int getCoordinate(){
+    public int getCoordinate(int maxValue){
         Random rand = new Random();
 
-        return rand.nextInt(100);
+        return rand.nextInt(maxValue);
     }
-
-
-
-
-
-
-
-
-
-
 
     public void showShips(Player player, boolean shown){
         GameBoard gameBoard = player.getGameBoard();
@@ -216,7 +178,13 @@ public class Game {
                 cell.fxButton.setDisable(true);
             }
         }
+    }
 
+    public Object[] randomCell(Object[] cells) {
+        int maxValue = cells.length;
+        int value = rand.nextInt(maxValue);
+        Object[] returnObjects = new Object[]{cells[value], value};
+        return returnObjects;
     }
 
 

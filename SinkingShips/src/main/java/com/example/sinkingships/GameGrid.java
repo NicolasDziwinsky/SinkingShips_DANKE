@@ -71,8 +71,8 @@ public class GameGrid {
         Cell cell = player.getGameBoard().getCell(x, y);
 
         Random rand = new Random();
-        int randIntTill5 = rand.nextInt(5);
-        int randIntTill2 = rand.nextInt(2);
+        int randIntTill5 = rand.nextInt(6);
+        int randIntTill2 = rand.nextInt(3);
 
         if (!cell.IsHit() && Game.returnGame().gameOver == false) {
             cell.setIsHit();
@@ -94,28 +94,50 @@ public class GameGrid {
                 return 1;
 
             }
-            /*
-            Image image = new Image(String.valueOf(getClass().getResource("/img/target_hit1.jpg")));
-            ImageView HitImage = new ImageView();
-            HitImage.setImage(image);
-            HitImage.setFitHeight(70);
-            HitImage.setFitWidth(70);
-            gridPane.add(HitImage, x-1, y-1);
-            */
-
         } else if(Game.returnGame().gameOver) {
             System.out.println("Game Over");
         } else {
             System.out.println("Already Hit");
             return 2;
         }
+        return 0;
+    }
 
+    public int onPress(Cell cell, Player player) {
 
+        int x = cell.getX();
+        int y = cell.getY();
 
-        //Test Funktion
-        System.out.println(player.getName());
-        player.getGameBoard().outputTextVersion();
-        //
-        return 3;
+        Random rand = new Random();
+        int randIntTill5 = rand.nextInt(6);
+        int randIntTill2 = rand.nextInt(3);
+
+        if (!cell.IsHit() && Game.returnGame().gameOver == false) {
+            cell.setIsHit();
+            if (cell.isOccupied()) {
+                cell.image = new ImageView();
+                cell.image.setImage(HitImages.get(randIntTill5));
+                cell.image.setFitWidth(70);
+                cell.image.setFitHeight(70);
+                gridPane.add(cell.image, x-1, y-1);
+                Game.returnGame().HitHappened();
+                return 0;
+            } else {
+                cell.image = new ImageView();
+                cell.image.setImage(MissImages.get(randIntTill2));
+                cell.image.setFitWidth(70);
+                cell.image.setFitHeight(70);
+                gridPane.add(cell.image, x-1, y-1);
+                Game.returnGame().HitHappened();
+                return 1;
+
+            }
+        } else if(Game.returnGame().gameOver) {
+            System.out.println("Game Over");
+        } else {
+            System.out.println("Already Hit");
+            return 2;
+        }
+        return 0;
     }
 }
