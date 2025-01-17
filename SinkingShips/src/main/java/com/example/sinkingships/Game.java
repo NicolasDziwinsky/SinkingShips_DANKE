@@ -1,9 +1,8 @@
 package com.example.sinkingships;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 /**
  * //Singleton
@@ -18,6 +17,8 @@ public class Game {
     private Player Player2;
     private int turn = 1;
     public boolean gameOver = false;
+    private Cell lastCellHit;
+    private ArrayList<Cell> cellsHit = new ArrayList<Cell>();
     /**
      *     //used to access the object
      */
@@ -49,36 +50,144 @@ public class Game {
 
 
     public boolean HitHappened() {
-        if (!gameOver) {
-            System.out.println("Hit Happened ");
-            System.out.println(turn);
-            if (turn % 2 != 0) {
-                toggleField(Player2, true);
-                toggleField(Player1, false);
-            } else {
-                toggleField(Player1, true);
-                toggleField(Player2, false);
+        //0 = occupied
+        //1 = nicht occupied aber valid
+        //2 = nicht valid
+
+        if(Player2.isAI() && !Player1.isAI()){
+            if (!gameOver) {
+                System.out.println("Hit Happened ");
+                System.out.println(turn);
+                if (turn % 2 != 0) {
+                    //Player 1 turn
+                    toggleField(Player2, true);
+                    toggleField(Player1, false);
+
+                } else {
+                    //Player 2 turn
+                    System.out.println("Hallo");
+                    int randInt = getCoordinate();
+                    Cell[] cells = getPlayer1().getGameBoard().getCells();
+                    boolean validFound = false;
+
+                    if(!cellsHit.isEmpty() ){
+                        while (!validFound){
+                            randInt = getCoordinate();
+                            for(Cell cell:cellsHit){
+                                if(Arrays.asList(cells).contains(cell)){
+                                    validFound = true;
+                                }
+                            }
+                        }
+                    }
+
+
+                    int value = getPlayer1().gameGrid.onPress(cells[randInt].getX(), cells[randInt].getY(), getPlayer1());
+
+
+                    if(value == 0){
+                        cellsHit.add(cells[randInt]);
+
+                    }else if(value == 1) {
+                        cellsHit.add(cells[randInt]);
+                    }
+
+
+
+
+
+
+
+                }
+
+                if (Player1.checkIfLost()) {
+                    System.out.println("Player 2 Won");
+                    gameOver = true;
+                    return true;
+                } else if (Player2.checkIfLost()) {
+                    System.out.println("Player 1 Won");
+                    gameOver = true;
+                    return true;
+                }
+
+                turn += 1;
+                return true;
             }
 
-            if (Player1.checkIfLost()) {
-                System.out.println("Player 2 Won");
-                gameOver = true;
-                return true;
-            } else if (Player2.checkIfLost()) {
-                System.out.println("Player 1 Won");
-                gameOver = true;
+        }else if(Player1.isAI() && Player2.isAI()){
+
+        }else {
+            if (!gameOver) {
+                System.out.println("Hit Happened ");
+                System.out.println(turn);
+                if (turn % 2 != 0) {
+                    toggleField(Player2, true);
+                    toggleField(Player1, false);
+                } else {
+                    toggleField(Player1, true);
+                    toggleField(Player2, false);
+                }
+
+                if (Player1.checkIfLost()) {
+                    System.out.println("Player 2 Won");
+                    gameOver = true;
+                    return true;
+                } else if (Player2.checkIfLost()) {
+                    System.out.println("Player 1 Won");
+                    gameOver = true;
+                    return true;
+                }
+
+                turn += 1;
                 return true;
             }
-
-            turn += 1;
-            return true;
         }
+
         return true;
     }
 
     //funktion
     //rand x
     //rand y
+
+    public void AiTurn(){
+        //make hit at random cell
+        //if cell is already hit AiTurn()
+        GameBoard gameBoard = getPlayer1().getGameBoard();
+        Cell[] cell = gameBoard.getCells();
+        int coordinate = getCoordinate();
+
+
+        if(cell[coordinate].IsHit()){
+            AiTurn();
+            return;
+        }else {
+            if(cell[coordinate].isOccupied()){
+
+            }else {
+                //make turn normally
+            }
+        }
+
+        //if cell is valid mark cell as hit
+        //if cell was occupied
+          //make next guess to be adjacent
+    }
+
+    public int getCoordinate(){
+        Random rand = new Random();
+
+        return rand.nextInt(100);
+    }
+
+
+
+
+
+
+
+
+
 
 
     public void showShips(Player player, boolean shown){

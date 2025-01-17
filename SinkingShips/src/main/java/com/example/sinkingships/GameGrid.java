@@ -67,7 +67,7 @@ public class GameGrid {
     /**
      * On press, sets the pressed cell to hit
      */
-    public void onPress(int x, int y, Player player) {
+    public int onPress(int x, int y, Player player) {
         Cell cell = player.getGameBoard().getCell(x, y);
 
         Random rand = new Random();
@@ -82,12 +82,16 @@ public class GameGrid {
                 cell.image.setFitWidth(70);
                 cell.image.setFitHeight(70);
                 gridPane.add(cell.image, x-1, y-1);
+                Game.returnGame().HitHappened();
+                return 0;
             } else {
                 cell.image = new ImageView();
                 cell.image.setImage(MissImages.get(randIntTill2));
                 cell.image.setFitWidth(70);
                 cell.image.setFitHeight(70);
                 gridPane.add(cell.image, x-1, y-1);
+                Game.returnGame().HitHappened();
+                return 1;
 
             }
             /*
@@ -98,11 +102,12 @@ public class GameGrid {
             HitImage.setFitWidth(70);
             gridPane.add(HitImage, x-1, y-1);
             */
-            Game.returnGame().HitHappened();
+
         } else if(Game.returnGame().gameOver) {
             System.out.println("Game Over");
         } else {
             System.out.println("Already Hit");
+            return 2;
         }
 
 
@@ -111,5 +116,6 @@ public class GameGrid {
         System.out.println(player.getName());
         player.getGameBoard().outputTextVersion();
         //
+        return 3;
     }
 }
