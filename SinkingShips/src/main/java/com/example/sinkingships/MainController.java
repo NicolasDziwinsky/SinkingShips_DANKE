@@ -371,6 +371,8 @@ public class MainController {
         }
     }
 
+
+
     /**
      * Initializes both gamefields
      */
