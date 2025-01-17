@@ -352,6 +352,15 @@ public class MainController {
         gridCounter++;
     }
 
+    public void RotateShip() {
+        for (Ship ship:Game.returnGame().getPlayer1().getGameBoard().placementShips) {
+            ship.turnShip();
+        }
+        for (Ship ship:Game.returnGame().getPlayer2().getGameBoard().placementShips) {
+            ship.turnShip();
+        }
+    }
+
     /**
      * Initializes both gamefields
      */

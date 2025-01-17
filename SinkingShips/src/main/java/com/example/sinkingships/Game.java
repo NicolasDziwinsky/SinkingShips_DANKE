@@ -50,36 +50,6 @@ public class Game {
     public boolean HitHappened() {
         System.out.println("Hit Happened ");
 
-        /*switch (turn) {
-            case :
-                if(Game.returnGame().getPlayer1().checkIfLost()){
-                    System.out.println("Player 2 wins.");
-                    return true;
-                }
-                System.out.println("Zwischenzug");
-                break;
-
-
-            case 2,4:
-                //Zwischenzug
-                //display text
-                if (turn == 2) {
-                    System.out.println("Player2's Turn");
-                } else {
-                    System.out.println("Player1's Turn");
-                }
-                break;
-
-
-            case 3:
-                if(Game.returnGame().getPlayer2().checkIfLost()){
-                    System.out.println("Player 1 wins.");
-                    return true;
-
-                }
-                System.out.println("Zwischenzug");
-        }*/
-
         System.out.println(turn);
         if (turn%2 != 0) {
             toggleField(Player2, true);
@@ -130,15 +100,7 @@ public class Game {
     }
 
 
-
     //game.getplayerx.getgameboard.getcell(x,y).fxbutton.setopacity()
-
-
-
-
-
-
-
 
 
 }

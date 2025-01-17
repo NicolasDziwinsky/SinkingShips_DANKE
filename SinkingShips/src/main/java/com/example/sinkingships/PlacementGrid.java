@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
  */
 public class PlacementGrid {
     GameBoard gameBoard;
-    private GridPane gridPane;
+    public GridPane gridPane;
 
 
     /**
@@ -57,11 +57,11 @@ public class PlacementGrid {
         gameBoard.outputTextVersion();
     }
     /**
-     * Currently all cells will be reset
+     * Currently all images will be removed
      */
     public void resetField() {
         for (Cell cell : gameBoard.getCells()) {
-            cell.fxButton.setOpacity(0);
+            if (cell.image != null) cell.image.imageProperty().set(null);
         }
     }
 }

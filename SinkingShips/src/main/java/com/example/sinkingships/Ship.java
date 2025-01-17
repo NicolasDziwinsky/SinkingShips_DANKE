@@ -1,5 +1,7 @@
 package com.example.sinkingships;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +17,40 @@ public class Ship {
      */
     private boolean orientation;
     private boolean sunk = false;
+    public Image shipImage;
+    public List<Image> shipImageParts = new ArrayList<Image>();
 
     public Ship(int length, boolean orientation) {
         this.length = length;
         this.orientation = orientation;
+
+        switch (length) {
+            case 2:
+                shipImage = new Image(String.valueOf(getClass().getResource("/img/ships/ship_2a.png")));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_2a_part1.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_2a_part2.png"))));
+                break;
+            case 3:
+                shipImage = new Image(String.valueOf(getClass().getResource("/img/ships/ship_3a.png")));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_3a_part1.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_3a_part2.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_3a_part3.png"))));
+                break;
+            case 4:
+                shipImage = new Image(String.valueOf(getClass().getResource("/img/ships/ship_4a.png")));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_4a_part1.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_4a_part2.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_4a_part3.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_4a_part4.png"))));
+                break;
+            case 5:
+                shipImage = new Image(String.valueOf(getClass().getResource("/img/ships/ship_5a.png")));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_5a_part1.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_5a_part2.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_5a_part3.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_5a_part4.png"))));
+                shipImageParts.add(new Image(String.valueOf(getClass().getResource("/img/ships/ship_5a_part5.png"))));
+        }
     }
 
     /**
@@ -71,6 +103,16 @@ public class Ship {
 
     public boolean getOrrientation() {
         return orientation;
+    }
+
+    public void turnShip() {
+        if (orientation) {
+            orientation = false;
+
+        } else {
+            orientation = true;
+        }
+        System.out.println(orientation);
     }
 
     public List<Cell> getCoordinates(){

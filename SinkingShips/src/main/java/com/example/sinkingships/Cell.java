@@ -1,12 +1,15 @@
 package com.example.sinkingships;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+
 public class Cell {
     private int x;
     private int y;
     private boolean isOccupied;
     private boolean isHit;
     public Button fxButton;
+    public ImageView image;
 
     Cell(int x, int y) {
         this.x = x;

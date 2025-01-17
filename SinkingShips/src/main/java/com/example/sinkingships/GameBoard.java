@@ -1,5 +1,8 @@
 package com.example.sinkingships;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,7 @@ public class GameBoard {
     public List<Ship> ShipList = new ArrayList<Ship>();
     public PlacementGrid placementGrid;
     public Ship[] placementShips =
-            {new Ship(1, true), new Ship(2, true), new Ship(3, true), new Ship(4, true)};
+            {new Ship(2, true), new Ship(3, true), new Ship(4, true), new Ship(5, true)};
     public int shipCounter = 0;
 
 
@@ -98,22 +101,51 @@ public class GameBoard {
 
         int X = targetCell.getX();
         int Y = targetCell.getY();
-
         int i = 0;
+
+        //pre-checks if target cells are valid for placement
         while (i < ship.getLength()) {
             //Horizontal
             if (ship.getOrrientation() == true) {
                 if (getCell(X, Y) == null || getCell(X,Y).isOccupied()) {
                     return false;
                 }
+                X++;
+            }
+            //Vertical
+            if (ship.getOrrientation() == false) {
+
+                if (getCell(X, Y) == null || getCell(X,Y).isOccupied()) {
+                    return false;
+                }
+                Y++;
+            }
+            i++;
+        }
+        //resets variables
+        X = targetCell.getX();
+        Y = targetCell.getY();
+
+        i = 0;
+        while (i < ship.getLength()) {
+            //Horizontal
+            if (ship.getOrrientation() == true) {
+                getCell(X, Y).image = new ImageView();
+                getCell(X, Y).image.setImage(ship.shipImageParts.get(i));
+                getCell(X, Y).image.setFitHeight(80);
+                getCell(X, Y).image.setFitWidth(80);
+                placementGrid.gridPane.add(getCell(X, Y).image, X-1, Y-1);
                 ship.coordinates.add(getCell(X, Y));
                 X++;
             }
             //Vertical
             if (ship.getOrrientation() == false) {
-                if (getCell(X, Y) == null) {
-                    return false;
-                }
+                getCell(X, Y).image = new ImageView();
+                getCell(X, Y).image.setImage(ship.shipImageParts.get(i));
+                getCell(X, Y).image.setFitHeight(80);
+                getCell(X, Y).image.setFitWidth(80);
+                getCell(X, Y).image.rotateProperty().set(90);
+                placementGrid.gridPane.add(getCell(X, Y).image, X-1, Y-1);
                 ship.coordinates.add(getCell(X, Y));
                 Y++;
             }
