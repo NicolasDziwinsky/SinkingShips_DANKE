@@ -10,58 +10,84 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="RootPane" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
+<AnchorPane fx:id="RootPane" stylesheets="@../../../style.css"
+            minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.sinkingships.MainController">
 
-    <VBox AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="8.0">
-        <Button mnemonicParsing="false" onAction="#switchToNewGame" styleClass="backButton" text="&lt; Back" />
+    <VBox AnchorPane.topAnchor="8.0" AnchorPane.leftAnchor="24.0">
+        <Button styleClass="backButton" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" onAction="#switchToNewGame" text="&lt; Back"/>
     </VBox>
 
     <VBox AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0">
         <HBox styleClass="soundSettings">
-            <Label text="Music" />
-            <Button fx:id="SoundMusicReset" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" />
-            <Slider prefWidth="150.0" value="100.0" />
+            <Label text="Music"/>
+            <Button fx:id="SoundMusicReset" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
+            <Slider fx:id="SoundMusicSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0"/>
         </HBox>
         <HBox styleClass="soundSettings">
-            <Label text="Sounds" />
-            <Button fx:id="SoundEffectReset" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" />
-            <Slider prefWidth="150.0" value="100.0" />
+            <Label text="Sounds"/>
+            <Button fx:id="SoundEffectReset" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
+            <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0"/>
         </HBox>
     </VBox>
 
     <VBox AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="24.0">
-        <Button fx:id="StartGame" mnemonicParsing="false" onAction="#nextGrid" styleClass="mainMenuButton" text="Start Placing Ships" />
+        <Button fx:id="StartGame" styleClass="mainMenuButton" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" onAction="#nextGrid" text="Start Placing Ships"/>
     </VBox>
 
-    <HBox prefHeight="800.0" prefWidth="800.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="64.0">
+    <HBox AnchorPane.topAnchor="64.0" AnchorPane.leftAnchor="80.0" prefHeight="800.0" prefWidth="800.0">
         <GridPane fx:id="PlacementGridFX" prefHeight="800.0" prefWidth="800.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
         </GridPane>
     </HBox>
 
-    <Button fx:id="RotateButton" mnemonicParsing="false" onAction="#RotateShip" styleClass="mainMenuButton" text="Rotate Ship" AnchorPane.bottomAnchor="128.0" AnchorPane.rightAnchor="24.0" />
-    <Label fx:id="PlayerNamePlacement" text="Label" AnchorPane.bottomAnchor="192.0" AnchorPane.rightAnchor="24.0" />
+    <GridPane fx:id="ContainerGrid" layoutX="960.0" layoutY="230.0"
+              prefHeight="570.0" prefWidth="570.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+    </GridPane>
+
+    <Button fx:id="TestButton" AnchorPane.bottomAnchor="128.0" AnchorPane.rightAnchor="24.0"
+            styleClass="mainMenuButton" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" onAction="#nextGrid" text="Test"/>
+    <Label fx:id="PlayerNamePlacement" AnchorPane.bottomAnchor="192.0" AnchorPane.rightAnchor="24.0" text="Label"/>
 </AnchorPane>

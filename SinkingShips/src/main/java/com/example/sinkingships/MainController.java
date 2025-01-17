@@ -1,238 +1,248 @@
 package com.example.sinkingships;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Random;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.ImageCursor;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-import javax.print.attribute.standard.Media;
-import javax.sound.sampled.*;
-
 //all major logic should happen here, because in here all created objects can interact with one another
 public class MainController {
-    @FXML
-    public AnchorPane RootPane;
-    @FXML
-    public TextField Name1;
-    @FXML
-    public TextField Name2;
-    @FXML
-    public CheckBox AiCheckbox;
-    @FXML
-    public GridPane PlacementGridFX;
-    @FXML
-    public GridPane ContainerGrid;
-    @FXML
-    public Label PlayerNamePlacement;
-    @FXML
-    public Button StartGame;
-    @FXML
-    public GridPane Map1;
-    @FXML
-    public GridPane Map2;
-    @FXML
-    public ImageView GunPlayer1;
-    @FXML
-    public ImageView GunPlayer2;
-    @FXML
-    public ImageView GunMenu1;
-    @FXML
-    public ImageView GunMenu2;
-    @FXML
-    public ImageView GunMenu3;
+    // General
+    @FXML public AnchorPane RootPane;
+    @FXML public GridPane PlacementGridFX;
+    @FXML public GridPane ContainerGrid;
+    @FXML public Label PlayerNamePlacement;
+    @FXML public Button StartGame;
+    @FXML public GridPane Map1;
+    @FXML public GridPane Map2;
+    @FXML public ImageView GunPlayer1;
+    @FXML public ImageView GunPlayer2;
+    @FXML public ImageView GunMenu1;
+    @FXML public ImageView GunMenu2;
+    @FXML public ImageView GunMenu3;
+    @FXML public Button SoundMusicReset;
+    @FXML public Button SoundEffectReset;
+    @FXML public Slider SoundMusicSlider;
+    @FXML public Slider SoundEffectSlider;
+    @FXML public Button Back;
+
+    // New Game
+    @FXML public TextField Name1;
+    @FXML public TextField Name2;
+    @FXML public CheckBox AiCheckbox;
+
+    // Main Menu
+    @FXML public Button NewGame;
+    @FXML public Button LoadGame;
+    @FXML public Button Tutorial;
+    @FXML public Button Scoreboard;
+    @FXML public Button Exit;
+    @FXML public Button Credits;
+
+    public boolean canonIsHovered;
 
     public int gridCounter = 0;
     public SceneSwitcher SceneSwitcher = new SceneSwitcher();
 
-    /**
-     * Everything in this block is to try out stuff with the moving canons and playing sounds
-     */
+    // Everything in this block is to try out stuff with the moving canons and playing sounds
     @FXML
     public void initialize() {
-        // Runs the method to rotate guns every time the mouse cursor is moved inside the root pane
-        // If the parameter given to this method is 'null' it removes the method that makes the gun follow the cursor
-        // Suggestion: Only the gun of the active player should follow the cursor
-        // setOnMouseMoved only works as long as the cursor doesn't enter a button, so for every button the methods need to be run separately
         if(GunPlayer2 != null) {
             GunPlayer2.setOpacity(0.6);
-            RootPane.setOnMouseMoved(this::autoRotateLeftGun);
-            RootPane.setOnMouseClicked(this::testShooting);
         }
-        if(GunMenu1 != null){
-            RootPane.setOnMouseMoved(this::autoRotateAllMenuGuns);
-            RootPane.setOnMouseClicked(this::testShooting);
+
+        if(GunMenu1 != null) {
+            GunMenu1.setPickOnBounds(false);
+        }
+        if(GunMenu2 != null) {
+            GunMenu2.setPickOnBounds(false);
+        }
+        if(GunMenu3 != null) {
+            GunMenu3.setPickOnBounds(false);
+        }
+        if(GunPlayer1 != null) {
+            GunPlayer1.setPickOnBounds(false);
+        }
+        if(GunPlayer2 != null) {
+            GunPlayer2.setPickOnBounds(false);
+        }
+        canonIsHovered = false;
+    }
+
+    @FXML
+    public void handleMouseEntered(MouseEvent mouseEvent) {
+        Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_finger.png")));
+        ((Node) mouseEvent.getSource()).setCursor(new ImageCursor(imageForCursor, 48, 48));
+    }
+    @FXML
+    public void handleMouseClicked(MouseEvent mouseEvent) {
+        if(!canonIsHovered) {
+            setUpShootingInGame(mouseEvent);
+            setUpShootingInMenu(mouseEvent);
         }
     }
-    private void testShooting(MouseEvent mouseEvent) {
-        Thread testThread = new Thread(this::testShootingThread);
-        testThread.start();
-    }
-    private void testShootingThread(){
-        if(GunPlayer1 != null){
-            GunPlayer1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper_boom.png"))));
-        }
+    @FXML
+    public void handleMouseMoved(MouseEvent mouseEvent) {
         if(GunMenu1 != null && GunMenu2 != null && GunMenu3 != null) {
-            Random rand = new Random();
-            int check = rand.nextInt(3);
-            switch (check) {
-                case 0:
-                    GunMenu1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper_boom.png"))));
-                    break;
-                case 1:
-                    GunMenu2.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper_boom.png"))));
-                    break;
-                case 2:
-                    GunMenu3.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper_boom.png"))));
-                    break;
-            }
+            autoRotateAllMenuCanons(mouseEvent);
         }
-
-        // Playing around with playing sounds at random
-        try {
-            URL audioFile = getClass().getResource("/audio/boom.wav");
-            Random random = new Random();
-            int shot = random.nextInt(3);
-            if(shot == 1){
-                audioFile = getClass().getResource("/audio/boom2.wav");
-            }
-            if(shot == 2) {
-                audioFile = getClass().getResource("/audio/boom3.wav");
-            }
-            if(shot == 0) {
-                audioFile = getClass().getResource("/audio/boom.wav");
-            }
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            //FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            //gainControl.setValue(random.nextFloat(0.0f,1.0f));
-            //float range = gainControl.getMaximum() - gainControl.getMinimum();
-            //float gain = (range * random.nextFloat(0.5f,1.0f)) + gainControl.getMinimum();
-            //gainControl.setValue(gain);
-            clip.start();
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
+        if(GunPlayer1 != null) {
+            autoRotateLeftCanon(mouseEvent);
         }
+        /*if(GunPlayer2 != null) {
+            autoRotateRightCanon(mouseEvent);
+        }*/
+    }
+    @FXML
+    public void handleCatClick(MouseEvent mouseEvent) {
+        Soundboard meowingSoundboard = new Soundboard();
+        meowingSoundboard.playCatNoise();
+    }
+    @FXML
+    public void handleCatEntered(MouseEvent mouseEvent) {
+        handleMouseEntered(mouseEvent);
+        canonIsHovered = true;
+    }
+    @FXML
+    public void handleCatExited(MouseEvent mouseEvent) {
+        canonIsHovered = false;
+    }
 
-        // Waiting for 200 milliseconds before switching out the sprite again
+    // Methods to make the canons shoot on mouse click
+    private void setUpShootingInGame(MouseEvent mouseEvent) {
+        Thread leftPlayerGunThread = new Thread(this::shootingThreadPlayerCanonLeft);
+        leftPlayerGunThread.start();
+        //Thread rightPlayerGunThread = new Thread(this::shootingThreadPlayerGunRight);
+        //rightPlayerGunThread.start();
+    }
+    private void setUpShootingInMenu(MouseEvent mouseEvent) {
+        Random rnd = new Random();
+        int randomNumber = rnd.nextInt(3);
+        switch (randomNumber) {
+            case 0:
+                Thread menuGunAThread = new Thread(this::shootingThreadMenuCanonA);
+                menuGunAThread.start();
+                break;
+            case 1:
+                Thread menuGunBThread = new Thread(this::shootingThreadMenuCanonB);
+                menuGunBThread.start();
+                break;
+            case 2:
+                Thread menuGunCThread = new Thread(this::shootingThreadMenuCanonC);
+                menuGunCThread.start();
+                break;
+
+        }
+    }
+    private void shootingThreadPlayerCanonLeft(){
+        Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper_boom.png")));
+        Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper.png")));
+        setUpShootingCanon(GunPlayer1, defaultImage, shootingImage, true);
+    }
+    private void shootingThreadPlayerCanonRight(){
+        Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper_boom.png")));
+        Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper.png")));
+        setUpShootingCanon(GunPlayer2, defaultImage, shootingImage, true);
+    }
+    private void shootingThreadMenuCanonA(){
+        Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper_boom.png")));
+        Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper.png")));
+        setUpShootingCanon(GunMenu1, defaultImage, shootingImage, false);
+    }
+    private void shootingThreadMenuCanonB(){
+        Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper_boom.png")));
+        Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper.png")));
+        setUpShootingCanon(GunMenu2, defaultImage, shootingImage, false);
+    }
+    private void shootingThreadMenuCanonC(){
+        Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper_boom.png")));
+        Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper.png")));
+        setUpShootingCanon(GunMenu3, defaultImage, shootingImage, false);
+    }
+    private void setUpShootingCanon(ImageView imageViewOfGun, Image standardGun, Image shootingGun, boolean playImpact){
+        imageViewOfGun.setImage(shootingGun);
+        Soundboard soundboardForGun = new Soundboard();
+        soundboardForGun.playCanonShot();
+
+        // Waiting for 600 milliseconds before switching out the sprite again
         try {
-            Thread.sleep(200);
+            Thread.sleep(600);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        if(GunPlayer1 != null){
-            GunPlayer1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper.png"))));
-        }
-        if(GunMenu1 != null){
-            GunMenu1.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper.png"))));
-        }
-        if(GunMenu2 != null){
-            GunMenu2.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper.png"))));
-        }
-        if(GunMenu3 != null){
-            GunMenu3.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper.png"))));
+
+        imageViewOfGun.setImage(standardGun);
+        if (playImpact){
+            soundboardForGun.playImpactBoom();
         }
     }
-    private void autoRotateBothGuns(MouseEvent eventFromMouse) {
-        autoRotateLeftGun(eventFromMouse);
-        autoRotateRightGun(eventFromMouse);
+
+    // Methods to the canons rotate to always look at the mouse cursor
+    private void autoRotateAllInGameCanons(MouseEvent eventFromMouse) {
+        autoRotateLeftCanon(eventFromMouse);
+        autoRotateRightCanon(eventFromMouse);
     }
-    public void autoRotateLeftGun(MouseEvent eventFromMouse) {
-        double gunCenterX = GunPlayer1.getLayoutX() + GunPlayer1.getFitWidth() / 2;
-        double gunCenterY = GunPlayer1.getLayoutY() + GunPlayer1.getFitHeight() / 2;
+    private void autoRotateLeftCanon(MouseEvent eventFromMouse) {
+        autoRotateCanon(80, -80, true, GunPlayer1, eventFromMouse);
+    }
+    private void autoRotateRightCanon(MouseEvent eventFromMouse) {
+        autoRotateCanon(80, -80, false, GunPlayer2, eventFromMouse);
+    }
+    private void autoRotateAllMenuCanons(MouseEvent eventFromMouse) {
+        autoRotateMenuCanon1(eventFromMouse);
+        autoRotateMenuCanon2(eventFromMouse);
+        autoRotateMenuCanon3(eventFromMouse);
+    }
+    private void autoRotateMenuCanon1(MouseEvent eventFromMouse) {
+        autoRotateCanon(150, -120, false, GunMenu1, eventFromMouse);
+    }
+    private void autoRotateMenuCanon2(MouseEvent eventFromMouse) {
+        autoRotateCanon(120, -150, false, GunMenu2, eventFromMouse);
+    }
+    private void autoRotateMenuCanon3(MouseEvent eventFromMouse) {
+        autoRotateCanon(40, -70, true, GunMenu3, eventFromMouse);
+    }
+    /**
+     * Rotates the given image to look towards the mouse cursor, from a certain upper and lower threshold for the angle.
+     * @param angleUpper Highest angle.
+     * @param angleLower Lowest angle.
+     * @param leftToRight True if image looks from left to right by default. False if it looks right to left.
+     * @param ivToRotate The ImageView to rotate.
+     * @param eventFromMouse The mouse event of the cursor to use to calculate the angle towards.
+     */
+    private void autoRotateCanon(double angleUpper, double angleLower, boolean leftToRight, ImageView ivToRotate, MouseEvent eventFromMouse) {
+        double gunCenterX = ivToRotate.getLayoutX() + ivToRotate.getFitWidth() / 2;
+        double gunCenterY = ivToRotate.getLayoutY() + ivToRotate.getFitHeight() / 2;
         double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
 
-        // Keeps the gun from rotating beyond a certain threshold
-        if (gunAngle > 80){
-            gunAngle = 80;
+        // Rotates the gun inside the given threshold angles
+        if(leftToRight) {
+            if (gunAngle > angleUpper) {
+                gunAngle = angleUpper;
+            }
+            if (gunAngle < angleLower) {
+                gunAngle = angleLower;
+            }
+            ivToRotate.setRotate(gunAngle);
+        } else {
+            if (gunAngle < angleUpper && gunAngle >= 0){
+                gunAngle = angleUpper;
+            }
+            if (gunAngle > angleLower && gunAngle < 0){
+                gunAngle = angleLower;
+            }
+            ivToRotate.setRotate(gunAngle + 180);
         }
-        if (gunAngle < -80){
-            gunAngle = -80;
-        }
-
-        GunPlayer1.setRotate(gunAngle);
-    }
-    public void autoRotateRightGun(MouseEvent eventFromMouse) {
-        double gunCenterX = GunPlayer2.getLayoutX() + GunPlayer2.getFitWidth() / 2;
-        double gunCenterY = GunPlayer2.getLayoutY() + GunPlayer2.getFitHeight() / 2;
-        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
-
-        // Keeps the gun from rotating beyond a certain threshold
-        if (gunAngle < 100 && gunAngle >= 0){
-            gunAngle = 100;
-        }
-        if (gunAngle > -100 && gunAngle < 0){
-            gunAngle = -100;
-        }
-
-        GunPlayer2.setRotate(gunAngle + 180); // the 180 degrees are added so the gun is looking in the right direction
-    }
-    public void autoRotateAllMenuGuns(MouseEvent eventFromMouse) {
-        autoRotateMenuGun1(eventFromMouse);
-        autoRotateMenuGun2(eventFromMouse);
-        autoRotateMenuGun3(eventFromMouse);
-    }
-    public void autoRotateMenuGun1(MouseEvent eventFromMouse) {
-        double gunCenterX = GunMenu1.getLayoutX() + GunMenu1.getFitWidth() / 2;
-        double gunCenterY = GunMenu1.getLayoutY() + GunMenu1.getFitHeight() / 2;
-        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
-
-        // Keeps the gun from rotating beyond a certain threshold
-        if (gunAngle < 150 && gunAngle >= 0){
-            gunAngle = 150;
-        }
-        if (gunAngle > -120 && gunAngle < 0){
-            gunAngle = -120;
-        }
-
-        GunMenu1.setRotate(gunAngle + 180);
-    }
-    public void autoRotateMenuGun2(MouseEvent eventFromMouse) {
-        double gunCenterX = GunMenu2.getLayoutX() + GunMenu2.getFitWidth() / 2;
-        double gunCenterY = GunMenu2.getLayoutY() + GunMenu2.getFitHeight() / 2;
-        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
-
-        // Keeps the gun from rotating beyond a certain threshold
-        if (gunAngle < 120 && gunAngle >= 0){
-            gunAngle = 120;
-        }
-        if (gunAngle > -150 && gunAngle < 0){
-            gunAngle = -150;
-        }
-
-        GunMenu2.setRotate(gunAngle + 180);
-    }
-    public void autoRotateMenuGun3(MouseEvent eventFromMouse) {
-        double gunCenterX = GunMenu3.getLayoutX() + GunMenu3.getFitWidth() / 2;
-        double gunCenterY = GunMenu3.getLayoutY() + GunMenu3.getFitHeight() / 2;
-        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
-
-        // Keeps the gun from rotating beyond a certain threshold
-        if (gunAngle > 40){
-            gunAngle = 40;
-        }
-        if (gunAngle < -70){
-            gunAngle = -70;
-        }
-
-        GunMenu3.setRotate(gunAngle);
     }
     /***
      * Calculates the angle at which an image has to be rotated so it follows the mouse cursor
