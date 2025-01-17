@@ -108,7 +108,6 @@ public class Ship {
     public void turnShip() {
         if (orientation) {
             orientation = false;
-
         } else {
             orientation = true;
         }
