@@ -5,9 +5,15 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class GameGrid {
     GridPane gridPane;
     GameBoard gameBoard;
+    public List<Image> HitImages = new ArrayList<Image>();
+    public List<Image> MissImages = new ArrayList<Image>();
     //boolean hidden
 
     /**
@@ -18,6 +24,16 @@ public class GameGrid {
         this.gameBoard = player.getGameBoard();
 
         //init the placement grid
+        HitImages.add(new Image(String.valueOf(getClass().getResource("/img/target_hit1.png"))));
+        HitImages.add(new Image(String.valueOf(getClass().getResource("/img/target_hit2.png"))));
+        HitImages.add(new Image(String.valueOf(getClass().getResource("/img/target_hit3.png"))));
+        HitImages.add(new Image(String.valueOf(getClass().getResource("/img/target_hit4.png"))));
+        HitImages.add(new Image(String.valueOf(getClass().getResource("/img/target_hit5.png"))));
+        HitImages.add(new Image(String.valueOf(getClass().getResource("/img/target_hit6.png"))));
+
+        MissImages.add(new Image(String.valueOf(getClass().getResource("/img/target_missed1.png"))));
+        MissImages.add(new Image(String.valueOf(getClass().getResource("/img/target_missed2.png"))));
+        MissImages.add(new Image(String.valueOf(getClass().getResource("/img/target_missed3.png"))));
         //1.Making the Grid interactable via invisible buttons
         int x = 1;
         int y = 1;
@@ -54,8 +70,26 @@ public class GameGrid {
     public void onPress(int x, int y, Player player) {
         Cell cell = player.getGameBoard().getCell(x, y);
 
-        if (!cell.IsHit()) {
+        Random rand = new Random();
+        int randIntTill5 = rand.nextInt(5);
+        int randIntTill2 = rand.nextInt(2);
+
+        if (!cell.IsHit() && Game.returnGame().gameOver == false) {
             cell.setIsHit();
+            if (cell.isOccupied()) {
+                cell.image = new ImageView();
+                cell.image.setImage(HitImages.get(randIntTill5));
+                cell.image.setFitWidth(70);
+                cell.image.setFitHeight(70);
+                gridPane.add(cell.image, x-1, y-1);
+            } else {
+                cell.image = new ImageView();
+                cell.image.setImage(MissImages.get(randIntTill2));
+                cell.image.setFitWidth(70);
+                cell.image.setFitHeight(70);
+                gridPane.add(cell.image, x-1, y-1);
+
+            }
             /*
             Image image = new Image(String.valueOf(getClass().getResource("/img/target_hit1.jpg")));
             ImageView HitImage = new ImageView();
@@ -65,6 +99,8 @@ public class GameGrid {
             gridPane.add(HitImage, x-1, y-1);
             */
             Game.returnGame().HitHappened();
+        } else if(Game.returnGame().gameOver) {
+            System.out.println("Game Over");
         } else {
             System.out.println("Already Hit");
         }
@@ -72,10 +108,6 @@ public class GameGrid {
 
 
         //Test Funktion
-
-        if(cell.isOccupied()) {
-            cell.fxButton.setText("Hit");
-        }
         System.out.println(player.getName());
         player.getGameBoard().outputTextVersion();
         //

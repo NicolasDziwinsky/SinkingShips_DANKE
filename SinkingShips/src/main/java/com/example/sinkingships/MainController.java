@@ -264,8 +264,8 @@ public class MainController {
      */
     public void generatePlayersTest() {
         //Generates Players and adds them to the GameInstance
-        Game.returnGame().setPlayer1(new Player(Name1.getText(), false));
-        Game.returnGame().setPlayer2(new Player(Name1.getText(), false));
+        Game.returnGame().setPlayer1(new Player(Name1.getText(), false, GunPlayer1));
+        Game.returnGame().setPlayer2(new Player(Name1.getText(), false, GunPlayer2));
 
 
         //Output general Player info
@@ -308,8 +308,8 @@ public class MainController {
      * Generates two players and adds them to the Game object
      */
     public void generatePlayers() {
-        Game.returnGame().setPlayer1(new Player(Name1.getText(), false));
-        Game.returnGame().setPlayer2(new Player(Name2.getText(), AiCheckbox.isSelected()));
+        Game.returnGame().setPlayer1(new Player(Name1.getText(), false, GunPlayer1));
+        Game.returnGame().setPlayer2(new Player(Name2.getText(), AiCheckbox.isSelected(), GunPlayer2));
     }
 
     //This block abstracts the scene switching, which is actually handled by the SceneSwitcher

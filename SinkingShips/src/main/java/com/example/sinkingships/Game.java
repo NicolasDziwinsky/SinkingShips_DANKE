@@ -17,6 +17,7 @@ public class Game {
     private Player Player1;
     private Player Player2;
     private int turn = 1;
+    public boolean gameOver = false;
     /**
      *     //used to access the object
      */
@@ -48,20 +49,30 @@ public class Game {
 
 
     public boolean HitHappened() {
-        System.out.println("Hit Happened ");
+        if (!gameOver) {
+            System.out.println("Hit Happened ");
+            System.out.println(turn);
+            if (turn % 2 != 0) {
+                toggleField(Player2, true);
+                toggleField(Player1, false);
+            } else {
+                toggleField(Player1, true);
+                toggleField(Player2, false);
+            }
 
-        System.out.println(turn);
-        if (turn%2 != 0) {
-            toggleField(Player2, true);
-            toggleField(Player1, false);
-            turn +=1;
-        } else {
-            toggleField(Player1, true);
-            toggleField(Player2, false);
-            turn +=1;
+            if (Player1.checkIfLost()) {
+                System.out.println("Player 2 Won");
+                gameOver = true;
+                return true;
+            } else if (Player2.checkIfLost()) {
+                System.out.println("Player 1 Won");
+                gameOver = true;
+                return true;
+            }
+
+            turn += 1;
+            return true;
         }
-
-
         return true;
     }
 

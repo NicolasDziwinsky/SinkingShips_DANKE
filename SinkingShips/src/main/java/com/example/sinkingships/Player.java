@@ -1,4 +1,7 @@
 package com.example.sinkingships;
+
+import javafx.scene.image.ImageView;
+
 /**
  * Currently all cells will be reset
  */
@@ -8,10 +11,12 @@ public class Player {
     private boolean isAI;
     private GameBoard gameBoard;
     public GameGrid gameGrid;
+    public ImageView gun;
 
-    public Player(String name, boolean isAI) {
+    public Player(String name, boolean isAI, ImageView gun) {
         this.name = name;
         this.isAI = isAI;
+        this.gun = gun;
         this.gameBoard = new GameBoard();
     }
 
