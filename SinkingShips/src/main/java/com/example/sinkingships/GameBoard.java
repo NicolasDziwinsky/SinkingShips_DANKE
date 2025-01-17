@@ -165,6 +165,11 @@ public class GameBoard {
         boolean returnMessage = placeShip(placementShips[shipCounter], targetCell);
         if (returnMessage) {
             shipCounter += 1;
+            if (shipCounter > 3) {
+                placementGrid.shipPreview.imageProperty().set(null);
+            }
+            placementGrid.setShipPreview(placementShips[shipCounter].shipImage);
+
         }
         return returnMessage;
     }

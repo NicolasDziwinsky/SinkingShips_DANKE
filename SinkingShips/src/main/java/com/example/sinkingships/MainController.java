@@ -35,6 +35,7 @@ public class MainController {
     @FXML public Slider SoundMusicSlider;
     @FXML public Slider SoundEffectSlider;
     @FXML public Button Back;
+    @FXML public ImageView ShipPreview;
 
     // New Game
     @FXML public TextField Name1;
@@ -337,10 +338,12 @@ public class MainController {
     public void initPlacementGrid(int Player) {
         Game game = Game.returnGame();
         if (Player == 0) {
-            game.getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, game.getPlayer1().getGameBoard());
+            game.getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, game.getPlayer1().getGameBoard(), ShipPreview);
             PlayerNamePlacement.setText(Game.returnGame().getPlayer1().getName());
+            game.getPlayer1().getGameBoard().placementGrid.setShipPreview(game.getPlayer1().getGameBoard().placementShips[0].shipImage);
         } else {
-            game.getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, game.getPlayer2().getGameBoard());
+            game.getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, game.getPlayer2().getGameBoard(), ShipPreview);
+            game.getPlayer2().getGameBoard().placementGrid.setShipPreview(game.getPlayer1().getGameBoard().placementShips[0].shipImage);
             PlayerNamePlacement.setText(Game.returnGame().getPlayer2().getName());
         }
     }
@@ -368,6 +371,12 @@ public class MainController {
         }
         for (Ship ship:Game.returnGame().getPlayer2().getGameBoard().placementShips) {
             ship.turnShip();
+        }
+
+        if (ShipPreview.getRotate() == 90) {
+            ShipPreview.rotateProperty().set(0);
+        } else {
+            ShipPreview.rotateProperty().set(90);
         }
     }
 

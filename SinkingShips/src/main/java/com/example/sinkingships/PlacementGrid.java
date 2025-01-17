@@ -1,6 +1,8 @@
 package com.example.sinkingships;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -9,14 +11,16 @@ import javafx.scene.layout.GridPane;
 public class PlacementGrid {
     GameBoard gameBoard;
     public GridPane gridPane;
+    public ImageView shipPreview;
 
 
     /**
      * Class constructor, also adds a button to every single cell to make them interactable
      */
-    PlacementGrid(GridPane GridPane, GameBoard gameBoard) {
+    PlacementGrid(GridPane GridPane, GameBoard gameBoard, ImageView shipPreview) {
         this.gridPane = GridPane;
         this.gameBoard = gameBoard;
+        this.shipPreview = shipPreview;
 
         //init the placement grid
         //1.Making the Grid interactable via invisible buttons
@@ -63,5 +67,9 @@ public class PlacementGrid {
         for (Cell cell : gameBoard.getCells()) {
             if (cell.image != null) cell.image.imageProperty().set(null);
         }
+    }
+
+    public void setShipPreview(Image image) {
+        shipPreview.setImage(image);
     }
 }
