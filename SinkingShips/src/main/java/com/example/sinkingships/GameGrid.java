@@ -74,7 +74,7 @@ public class GameGrid {
         int randIntTill5 = rand.nextInt(6);
         int randIntTill2 = rand.nextInt(3);
 
-        if (!cell.IsHit() && Game.returnGame().gameOver == false) {
+        if (!cell.IsHit() && Game.gameOver == false) {
             cell.setIsHit();
             if (cell.isOccupied()) {
                 cell.image = new ImageView();
@@ -82,7 +82,7 @@ public class GameGrid {
                 cell.image.setFitWidth(70);
                 cell.image.setFitHeight(70);
                 gridPane.add(cell.image, x-1, y-1);
-                Game.returnGame().HitHappened();
+                Game.HitHappened();
                 return 0;
             } else {
                 cell.image = new ImageView();
@@ -90,11 +90,11 @@ public class GameGrid {
                 cell.image.setFitWidth(70);
                 cell.image.setFitHeight(70);
                 gridPane.add(cell.image, x-1, y-1);
-                Game.returnGame().HitHappened();
+                Game.HitHappened();
                 return 1;
 
             }
-        } else if(Game.returnGame().gameOver) {
+        } else if(Game.gameOver) {
             System.out.println("Game Over");
         } else {
             System.out.println("Already Hit");
@@ -112,7 +112,7 @@ public class GameGrid {
         int randIntTill5 = rand.nextInt(6);
         int randIntTill2 = rand.nextInt(3);
 
-        if (!cell.IsHit() && Game.returnGame().gameOver == false) {
+        if (!cell.IsHit() && Game.gameOver == false) {
             cell.setIsHit();
             if (cell.isOccupied()) {
                 cell.image = new ImageView();
@@ -120,7 +120,7 @@ public class GameGrid {
                 cell.image.setFitWidth(70);
                 cell.image.setFitHeight(70);
                 gridPane.add(cell.image, x-1, y-1);
-                Game.returnGame().HitHappened();
+                Game.HitHappened();
                 return 0;
             } else {
                 cell.image = new ImageView();
@@ -128,11 +128,11 @@ public class GameGrid {
                 cell.image.setFitWidth(70);
                 cell.image.setFitHeight(70);
                 gridPane.add(cell.image, x-1, y-1);
-                Game.returnGame().HitHappened();
+                Game.HitHappened();
                 return 1;
 
             }
-        } else if(Game.returnGame().gameOver) {
+        } else if(Game.gameOver) {
             System.out.println("Game Over");
         } else {
             System.out.println("Already Hit");

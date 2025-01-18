@@ -265,54 +265,54 @@ public class MainController {
      */
     public void generatePlayersTest() {
         //Generates Players and adds them to the GameInstance
-        Game.returnGame().setPlayer1(new Player(Name1.getText(), false, GunPlayer1));
-        Game.returnGame().setPlayer2(new Player(Name1.getText(), false, GunPlayer2));
+        Game.setPlayer1(new Player(Name1.getText(), false, GunPlayer1));
+        Game.setPlayer2(new Player(Name1.getText(), false, GunPlayer2));
 
 
         //Output general Player info
-        System.out.println(Game.returnGame().getPlayer1().playerInfo());
-        System.out.println(Game.returnGame().getPlayer1().playerInfo());
+        System.out.println(Game.getPlayer1().playerInfo());
+        System.out.println(Game.getPlayer1().playerInfo());
 
         //Example how to manipulate the individual nodes of the gameboard
-        Game.returnGame().getPlayer1().getGameBoard().getCell(2, 4).setOccupied();
-        Game.returnGame().getPlayer1().getGameBoard().getCell(2, 5).setOccupied();
-        Game.returnGame().getPlayer1().getGameBoard().getCell(2, 6).setOccupied();
+        Game.getPlayer1().getGameBoard().getCell(2, 4).setOccupied();
+        Game.getPlayer1().getGameBoard().getCell(2, 5).setOccupied();
+        Game.getPlayer1().getGameBoard().getCell(2, 6).setOccupied();
 
-        Game.returnGame().getPlayer1().getGameBoard().getCell(2, 4).setIsHit();
-        Game.returnGame().getPlayer1().getGameBoard().getCell(3, 4).setIsHit();
-        Game.returnGame().getPlayer1().getGameBoard().getCell(4, 4).setIsHit();
+        Game.getPlayer1().getGameBoard().getCell(2, 4).setIsHit();
+        Game.getPlayer1().getGameBoard().getCell(3, 4).setIsHit();
+        Game.getPlayer1().getGameBoard().getCell(4, 4).setIsHit();
 
         //example of placing a ship on the board
         Ship shipHorizontal = new Ship(3, true);
-        Game.returnGame().getPlayer1().getGameBoard().placeShip(shipHorizontal, Game.returnGame().getPlayer1().getGameBoard().getCell(5, 8));
+        Game.getPlayer1().getGameBoard().placeShip(shipHorizontal, Game.getPlayer1().getGameBoard().getCell(5, 8));
 
         Ship shipVertical = new Ship(4, false);
-        Game.returnGame().getPlayer1().getGameBoard().placeShip(shipVertical, Game.returnGame().getPlayer1().getGameBoard().getCell(9, 5));
+        Game.getPlayer1().getGameBoard().placeShip(shipVertical, Game.getPlayer1().getGameBoard().getCell(9, 5));
 
         //example of checking if "shipVertical" is sunk
-        Game.returnGame().getPlayer1().getGameBoard().getCell(9, 5).setIsHit();
-        Game.returnGame().getPlayer1().getGameBoard().getCell(9, 6).setIsHit();
-        Game.returnGame().getPlayer1().getGameBoard().getCell(9, 7).setIsHit();
-        Game.returnGame().getPlayer1().getGameBoard().getCell(9, 8).setIsHit();
+        Game.getPlayer1().getGameBoard().getCell(9, 5).setIsHit();
+        Game.getPlayer1().getGameBoard().getCell(9, 6).setIsHit();
+        Game.getPlayer1().getGameBoard().getCell(9, 7).setIsHit();
+        Game.getPlayer1().getGameBoard().getCell(9, 8).setIsHit();
 
         System.out.println("Is Ship Sunk?: " + shipVertical.checkIfSunk());
 
         //example of checking if Player Lost
         //It only checks ships, not any other occupied cells
-        System.out.println("Player 1 Lost?: " + Game.returnGame().getPlayer1().checkIfLost());
+        System.out.println("Player 1 Lost?: " + Game.getPlayer1().checkIfLost());
 
 
         //Outputs the Gameboard of Player1 in a comprehensible form into the Terminal
-        Game.returnGame().getPlayer1().getGameBoard().outputTextVersion();
+        Game.getPlayer1().getGameBoard().outputTextVersion();
     }
     /**
      * Generates two players and adds them to the Game object
      */
     public void generatePlayers() {
-        Game.returnGame().setPlayer1(new Player(Name1.getText(), AiCheckbox1.isSelected(), GunPlayer1));
-        Game.returnGame().setPlayer2(new Player(Name2.getText(), AiCheckbox2.isSelected(), GunPlayer2));
-        Game.returnGame().aiBrain1 = new AiBrain(Game.returnGame().getPlayer2());
-        Game.returnGame().aiBrain2 = new AiBrain(Game.returnGame().getPlayer1());
+        Game.setPlayer1(new Player(Name1.getText(), AiCheckbox1.isSelected(), GunPlayer1));
+        Game.setPlayer2(new Player(Name2.getText(), AiCheckbox2.isSelected(), GunPlayer2));
+        Game.aiBrain1 = new AiBrain(Game.getPlayer2());
+        Game.aiBrain2 = new AiBrain(Game.getPlayer1());
     }
 
     //This block abstracts the scene switching, which is actually handled by the SceneSwitcher
@@ -339,15 +339,14 @@ public class MainController {
      * //Potential for improvement
      */
     public void initPlacementGrid(int Player) {
-        Game game = Game.returnGame();
         if (Player == 0) {
-            game.getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, game.getPlayer1().getGameBoard(), ShipPreview);
-            PlayerNamePlacement.setText(Game.returnGame().getPlayer1().getName());
-            game.getPlayer1().getGameBoard().placementGrid.setShipPreview(game.getPlayer1().getGameBoard().placementShips[0].shipImage);
+            Game.getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.getPlayer1().getGameBoard(), ShipPreview);
+            PlayerNamePlacement.setText(Game.getPlayer1().getName());
+            Game.getPlayer1().getGameBoard().placementGrid.setShipPreview(Game.getPlayer1().getGameBoard().placementShips[0].shipImage);
         } else {
-            game.getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, game.getPlayer2().getGameBoard(), ShipPreview);
-            game.getPlayer2().getGameBoard().placementGrid.setShipPreview(game.getPlayer1().getGameBoard().placementShips[0].shipImage);
-            PlayerNamePlacement.setText(Game.returnGame().getPlayer2().getName());
+            Game.getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.getPlayer2().getGameBoard(), ShipPreview);
+            Game.getPlayer2().getGameBoard().placementGrid.setShipPreview(Game.getPlayer1().getGameBoard().placementShips[0].shipImage);
+            PlayerNamePlacement.setText(Game.getPlayer2().getName());
         }
     }
     /**
@@ -355,11 +354,10 @@ public class MainController {
      * //Potential for improvement
      */
     public void nextGrid(ActionEvent event) throws IOException {
-        Game game = Game.returnGame();
         if (gridCounter == 0) {
             StartGame.setText("Next Player");
         } else if (gridCounter == 1) {
-            game.getPlayer1().getGameBoard().placementGrid.resetField();
+            Game.getPlayer1().getGameBoard().placementGrid.resetField();
             StartGame.setText("Start Game");
         } else if (gridCounter == 2) {
             switchToGame(event);
@@ -369,10 +367,10 @@ public class MainController {
     }
 
     public void RotateShip() {
-        for (Ship ship:Game.returnGame().getPlayer1().getGameBoard().placementShips) {
+        for (Ship ship:Game.getPlayer1().getGameBoard().placementShips) {
             ship.turnShip();
         }
-        for (Ship ship:Game.returnGame().getPlayer2().getGameBoard().placementShips) {
+        for (Ship ship:Game.getPlayer2().getGameBoard().placementShips) {
             ship.turnShip();
         }
 
@@ -389,10 +387,10 @@ public class MainController {
      * Initializes both gamefields
      */
     public void StartGame() {
-        Game game = Game.returnGame();
-        game.getPlayer1().gameGrid = new GameGrid(Map1, game.getPlayer1());
-        game.getPlayer2().gameGrid = new GameGrid(Map2, game.getPlayer2());
-        game.HitHappened();
+
+        Game.getPlayer1().gameGrid = new GameGrid(Map1, Game.getPlayer1());
+        Game.getPlayer2().gameGrid = new GameGrid(Map2, Game.getPlayer2());
+        Game.HitHappened();
     }
 
 

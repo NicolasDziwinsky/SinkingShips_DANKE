@@ -11,49 +11,43 @@ import java.util.Random;
  */
 public class Game {
 
-    private static final Game game = new Game();
 
-
-    private Player Player1;
-    private Player Player2;
-    public AiBrain aiBrain1;
-    public AiBrain aiBrain2;
-    private int turn = 1;
-    public boolean gameOver = false;
-    private Cell lastCellHit;
-    private ArrayList<Cell> cellsHit = new ArrayList<Cell>();
-    public Random rand = new Random();
+    static private Player Player1;
+    static private Player Player2;
+    static public AiBrain aiBrain1;
+    static public AiBrain aiBrain2;
+    static private int turn = 1;
+    static public boolean gameOver = false;
+    static private Cell lastCellHit;
+    static private ArrayList<Cell> cellsHit = new ArrayList<Cell>();
+    static public Random rand = new Random();
     /**
      *     //used to access the object
      */
-    public static Game returnGame() {
-        return game;  
-    }
 
-    public Player getPlayer1() {
+    static public Player getPlayer1() {
         return Player1;
     }
 
-    public Player getPlayer2() {
+    static public Player getPlayer2() {
         return Player2;
     }
 
-    public void setPlayer1(Player player) {
+    static public void setPlayer1(Player player) {
         Player1 = player;
     }
 
-    public void setPlayer2(Player player) {
+    static public void setPlayer2(Player player) {
         Player2 = player;
     }
 
-    public int getTurn(){
-        return this.turn;
+    static public int getTurn(){
+        return turn;
     }
 
 
 
-
-    public boolean HitHappened() {
+    static public boolean HitHappened() {
         //0 = occupied
         //1 = nicht occupied aber valid
         //2 = nicht valid
@@ -128,7 +122,7 @@ public class Game {
         return true;
     }
 
-    public void showShips(Player player, boolean shown){
+    static public void showShips(Player player, boolean shown){
         GameBoard gameBoard = player.getGameBoard();
 
         for(Ship ship:gameBoard.ShipList){
@@ -144,7 +138,7 @@ public class Game {
 
     }
 
-    public void toggleField(Player player, boolean activate){
+    static public void toggleField(Player player, boolean activate){
         GameBoard gameBoard = player.getGameBoard();
 
         for(Cell cell:gameBoard.getCells()){
@@ -156,14 +150,14 @@ public class Game {
         }
     }
 
-    public Object[] randomCell(Object[] cells) {
+    static public Object[] randomCell(Object[] cells) {
         int maxValue = cells.length;
         int value = rand.nextInt(maxValue);
         Object[] returnObjects = new Object[]{cells[value], value};
         return returnObjects;
     }
 
-    public Player checkWinningPlayer() {
+    static public Player checkWinningPlayer() {
         if (Player1.checkIfLost()) {
             System.out.println("Player 2 Won");
             gameOver = true;
