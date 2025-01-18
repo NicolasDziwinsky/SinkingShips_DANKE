@@ -16,6 +16,8 @@ public class Game {
 
     private Player Player1;
     private Player Player2;
+    public AiBrain aiBrain1;
+    public AiBrain aiBrain2;
     private int turn = 1;
     public boolean gameOver = false;
     private Cell lastCellHit;
@@ -56,100 +58,74 @@ public class Game {
         //1 = nicht occupied aber valid
         //2 = nicht valid
 
+            //Player vs Ai
+        if(Player2.isAI() && !Player1.isAI() && !gameOver){
+            System.out.println(turn);
 
-        if(Player2.isAI() && !Player1.isAI()){
-            if (!gameOver) {
-                System.out.println("Hit Happened ");
-                System.out.println(turn);
-                if (turn % 2 != 0) {
-                    turn += 1;
-                    //Player 1 turn
-                    toggleField(Player2, true);
-                    toggleField(Player1, false);
-
-
-                } else{
-                    turn += 1;
-                    //Player 2 turn
-                    Cell[] cells = getPlayer1().getGameBoard().getCells();
-
-
-                    if (cellsHit.isEmpty()) {
-                        cellsHit.addAll(Arrays.asList(cells));
-                    }
-
-                    Object randResult[] = randomCell(cellsHit.toArray(new Cell[cellsHit.size()]));
-
-                    Cell randCell = (Cell) randResult[0];
-                    int randInt = (int) randResult[1];
-
-                    if(getPlayer1().gameGrid.onPress(randCell, getPlayer1()) == 0){
-                        cellsHit.remove(cellsHit.get(randInt));
-                        System.out.println("Hit");
-                    }else {
-                        cellsHit.remove(cellsHit.get(randInt));
-                        System.out.println("No Hit");
-                    }
-
-                }
-
-                if (Player1.checkIfLost()) {
-                    System.out.println("Player 2 Won");
-                    gameOver = true;
-                    return true;
-                } else if (Player2.checkIfLost()) {
-                    System.out.println("Player 1 Won");
-                    gameOver = true;
-                    return true;
-                }
-
-                getPlayer1().getGameBoard().outputTextVersion();
-                getPlayer2().getGameBoard().outputTextVersion();
-                //turn += 1;
-                return true;
-            }
-
-        }else if(Player1.isAI() && Player2.isAI()){
-
-        }else {
-            if (!gameOver) {
-                System.out.println("Hit Happened ");
-                System.out.println(turn);
-                if (turn % 2 != 0) {
-                    toggleField(Player2, true);
-                    toggleField(Player1, false);
-                } else {
-                    toggleField(Player1, true);
-                    toggleField(Player2, false);
-                }
-
-                if (Player1.checkIfLost()) {
-                    System.out.println("Player 2 Won");
-                    gameOver = true;
-                    return true;
-                } else if (Player2.checkIfLost()) {
-                    System.out.println("Player 1 Won");
-                    gameOver = true;
-                    return true;
-                }
-
+            if (turn % 2 != 0) {
                 turn += 1;
-                return true;
+                //Player 1 turn
+                toggleField(Player2, true);
+                toggleField(Player1, false);
+
+            } else {
+                turn += 1;
+                //Player 2 turn
+                aiBrain2.hitCell();
             }
+
+            if (checkWinningPlayer() == Player1) {
+                System.out.println("Player1 Won");
+            } else if (checkWinningPlayer() == Player2) {
+                System.out.println("Player2 Won");
+            }
+            return true;
+
+            //Ai vs Ai
+        }else if(Player1.isAI() && Player2.isAI() && !gameOver){
+            System.out.println(turn);
+
+            if (turn % 2 != 0) {
+                turn += 1;
+                //Player 1 turn
+                aiBrain1.hitCell();
+
+            } else {
+                turn += 1;
+                //Player 2 turn
+                aiBrain2.hitCell();
+            }
+
+            if (checkWinningPlayer() == Player1) {
+                System.out.println("Player1 Won");
+            } else if (checkWinningPlayer() == Player2) {
+                System.out.println("Player2 Won");
+            }
+            return true;
+
+            //Player vs Player
+        }else if (!gameOver) {
+
+            System.out.println("Hit Happened ");
+            System.out.println(turn);
+            if (turn % 2 != 0) {
+                toggleField(Player2, true);
+                toggleField(Player1, false);
+            } else {
+                toggleField(Player1, true);
+                toggleField(Player2, false);
+            }
+
+            if (checkWinningPlayer() == Player1) {
+                System.out.println("Player1 Won");
+            } else if (checkWinningPlayer() == Player2) {
+                System.out.println("Player2 Won");
+            }
+
+            turn += 1;
+            return true;
         }
-
         return true;
-    }
-
-    //funktion
-    //rand x
-    //rand y
-
-
-    public int getCoordinate(int maxValue){
-        Random rand = new Random();
-
-        return rand.nextInt(maxValue);
     }
 
     public void showShips(Player player, boolean shown){
@@ -187,8 +163,18 @@ public class Game {
         return returnObjects;
     }
 
-
-    //game.getplayerx.getgameboard.getcell(x,y).fxbutton.setopacity()
+    public Player checkWinningPlayer() {
+        if (Player1.checkIfLost()) {
+            System.out.println("Player 2 Won");
+            gameOver = true;
+            return Player2;
+        } else if (Player2.checkIfLost()) {
+            System.out.println("Player 1 Won");
+            gameOver = true;
+            return Player1;
+        }
+        return null;
+    }
 
 
 }

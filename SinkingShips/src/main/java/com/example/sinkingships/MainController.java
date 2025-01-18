@@ -40,7 +40,8 @@ public class MainController {
     // New Game
     @FXML public TextField Name1;
     @FXML public TextField Name2;
-    @FXML public CheckBox AiCheckbox;
+    @FXML public CheckBox AiCheckbox1;
+    @FXML public CheckBox AiCheckbox2;
 
     // Main Menu
     @FXML public Button NewGame;
@@ -308,8 +309,10 @@ public class MainController {
      * Generates two players and adds them to the Game object
      */
     public void generatePlayers() {
-        Game.returnGame().setPlayer1(new Player(Name1.getText(), false, GunPlayer1));
-        Game.returnGame().setPlayer2(new Player(Name2.getText(), AiCheckbox.isSelected(), GunPlayer2));
+        Game.returnGame().setPlayer1(new Player(Name1.getText(), AiCheckbox1.isSelected(), GunPlayer1));
+        Game.returnGame().setPlayer2(new Player(Name2.getText(), AiCheckbox2.isSelected(), GunPlayer2));
+        Game.returnGame().aiBrain1 = new AiBrain(Game.returnGame().getPlayer2());
+        Game.returnGame().aiBrain2 = new AiBrain(Game.returnGame().getPlayer1());
     }
 
     //This block abstracts the scene switching, which is actually handled by the SceneSwitcher

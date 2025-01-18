@@ -5,83 +5,75 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.image.Image?>
 
-<AnchorPane fx:id="RootPane" stylesheets="@../../../style.css"
-            minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.sinkingships.MainController">
+<AnchorPane fx:id="RootPane" minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
 
-   <ImageView styleClass="decorations" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="450.0" fitHeight="300.0" fitWidth="300.0"
-              pickOnBounds="true" preserveRatio="true">
-      <Image url="@../../../img/deco/deco_tictactoe.png" backgroundLoading="true"/>
+   <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="decorations" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="450.0">
+      <Image backgroundLoading="true" url="@../../../img/deco/deco_tictactoe.png" />
    </ImageView>
-   <ImageView styleClass="decorations" AnchorPane.topAnchor="300.0" AnchorPane.leftAnchor="20.0" fitHeight="200.0" fitWidth="200.0"
-              pickOnBounds="true" preserveRatio="true">
-      <Image url="@../../../img/deco/deco_smile.png" backgroundLoading="true"/>
+   <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="decorations" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="300.0">
+      <Image backgroundLoading="true" url="@../../../img/deco/deco_smile.png" />
    </ImageView>
-   <ImageView styleClass="decorations" AnchorPane.topAnchor="50.0" AnchorPane.rightAnchor="600.0" fitHeight="200.0" fitWidth="200.0"
-              pickOnBounds="true" preserveRatio="true">
-      <Image url="@../../../img/deco/deco_birds.png" backgroundLoading="true"/>
+   <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="decorations" AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="50.0">
+      <Image backgroundLoading="true" url="@../../../img/deco/deco_birds.png" />
    </ImageView>
-   <ImageView styleClass="decorations" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="100.0" fitHeight="200.0" fitWidth="200.0"
-              pickOnBounds="true" preserveRatio="true">
-      <Image url="@../../../img/deco/deco_ra.png" backgroundLoading="true"/>
+   <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="decorations" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="100.0">
+      <Image backgroundLoading="true" url="@../../../img/deco/deco_ra.png" />
    </ImageView>
 
-   <VBox AnchorPane.topAnchor="8.0" AnchorPane.leftAnchor="24.0" spacing="20.0">
-      <Button fx:id="Back" styleClass="backButton" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" onAction="#switchToMainMenu" text="&lt; Back"/>
+   <VBox spacing="20.0" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="8.0">
+      <Button fx:id="Back" mnemonicParsing="false" onAction="#switchToMainMenu" onMouseEntered="#handleMouseEntered" styleClass="backButton" text="&lt; Back" />
    </VBox>
 
    <VBox AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0">
       <HBox styleClass="soundSettings">
-         <Label text="Music"/>
-         <Button fx:id="SoundMusicReset" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider fx:id="SoundMusicSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0"/>
+         <Label text="Music" />
+         <Button fx:id="SoundMusicReset" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" />
+         <Slider fx:id="SoundMusicSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0" />
       </HBox>
       <HBox styleClass="soundSettings">
-         <Label text="Sounds"/>
-         <Button fx:id="SoundEffectReset" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0"/>
+         <Label text="Sounds" />
+         <Button fx:id="SoundEffectReset" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" />
+         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0" />
       </HBox>
    </VBox>
 
    <VBox AnchorPane.leftAnchor="256.0" AnchorPane.topAnchor="160.0">
       <HBox>
-         <Button fx:id="Image1Back" onMouseEntered="#handleMouseEntered" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
+         <Button fx:id="Image1Back" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" prefHeight="200.0" prefWidth="100.0" />
          <ImageView fx:id="Image1" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../img/canon/canon_3_paper_square.png"/>
+            <Image url="@../../../img/canon/canon_3_paper_square.png" />
          </ImageView>
-         <Button fx:id="Image1Forward" onMouseEntered="#handleMouseEntered" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
+         <Button fx:id="Image1Forward" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" prefHeight="200.0" prefWidth="100.0" />
       </HBox>
-      <VBox spacing="8.0" alignment="CENTER">
-         <Label styleClass="standardText" text="Player 1"/>
-         <TextField styleClass="standardTextInput" fx:id="Name1" promptText="[name]" prefHeight="150.0" prefWidth="400.0"/>
+      <VBox alignment="CENTER" spacing="8.0">
+         <Label styleClass="standardText" text="Player 1" />
+         <TextField fx:id="Name1" prefHeight="150.0" prefWidth="400.0" promptText="[name]" styleClass="standardTextInput" />
+         <CheckBox fx:id="AiCheckbox1" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" styleClass="standardCheckbox" text="AI Player" />
       </VBox>
    </VBox>
    <VBox AnchorPane.rightAnchor="256.0" AnchorPane.topAnchor="160.0">
       <HBox>
-         <Button fx:id="Image2Back" onMouseEntered="#handleMouseEntered" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
+         <Button fx:id="Image2Back" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" prefHeight="200.0" prefWidth="100.0" />
          <ImageView fx:id="Image2" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../../img/canon/canon_2_flip_paper_square.png"/>
+            <Image url="@../../../img/canon/canon_2_flip_paper_square.png" />
          </ImageView>
-         <Button fx:id="Image2Forward" onMouseEntered="#handleMouseEntered" mnemonicParsing="false" prefHeight="200.0" prefWidth="100.0"/>
+         <Button fx:id="Image2Forward" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" prefHeight="200.0" prefWidth="100.0" />
       </HBox>
-      <VBox spacing="8.0" alignment="CENTER">
-         <Label styleClass="standardText" text="Player 2"/>
-         <TextField styleClass="standardTextInput" fx:id="Name2" promptText="[name]" prefHeight="150.0" prefWidth="400.0"/>
-         <CheckBox fx:id="AiCheckbox" styleClass="standardCheckbox" onMouseEntered="#handleMouseEntered" mnemonicParsing="false" text="AI Player"/>
+      <VBox alignment="CENTER" spacing="8.0">
+         <Label styleClass="standardText" text="Player 2" />
+         <TextField fx:id="Name2" prefHeight="150.0" prefWidth="400.0" promptText="[name]" styleClass="standardTextInput" />
+         <CheckBox fx:id="AiCheckbox2" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" styleClass="standardCheckbox" text="AI Player" />
       </VBox>
    </VBox>
 
-   <VBox alignment="BOTTOM_RIGHT" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="64.0" spacing="8.0">
-      <Button fx:id="StartShortGame" styleClass="mainMenuButton" onMouseEntered="#handleMouseEntered" mnemonicParsing="false" onAction="#switchToShipPlacement"
-              text="Start Short Game"/>
-      <Button fx:id="StartLongGame" styleClass="mainMenuButton" onMouseEntered="#handleMouseEntered" mnemonicParsing="false" onAction="#generatePlayersTest"
-              text="Start Long Game"/>
+   <VBox alignment="BOTTOM_RIGHT" spacing="8.0" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="64.0">
+      <Button fx:id="StartShortGame" mnemonicParsing="false" onAction="#switchToShipPlacement" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="Start Short Game" />
+      <Button fx:id="StartLongGame" mnemonicParsing="false" onAction="#generatePlayersTest" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="Start Long Game" />
    </VBox>
 </AnchorPane>
