@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * //Singleton
@@ -21,6 +22,7 @@ public class Game {
     static private Cell lastCellHit;
     static private ArrayList<Cell> cellsHit = new ArrayList<Cell>();
     static public Random rand = new Random();
+    static boolean placedRandom = false;
     /**
      *     //used to access the object
      */
@@ -68,32 +70,25 @@ public class Game {
                 aiBrain2.hitCell();
             }
 
-            if (checkWinningPlayer() == Player1) {
-                System.out.println("Player1 Won");
-            } else if (checkWinningPlayer() == Player2) {
-                System.out.println("Player2 Won");
-            }
             return true;
 
             //Ai vs Ai
         }else if(Player1.isAI() && Player2.isAI() && !gameOver){
             System.out.println(turn);
+            System.out.println("Checking if won");
+            checkWinningPlayer();
 
             if (turn % 2 != 0) {
                 turn += 1;
                 //Player 1 turn
+
                 aiBrain1.hitCell();
 
             } else {
                 turn += 1;
                 //Player 2 turn
-                aiBrain2.hitCell();
-            }
 
-            if (checkWinningPlayer() == Player1) {
-                System.out.println("Player1 Won");
-            } else if (checkWinningPlayer() == Player2) {
-                System.out.println("Player2 Won");
+                aiBrain2.hitCell();
             }
             return true;
 
@@ -110,11 +105,6 @@ public class Game {
                 toggleField(Player2, false);
             }
 
-            if (checkWinningPlayer() == Player1) {
-                System.out.println("Player1 Won");
-            } else if (checkWinningPlayer() == Player2) {
-                System.out.println("Player2 Won");
-            }
 
             turn += 1;
             return true;
@@ -157,17 +147,14 @@ public class Game {
         return returnObjects;
     }
 
-    static public Player checkWinningPlayer() {
+    static public void checkWinningPlayer() {
         if (Player1.checkIfLost()) {
             System.out.println("Player 2 Won");
             gameOver = true;
-            return Player2;
         } else if (Player2.checkIfLost()) {
             System.out.println("Player 1 Won");
             gameOver = true;
-            return Player1;
         }
-        return null;
     }
 
 
