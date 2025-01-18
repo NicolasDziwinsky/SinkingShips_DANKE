@@ -50,7 +50,7 @@ public class SceneSwitcher {
         scene.setOnKeyPressed(event2 -> {
             if (event2.getCode() == KeyCode.F) {
                 System.out.println("Enter key was pressed in the scene!");
-                Game.returnGame().HitHappened();
+                Game.HitHappened();
             }
         });
 
