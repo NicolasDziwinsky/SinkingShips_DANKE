@@ -1,22 +1,18 @@
 @font-face {
     font-family: "Rubik Regular";
     src: url("fonts/Rubik-Regular.ttf");
-    -fx-font-style: normal;
 }
 @font-face {
     font-family: "Rubik Medium";
     src: url("fonts/Rubik-Medium.ttf");
-    -fx-font-style: normal;
 }
 @font-face {
     font-family: "Rubik Bold";
     src: url("fonts/Rubik-Bold.ttf");
-    -fx-font-style: normal;
 }
 @font-face {
     font-family: "Rubik Black";
     src: url("fonts/Rubik-Black.ttf");
-    -fx-font-style: normal;
 }
 
 .root {
