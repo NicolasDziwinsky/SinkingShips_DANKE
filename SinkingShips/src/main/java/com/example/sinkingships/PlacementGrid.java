@@ -57,6 +57,7 @@ public class PlacementGrid {
      * The code to be run when a cell is pressed, in this case the cell will be marked as occupied
      */
     public void onPress(int x, int y) {
+        Game.placedRandom = true;
         gameBoard.placeNextShip(gameBoard.getCell(x, y));
         gameBoard.outputTextVersion();
     }

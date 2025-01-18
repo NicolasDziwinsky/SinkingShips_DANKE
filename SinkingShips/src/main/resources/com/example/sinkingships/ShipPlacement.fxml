@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="RootPane" minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
 
@@ -66,4 +67,9 @@
     <Button fx:id="RotateButton" mnemonicParsing="false" onAction="#RotateShip" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="Rotate Ship" AnchorPane.bottomAnchor="128.0" AnchorPane.rightAnchor="24.0" />
    <ImageView fx:id="ShipPreview" fitHeight="258.0" fitWidth="274.0" layoutX="907.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" />
    <Label fx:id="PlayerNamePlacement" layoutX="466.0" layoutY="21.0" prefHeight="33.0" prefWidth="296.0" />
+   <Button fx:id="RandomPlacement" layoutX="857.0" layoutY="529.0" mnemonicParsing="false" onAction="#PlaceRandom" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="Place Randomly">
+      <font>
+         <Font size="11.0" />
+      </font>
+   </Button>
 </AnchorPane>

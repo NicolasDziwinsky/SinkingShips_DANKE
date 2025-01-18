@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameBoard {
     //contains all Cells of the Grid
@@ -54,7 +55,7 @@ public class GameBoard {
             int counter = 1;
 
             while (counter < 11) {
-                Line += "|"+getCell(counter, y).getStatusSymbol()+"|";
+                Line += "|" + getCell(counter, y).getStatusSymbol() + "|";
                 counter++;
             }
 
@@ -91,11 +92,11 @@ public class GameBoard {
 
     /**
      * //place Ship object at target Cell, direction is defined in Ship Object
-     *         //return true is placement was successful, false if placement would not work (out of bounds, another ship in the way)
-     *
-     *         //If placement was successful, add all nodes that the ship would occupy, and add them to the ships node list
-     *         //Horizontal: Left to right
-     *         //Vertical: Top to Bottom
+     * //return true is placement was successful, false if placement would not work (out of bounds, another ship in the way)
+     * <p>
+     * //If placement was successful, add all nodes that the ship would occupy, and add them to the ships node list
+     * //Horizontal: Left to right
+     * //Vertical: Top to Bottom
      */
     public boolean placeShip(Ship ship, Cell targetCell) {
 
@@ -107,7 +108,7 @@ public class GameBoard {
         while (i < ship.getLength()) {
             //Horizontal
             if (ship.getOrrientation() == true) {
-                if (getCell(X, Y) == null || getCell(X,Y).isOccupied()) {
+                if (getCell(X, Y) == null || getCell(X, Y).isOccupied()) {
                     return false;
                 }
                 X++;
@@ -115,7 +116,7 @@ public class GameBoard {
             //Vertical
             if (ship.getOrrientation() == false) {
 
-                if (getCell(X, Y) == null || getCell(X,Y).isOccupied()) {
+                if (getCell(X, Y) == null || getCell(X, Y).isOccupied()) {
                     return false;
                 }
                 Y++;
@@ -134,7 +135,7 @@ public class GameBoard {
                 getCell(X, Y).image.setImage(ship.shipImageParts.get(i));
                 getCell(X, Y).image.setFitHeight(80);
                 getCell(X, Y).image.setFitWidth(80);
-                placementGrid.gridPane.add(getCell(X, Y).image, X-1, Y-1);
+                placementGrid.gridPane.add(getCell(X, Y).image, X - 1, Y - 1);
                 ship.coordinates.add(getCell(X, Y));
                 X++;
             }
@@ -145,7 +146,7 @@ public class GameBoard {
                 getCell(X, Y).image.setFitHeight(80);
                 getCell(X, Y).image.setFitWidth(80);
                 getCell(X, Y).image.rotateProperty().set(90);
-                placementGrid.gridPane.add(getCell(X, Y).image, X-1, Y-1);
+                placementGrid.gridPane.add(getCell(X, Y).image, X - 1, Y - 1);
                 ship.coordinates.add(getCell(X, Y));
                 Y++;
             }
@@ -169,13 +170,34 @@ public class GameBoard {
                 placementGrid.shipPreview.imageProperty().set(null);
             }
             placementGrid.setShipPreview(placementShips[shipCounter].shipImage);
-
         }
         return returnMessage;
     }
 
+    public void placeShipsRandomly() {
+        Random rand = new Random();
+        shipCounter = 4;
+        placementGrid.shipPreview.imageProperty().set(null);
+        for (Ship ship : placementShips) {
+            boolean positionSet = false;
+            while (!positionSet) {
+                int X = rand.nextInt(1, 11);
+                int Y = rand.nextInt(1, 11);
+                int Z = rand.nextInt(2);
+                if (Z == 1) {
+                    for (Ship turnShip : placementShips) {
+                        turnShip.turnShip();
+                    }
+                }
+
+                if (placeShip(ship, getCell(X, Y))) {
+                    positionSet = true;
+                }
+                ;
+
+            }
+        }
 
 
-
-
+    }
 }

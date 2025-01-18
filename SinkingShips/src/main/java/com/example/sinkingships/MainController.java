@@ -3,6 +3,7 @@ package com.example.sinkingships;
 import java.io.IOException;
 import java.util.Random;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ public class MainController {
     @FXML public GridPane ContainerGrid;
     @FXML public Label PlayerNamePlacement;
     @FXML public Button StartGame;
+    @FXML public Button RandomPlacement;
     @FXML public GridPane Map1;
     @FXML public GridPane Map2;
     @FXML public ImageView GunPlayer1;
@@ -54,6 +56,7 @@ public class MainController {
     public boolean canonIsHovered;
 
     public int gridCounter = 0;
+    public Player currentPlayer;
     public SceneSwitcher SceneSwitcher = new SceneSwitcher();
 
     // Everything in this block is to try out stuff with the moving canons and playing sounds
@@ -311,8 +314,8 @@ public class MainController {
     public void generatePlayers() {
         Game.setPlayer1(new Player(Name1.getText(), AiCheckbox1.isSelected(), GunPlayer1));
         Game.setPlayer2(new Player(Name2.getText(), AiCheckbox2.isSelected(), GunPlayer2));
-        Game.aiBrain1 = new AiBrain(Game.getPlayer2());
-        Game.aiBrain2 = new AiBrain(Game.getPlayer1());
+        Game.aiBrain1 = new AiBrain(Game.getPlayer2(), Game.getPlayer1());
+        Game.aiBrain2 = new AiBrain(Game.getPlayer1(), Game.getPlayer2());
     }
 
     //This block abstracts the scene switching, which is actually handled by the SceneSwitcher
@@ -355,16 +358,34 @@ public class MainController {
      */
     public void nextGrid(ActionEvent event) throws IOException {
         if (gridCounter == 0) {
+            currentPlayer = Game.getPlayer1();
             StartGame.setText("Next Player");
         } else if (gridCounter == 1) {
+            Game.placedRandom = false;
             Game.getPlayer1().getGameBoard().placementGrid.resetField();
+            currentPlayer = Game.getPlayer2();
             StartGame.setText("Start Game");
+            RandomPlacement.setOpacity(1);
         } else if (gridCounter == 2) {
             switchToGame(event);
         }
         initPlacementGrid(gridCounter);
         gridCounter++;
     }
+
+    public void PlaceRandom()throws IOException {
+        if (!Game.placedRandom) {
+            currentPlayer.getGameBoard().placeShipsRandomly();
+            RandomPlacement.setOpacity(0.6);
+            Game.placedRandom = true;
+        }
+        if (currentPlayer.isAI()){
+
+        }
+
+    }
+
+
 
     public void RotateShip() {
         for (Ship ship:Game.getPlayer1().getGameBoard().placementShips) {
