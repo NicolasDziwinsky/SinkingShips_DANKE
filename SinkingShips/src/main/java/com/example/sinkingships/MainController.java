@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 //all major logic should happen here, because in here all created objects can interact with one another
@@ -39,6 +40,7 @@ public class MainController {
     @FXML public Slider SoundEffectSlider;
     @FXML public Button Back;
     @FXML public ImageView ShipPreview;
+    @FXML public StackPane WinningScreen;
 
     // New Game
     @FXML public TextField Name1;
@@ -719,6 +721,7 @@ public class MainController {
     public void StartGame() {
         Game.getPlayer1().gameGrid = new GameGrid(Map1, Game.getPlayer1(), this);
         Game.getPlayer2().gameGrid = new GameGrid(Map2, Game.getPlayer2(), this);
+        Game.winningScreen = WinningScreen;
         Game.HitHappened();
     }
 }

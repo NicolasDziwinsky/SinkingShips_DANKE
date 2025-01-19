@@ -1,5 +1,9 @@
 package com.example.sinkingships;
 
+import javafx.concurrent.Task;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,6 +16,7 @@ public class Game {
     static private Player Player2;
     static public AiBrain aiBrain1;
     static public AiBrain aiBrain2;
+    static public StackPane winningScreen;
 
     // Standardizes the cell Size, so it can be applied from anywhere
     static public int cellSize = 70;
@@ -93,6 +98,7 @@ public class Game {
 
             //Player vs Player
         }else if (!gameOver) {
+            checkWinningPlayer();
 
             System.out.println("Hit Happened ");
             System.out.println(turn);
@@ -151,11 +157,29 @@ public class Game {
         if (Player1.checkIfLost()) {
             System.out.println("Player 2 Won");
             gameOver = true;
+            winningScreen.visibleProperty().set(true);
+            //show end screen
         } else if (Player2.checkIfLost()) {
             System.out.println("Player 1 Won");
             gameOver = true;
+            winningScreen.visibleProperty().set(true);
+            //show end screen
         }
     }
 
+    public static void delay(long millis, Runnable continuation) {
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try { Thread.sleep(millis); }
+                catch (InterruptedException e) { }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(event -> continuation.run());
+        new Thread(sleeper).start();
+    }
+
+    //shows screen(Player)
 
 }
