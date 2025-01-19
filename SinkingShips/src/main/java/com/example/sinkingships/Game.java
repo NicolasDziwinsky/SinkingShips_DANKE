@@ -73,7 +73,7 @@ public class Game {
                 turn += 1;
                 //Player 2 turn
                 System.out.println("Player 2 Turn");
-                aiBrain2.hitCell(false);
+                aiBrain2.hitCell(true);
             }
 
             return true;

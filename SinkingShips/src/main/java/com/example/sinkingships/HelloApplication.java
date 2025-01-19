@@ -37,6 +37,7 @@ public class HelloApplication extends Application {
                 System.out.println("Enter key was pressed in the scene!");
             }
         });
+
         System.out.println(stage.getHeight() + " " + stage.getWidth());
 
         // Set up listeners for screen size changes

@@ -114,10 +114,4 @@ public class AiBrain {
         return returnObjects;
     }
 
-    public void placeShip() {
-        Object[] returnObjects = randomCell(correspondingPlayer.getGameBoard().getCells());
-        Cell randCell = (Cell) returnObjects[0];
-        correspondingPlayer.getGameBoard().placeNextShip(randCell);
-    }
-
 }

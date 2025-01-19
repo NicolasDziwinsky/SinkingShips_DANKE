@@ -66,6 +66,7 @@ public class SceneSwitcher {
 
         // Plays random 'Ran an's gekrizel' soundbyte
         soundboardForIntros.playCueGo();
+
     }
 
     public static void setUpNewScene(){

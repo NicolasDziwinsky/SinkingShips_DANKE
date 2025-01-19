@@ -729,5 +729,6 @@ public class MainController {
         Game.getPlayer2().gameGrid = new GameGrid(Map2, Game.getPlayer2(), this);
         Game.winningScreen = WinningScreen;
         Game.HitHappened();
+        StartGame.disableProperty().set(true);
     }
 }
