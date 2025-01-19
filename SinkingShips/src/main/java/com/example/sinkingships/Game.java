@@ -56,7 +56,7 @@ public class Game {
             //Player vs Ai
         if(Player2.isAI() && !Player1.isAI() && !gameOver){
             System.out.println(turn);
-
+            checkWinningPlayer();
             if (turn % 2 != 0) {
                 turn += 1;
                 //Player 1 turn
@@ -96,6 +96,7 @@ public class Game {
 
             System.out.println("Hit Happened ");
             System.out.println(turn);
+            checkWinningPlayer();
             if (turn % 2 != 0) {
                 toggleField(Player2, true);
                 toggleField(Player1, false);
