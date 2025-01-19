@@ -129,25 +129,21 @@ public class GameBoard {
 
         i = 0;
         while (i < ship.getLength()) {
-            //Horizontal
-            if (ship.getOrrientation() == true) {
-                getCell(X, Y).image = new ImageView();
-                getCell(X, Y).image.setImage(ship.shipImageParts.get(i));
-                getCell(X, Y).image.setFitHeight(80);
-                getCell(X, Y).image.setFitWidth(80);
-                placementGrid.gridPane.add(getCell(X, Y).image, X - 1, Y - 1);
-                ship.coordinates.add(getCell(X, Y));
+            getCell(X, Y).image = new ImageView();
+            getCell(X, Y).image.setImage(ship.shipImageParts.get(i));
+            placementGrid.gridPane.add(getCell(X, Y).image, X - 1, Y - 1);
+
+            // Makes the image resize together with the GridPane
+            getCell(X, Y).image.fitWidthProperty().bind(placementGrid.gridPane.widthProperty().multiply(0.1));
+            getCell(X, Y).image.fitHeightProperty().bind(placementGrid.gridPane.heightProperty().multiply(0.1));
+
+            ship.coordinates.add(getCell(X, Y));
+
+            // Horizontal
+            if (ship.getOrrientation()) {
                 X++;
-            }
-            //Vertical
-            if (ship.getOrrientation() == false) {
-                getCell(X, Y).image = new ImageView();
-                getCell(X, Y).image.setImage(ship.shipImageParts.get(i));
-                getCell(X, Y).image.setFitHeight(80);
-                getCell(X, Y).image.setFitWidth(80);
+            } else { // Vertical
                 getCell(X, Y).image.rotateProperty().set(90);
-                placementGrid.gridPane.add(getCell(X, Y).image, X - 1, Y - 1);
-                ship.coordinates.add(getCell(X, Y));
                 Y++;
             }
             i++;

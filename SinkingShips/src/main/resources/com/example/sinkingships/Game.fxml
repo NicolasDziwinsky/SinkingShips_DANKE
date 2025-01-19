@@ -16,26 +16,20 @@
 <AnchorPane fx:id="RootPane" stylesheets="@../../../style.css"
             minHeight="800.0" minWidth="800.0" prefHeight="1080.0" prefWidth="1920.0"
             onMouseClicked="#handleMouseClicked" onMouseMoved="#handleMouseMoved"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.sinkingships.MainController">
 
    <VBox AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0">
       <HBox styleClass="soundSettings">
-         <Label text="Music"/>
-         <Button fx:id="SoundMusicReset" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider fx:id="SoundMusicSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0"/>
-      </HBox>
-      <HBox styleClass="soundSettings">
-         <Label text="Sounds"/>
-         <Button fx:id="SoundEffectReset" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0"/>
+         <Button fx:id="SoundEffectReset" onMouseEntered="#handleMouseEntered" onAction="#handleSoundMute" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
+         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" onMouseReleased="#handleSoundSet" prefWidth="150.0" value="100.0"/>
       </HBox>
    </VBox>
 
    <Label AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="24.0" text="Game"/>
 
    <GridPane fx:id="Map1" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="64.0"
-             prefHeight="700.0" prefWidth="700.0">
+             prefHeight="732.0" prefWidth="732.0">
       <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -62,13 +56,13 @@
       </rowConstraints>
    </GridPane>
    <ImageView fx:id="GunPlayer1" onMouseClicked="#handleCatClick" onMouseEntered="#handleCatEntered" onMouseExited="#handleCatExited"
-              AnchorPane.leftAnchor="698.0" AnchorPane.topAnchor="314.0"
+              AnchorPane.leftAnchor="678.0" AnchorPane.topAnchor="314.0"
               fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../../../img/canon/canon_3_paper.png"/>
    </ImageView>
 
    <GridPane fx:id="Map2" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="64.0"
-             prefHeight="700.0" prefWidth="700.0">
+             prefHeight="732.0" prefWidth="732.0">
       <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -95,7 +89,7 @@
       </rowConstraints>
    </GridPane>
    <ImageView fx:id="GunPlayer2" onMouseClicked="#handleCatClick" onMouseEntered="#handleCatEntered" onMouseExited="#handleCatExited"
-              AnchorPane.rightAnchor="748.0" AnchorPane.topAnchor="314.0"
+              AnchorPane.rightAnchor="678.0" AnchorPane.topAnchor="314.0"
               fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../../../img/canon/canon_2_flip.png"/>
    </ImageView>

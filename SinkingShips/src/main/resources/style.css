@@ -20,7 +20,7 @@
     -fx-background-size: 100%;
     -fx-background-position: center;
     -fx-font-family: "Rubik";
-    -fx-font-size: 27px;
+    /*-fx-font-size: 27px;*/
     -fx-font-weight: 400;
 }
 
@@ -53,7 +53,8 @@
 }
 .mainMenuButton:hover,
 .backButton:hover,
-#Credits:hover {
+#Credits:hover,
+.standardCheckbox:hover{
     -fx-background-image: url("img/scribble.png");
     -fx-background-color: none;
     -fx-background-position: center;
@@ -74,14 +75,9 @@
 }
 
 /* Sound Settings stuff */
-.soundSettings {
+.soundSettings,
+.soundSettingsReverse {
     -fx-alignment: center-left;
-}
-.soundSettings .label {
-    -fx-font-size: 1em;
-    -fx-font-family: "Rubik Medium";
-    -fx-text-fill: rgba(0,0,100,255);
-    -fx-padding: 0px 12px 0px 0px;
 }
 .soundSettings .volumeButton {
     -fx-background-image: url("img/sound_on.png");
@@ -93,21 +89,34 @@
 .soundSettings .volumeButton:hover {
     -fx-background-image: url("img/sound_off.png");
 }
-.soundSettings .slider .track {
+.soundSettingsReverse .volumeButton {
+    -fx-background-image: url("img/sound_off.png");
+    -fx-background-color: none;
+    -fx-background-position: center;
+    -fx-background-size: 100%;
+    -fx-background-repeat: no-repeat;
+}
+.soundSettingsReverse .volumeButton:hover {
+    -fx-background-image: url("img/sound_on.png");
+}
+.soundSettings .slider .track,
+.soundSettingsReverse .slider .track {
     -fx-background-image: url("img/slider_track.png");
     -fx-background-color: none;
     -fx-background-position: center;
     -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
-    -fx-pref-height: 24px;
+    -fx-pref-height: 1em;
+    -fx-pref-width: 3em;
 }
-.soundSettings .slider .thumb {
+.soundSettings .slider .thumb,
+.soundSettingsReverse .slider .thumb {
     -fx-background-image: url("img/slider_thumb.png");
     -fx-background-color: none;
     -fx-background-position: center;
     -fx-background-size: auto 100%;
     -fx-background-repeat: no-repeat;
-    -fx-pref-height: 36px;
+    -fx-pref-height: 1.3em;
 }
 
 /* New Game Stuff */
@@ -184,6 +193,8 @@
 
 /*.gameCellButton,
 .placementCellButton {
+    -fx-pref-height: 70px;
+    -fx-pref-width: 70px;
     -fx-background-image: url("img/target_hit1.png");
     -fx-background-color: none;
     -fx-background-position: center;
@@ -192,7 +203,11 @@
 }
 .gameCellButton:hover,
 .placementCellButton:hover {
-    -fx-background-image: url("img/target_hit2.png");
+    -fx-background-image: url("img/cursor_shoot.png");
+    -fx-background-color: none;
+    -fx-background-position: center;
+    -fx-background-size: 100%;
+    -fx-background-repeat: no-repeat;
 }*/
 
 #PlacementGridFX,
@@ -204,5 +219,4 @@
     -fx-background-position: center;
     -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
-    -fx-padding: 16px;
 }

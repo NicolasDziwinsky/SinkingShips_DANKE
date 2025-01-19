@@ -1,7 +1,14 @@
 package com.example.sinkingships;
 
+import com.sun.tools.javac.Main;
+import javafx.scene.ImageCursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.ImageView;
 
@@ -12,6 +19,8 @@ import java.util.Random;
 public class GameGrid {
     GridPane gridPane;
     GameBoard gameBoard;
+    MainController mainController;
+    private ImageView ivToDisplayHover;
     public List<Image> HitImages = new ArrayList<Image>();
     public List<Image> MissImages = new ArrayList<Image>();
     //boolean hidden
@@ -19,9 +28,10 @@ public class GameGrid {
     /**
      * Initializes the Gamefield for the specified player
      */
-    public GameGrid(GridPane gridPane, Player player) {
+    public GameGrid(GridPane gridPane, Player player, MainController mainController) {
         this.gridPane = gridPane;
         this.gameBoard = player.getGameBoard();
+        this.mainController = mainController;
 
         //init the placement grid
         HitImages.add(new Image(String.valueOf(getClass().getResource("/img/target_hit1.png"))));
@@ -41,7 +51,7 @@ public class GameGrid {
 
         while (i < 100) {
             Button button = new Button();
-            button.setPrefSize(80,80);
+            button.setPrefSize(Game.cellSize,Game.cellSize);
             button.setOpacity(0);
 
             // Adds a class so you can do some css styling
@@ -50,6 +60,8 @@ public class GameGrid {
             int finalX = x;
             int finalY = y;
             button.onActionProperty().set(event -> {onPress(finalX, finalY, player);});
+            button.onMouseEnteredProperty().set(this::handleCellMouseEnter);
+            button.onMouseExitedProperty().set(this::handleCellMouseExit);
             gridPane.add(button, x-1, y-1);
             player.getGameBoard().getCell(finalX, finalY).fxButton = button;
             player.getGameBoard().getCell(finalX, finalY).fxButton.setDisable(true);
@@ -62,6 +74,8 @@ public class GameGrid {
             }
             i++;
         }
+
+        setUpHoverDisplay();
     }
 
     /**
@@ -69,30 +83,30 @@ public class GameGrid {
      */
     public int onPress(int x, int y, Player player) {
         Cell cell = player.getGameBoard().getCell(x, y);
-
+        return onPressContainer(cell, x, y, player);
+    }
+    public int onPress(Cell cell, Player player) {
+        int x = cell.getX();
+        int y = cell.getY();
+        return onPressContainer(cell, x, y, player);
+    }
+    private int onPressContainer(Cell cell, int x, int y, Player player) {
         Random rand = new Random();
         int randIntTill5 = rand.nextInt(6);
         int randIntTill2 = rand.nextInt(3);
 
-        if (!cell.IsHit() && Game.gameOver == false) {
+        if (!cell.IsHit() && !Game.gameOver) {
             cell.setIsHit();
             if (cell.isOccupied()) {
-                cell.image = new ImageView();
-                cell.image.setImage(HitImages.get(randIntTill5));
-                cell.image.setFitWidth(70);
-                cell.image.setFitHeight(70);
-                gridPane.add(cell.image, x-1, y-1);
+                addImageToGridPane(HitImages.get(randIntTill5), cell, x, y);
+                animateTheCellHit(cell, player, true);
                 Game.HitHappened();
                 return 0;
             } else {
-                cell.image = new ImageView();
-                cell.image.setImage(MissImages.get(randIntTill2));
-                cell.image.setFitWidth(70);
-                cell.image.setFitHeight(70);
-                gridPane.add(cell.image, x-1, y-1);
+                addImageToGridPane(MissImages.get(randIntTill2), cell, x, y);
+                animateTheCellHit(cell, player, false);
                 Game.HitHappened();
                 return 1;
-
             }
         } else if(Game.gameOver) {
             System.out.println("Game Over");
@@ -102,42 +116,78 @@ public class GameGrid {
         }
         return 0;
     }
+    private void addImageToGridPane(Image image, Cell cell, int x, int y) {
+        cell.image = new ImageView();
+        cell.image.setImage(image);
+        gridPane.add(cell.image, x-1, y-1);
 
-    public int onPress(Cell cell, Player player) {
+        // Makes the image resize together with the GridPane
+        cell.image.fitWidthProperty().bind(gridPane.widthProperty().multiply(0.1));
+        cell.image.fitHeightProperty().bind(gridPane.heightProperty().multiply(0.1));
+    }
 
-        int x = cell.getX();
-        int y = cell.getY();
+    // Methods to handle the mouse over shooting cursor on cells
+    private void setUpHoverDisplay(){
+        Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_shoot.png")));
+        ivToDisplayHover = new ImageView();
+        ivToDisplayHover.setImage(imageForCursor);
+        ivToDisplayHover.setMouseTransparent(true);
+    }
+    private void handleCellMouseEnter(MouseEvent event) {
+        Button thisButton = (Button) event.getSource();
+        mainController.autoRotateInGameCanons((Button)event.getSource());
+        ivToDisplayHover.setFitHeight(Game.cellSize);
+        ivToDisplayHover.setFitWidth(Game.cellSize);
+        ivToDisplayHover.setLayoutX(thisButton.localToScene(0,0).getX());
+        ivToDisplayHover.setLayoutY(thisButton.localToScene(0,0).getY());
+        mainController.RootPane.getChildren().add(ivToDisplayHover);
+    }
+    private void handleCellMouseExit(MouseEvent event) {
+        mainController.RootPane.getChildren().remove(ivToDisplayHover);
+    }
 
-        Random rand = new Random();
-        int randIntTill5 = rand.nextInt(6);
-        int randIntTill2 = rand.nextInt(3);
+    /**
+     * Tells the main controller to play sounds and animates stuff for the hit cell.
+     * @param cellToAnimate The cell to animate.
+     * @param currentPlayer The current player.
+     * @param isHit Is true if the cell contained a ship that was hit.
+     */
+    private void animateTheCellHit(Cell cellToAnimate, Player currentPlayer, boolean isHit){
+        if(!Game.getPlayer1().isAI() || !Game.getPlayer2().isAI()) {
+            Thread animationThread = new Thread(() -> {
+                Image oldImage = cellToAnimate.image.getImage();
+                cellToAnimate.image.setImage(null);
+                if(currentPlayer.isAI()){
+                    letCurrentThreadWait(2000);
+                }
+                cellToAnimate.image.setImage(new Image(String.valueOf(getClass().getResource("/img/cursor_shoot.png"))));
+                if (currentPlayer == Game.getPlayer1()) {
+                    mainController.playCanonTargetHit(false, isHit, true, true);
+                } else if (currentPlayer == Game.getPlayer2()) {
+                    mainController.playCanonTargetHit(true, isHit, true, true);
+                }
+                letCurrentThreadWait(600);
+                if (isHit) {
+                    cellToAnimate.image.setImage(new Image(String.valueOf(getClass().getResource("/img/boom_glow.png"))));
+                    letCurrentThreadWait(600);
+                }
+                cellToAnimate.image.setImage(oldImage);
 
-        if (!cell.IsHit() && Game.gameOver == false) {
-            cell.setIsHit();
-            if (cell.isOccupied()) {
-                cell.image = new ImageView();
-                cell.image.setImage(HitImages.get(randIntTill5));
-                cell.image.setFitWidth(70);
-                cell.image.setFitHeight(70);
-                gridPane.add(cell.image, x-1, y-1);
-                Game.HitHappened();
-                return 0;
-            } else {
-                cell.image = new ImageView();
-                cell.image.setImage(MissImages.get(randIntTill2));
-                cell.image.setFitWidth(70);
-                cell.image.setFitHeight(70);
-                gridPane.add(cell.image, x-1, y-1);
-                Game.HitHappened();
-                return 1;
-
-            }
-        } else if(Game.gameOver) {
-            System.out.println("Game Over");
-        } else {
-            System.out.println("Already Hit");
-            return 2;
+                // Swtich out the active gun
+                if(currentPlayer == Game.getPlayer1()){
+                    mainController.switchActiveCanon(true);
+                } else {
+                    mainController.switchActiveCanon(false);
+                }
+            });
+            animationThread.start();
         }
-        return 0;
+    }
+    private void letCurrentThreadWait(int milliseconds){
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

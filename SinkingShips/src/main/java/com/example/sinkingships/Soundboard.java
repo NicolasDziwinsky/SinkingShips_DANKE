@@ -6,30 +6,25 @@ import java.net.URL;
 import java.util.Random;
 
 public class Soundboard {
-    private float volumeEffects;
-    private float volumeMusic;
+    private static float volumeEffects = 1.0f;
+    public static boolean effectsIsMuted = false;
     private AudioInputStream audioInputStream;
 
-    public Soundboard() {
-        volumeEffects = 1.0f;
-        volumeMusic = 1.0f;
-    }
-    public Soundboard(float volumeEffectsToSet, float volumeMusicToSet) {
-        this.volumeEffects = volumeEffectsToSet;
-        this.volumeMusic = volumeMusicToSet;
+
+    /**
+     * Sets the Volume of the soundboard.
+     * @param volume The volume to set it to. Must be a Value between 0.0f and 1.0f.
+     */
+    public static void setVolume(float volume){
+        volumeEffects = volume;
     }
 
     /**
-     * Sets the Volume of the soundboard
-     * @param volume The volume to set it to. Must be a Value between 0.0f and 1.0f
-     * @param setEffects If true, the volume of the effects is set. If false, the volume of the music is set
+     * Gets the Volume of the soundboard.
+     * @return The Volume.
      */
-    public void setVolume(float volume, boolean setEffects){
-        if(setEffects){
-            volumeEffects = volume;
-        } else {
-            volumeMusic = volume;
-        }
+    public static float getVolume(){
+        return volumeEffects;
     }
 
     public void playKrizelshiff(){
@@ -49,6 +44,9 @@ public class Soundboard {
     }
     public void playImpactBoom(){
         playRndSoundsInRange("/audio/Boom", 8, ".wav");
+    }
+    public void playMissed(){
+        playRndSoundsInRange("/audio/Water", 6, ".wav");
     }
     public void playScribble(){
         playRndSoundsInRange("/audio/Scribble", 2, ".wav");
@@ -92,10 +90,15 @@ public class Soundboard {
             audioClip.open(audioInputStream);
 
             FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
-            float gainRange = gainControl.getMaximum() - gainControl.getMinimum();
-            float gain = (gainRange * this.volumeEffects) + gainControl.getMinimum();
+            gainControl.setValue(0);
+            float gainRange = gainControl.getMaximum() + 25;
+            float gain = (gainRange * Soundboard.volumeEffects) - gainControl.getMaximum() + gainControl.getMaximum() - 25;
 
-            gainControl.setValue(gain);
+            if(volumeEffects == 0 || effectsIsMuted){
+                gainControl.setValue(gainControl.getMinimum());
+            } else {
+                gainControl.setValue(gain);
+            }
             audioClip.start();
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             throw new RuntimeException(e);

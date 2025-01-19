@@ -1,22 +1,21 @@
 package com.example.sinkingships;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 /**
  * //Singleton
  *     //used to share data between scenes
  */
 public class Game {
-
-
     static private Player Player1;
     static private Player Player2;
     static public AiBrain aiBrain1;
     static public AiBrain aiBrain2;
+
+    // Standardizes the cell Size, so it can be applied from anywhere
+    static public int cellSize = 70;
+
     static private int turn = 1;
     static public boolean gameOver = false;
     static private Cell lastCellHit;

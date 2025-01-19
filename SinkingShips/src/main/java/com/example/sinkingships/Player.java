@@ -1,5 +1,6 @@
 package com.example.sinkingships;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -11,13 +12,17 @@ public class Player {
     private boolean isAI;
     private GameBoard gameBoard;
     public GameGrid gameGrid;
-    public ImageView gun;
+    public String gun;
+    public Image gunDefaultImage;
+    public Image gunShootingImage;
 
-    public Player(String name, boolean isAI, ImageView gun) {
+    public Player(String name, boolean isAI, String gun, Image gunDefault, Image gunShooting) {
         this.name = name;
         this.isAI = isAI;
         this.gun = gun;
         this.gameBoard = new GameBoard();
+        this.gunDefaultImage = gunDefault;
+        this.gunShootingImage = gunShooting;
     }
 
     public String getName() {

@@ -12,7 +12,7 @@
 <AnchorPane fx:id="RootPane" stylesheets="@../../../style.css" maxHeight="-Infinity" maxWidth="-Infinity"
             onMouseClicked="#handleMouseClicked" onMouseMoved="#handleMouseMoved"
             minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.sinkingships.MainController">
 
    <ImageView styleClass="decorations" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="100.0" fitHeight="150.0" fitWidth="150.0"
@@ -31,11 +31,11 @@
               pickOnBounds="true" preserveRatio="true">
       <Image url="@../../../img/deco/deco_battleship.png" backgroundLoading="true"/>
    </ImageView>
-   <ImageView styleClass="decorations" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="50.0" fitHeight="150.0" fitWidth="150.0"
+   <ImageView styleClass="decorations" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="50.0" fitHeight="150.0" fitWidth="150.0"
               pickOnBounds="true" preserveRatio="true">
       <Image url="@../../../img/deco/deco_jet1.png" backgroundLoading="true"/>
    </ImageView>
-   <ImageView styleClass="decorations" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="150.0" fitHeight="150.0" fitWidth="150.0"
+   <ImageView styleClass="decorations" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="150.0" fitHeight="150.0" fitWidth="150.0"
               pickOnBounds="true" preserveRatio="true">
       <Image url="@../../../img/deco/deco_jet2.png" backgroundLoading="true"/>
    </ImageView>
@@ -60,14 +60,8 @@
 
    <VBox AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0">
       <HBox styleClass="soundSettings">
-         <Label text="Music"/>
-         <Button fx:id="SoundMusicReset" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider fx:id="SoundMusicSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0"/>
-      </HBox>
-      <HBox styleClass="soundSettings">
-         <Label text="Sounds"/>
-         <Button fx:id="SoundEffectReset" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" prefWidth="150.0" value="100.0"/>
+         <Button fx:id="SoundEffectReset" onMouseEntered="#handleMouseEntered" onAction="#handleSoundMute" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
+         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" onMouseReleased="#handleSoundSet" prefWidth="150.0" value="100.0"/>
       </HBox>
    </VBox>
 
