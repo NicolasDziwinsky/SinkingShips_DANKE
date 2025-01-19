@@ -65,13 +65,15 @@ public class Game {
             if (turn % 2 != 0) {
                 turn += 1;
                 //Player 1 turn
+                System.out.println("Player 1 Turn");
                 toggleField(Player2, true);
                 toggleField(Player1, false);
 
             } else {
                 turn += 1;
                 //Player 2 turn
-                aiBrain2.hitCell();
+                System.out.println("Player 2 Turn");
+                aiBrain2.hitCell(false);
             }
 
             return true;
@@ -85,14 +87,13 @@ public class Game {
             if (turn % 2 != 0) {
                 turn += 1;
                 //Player 1 turn
-
-                aiBrain1.hitCell();
+                aiBrain1.hitCell(true);
 
             } else {
                 turn += 1;
                 //Player 2 turn
 
-                aiBrain2.hitCell();
+                aiBrain2.hitCell(true);
             }
             return true;
 

@@ -690,9 +690,6 @@ public class MainController {
             RandomPlacement.setOpacity(0.6);
             Game.placedRandom = true;
         }
-        if (currentPlayer.isAI()){
-
-        }
 
     }
 
@@ -713,7 +710,16 @@ public class MainController {
         }
     }
 
-
+    public void activateAiButton() {
+        if (AiCheckbox1.isDisabled()) {
+            AiCheckbox1.disableProperty().set(false);
+        } else {
+            AiCheckbox1.disableProperty().set(true);
+            if (AiCheckbox1.isSelected()) {
+                AiCheckbox1.selectedProperty().set(false);
+            }
+        }
+    }
 
     /**
      * Initializes both gamefields

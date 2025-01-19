@@ -19,12 +19,15 @@ public class AiBrain {
         cellsHit.addAll(Arrays.asList(targetPlayer.getGameBoard().getCells()));
     }
 
-    public void hitCell() {
+    public void hitCell(Boolean withDelay) {
         Cell cellToHit = DecideCellToHit();
         System.out.println(cellToHit.getX() + "/" + cellToHit.getY());
         cellsHit.remove(cellToHit);
-        Game.delay(500, () ->targetPlayer.gameGrid.onPress(cellToHit, targetPlayer) );
-
+        if (withDelay) {
+            Game.delay(500, () ->targetPlayer.gameGrid.onPress(cellToHit, targetPlayer) );
+        } else {
+            targetPlayer.gameGrid.onPress(cellToHit, targetPlayer);
+        }
     }
 
 
