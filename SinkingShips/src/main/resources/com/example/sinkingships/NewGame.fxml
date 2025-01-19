@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="RootPane" minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../../style.css"
-            xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
+<AnchorPane fx:id="RootPane" minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
 
    <ImageView fx:id="TicTacToeDeco" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="decorations" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="450.0">
       <Image backgroundLoading="true" url="@../../../img/deco/deco_tictactoe.png" />
@@ -33,8 +32,8 @@
 
    <VBox AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0">
       <HBox styleClass="soundSettings">
-         <Button fx:id="SoundEffectReset" onMouseEntered="#handleMouseEntered" onAction="#handleSoundMute" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" mnemonicParsing="false"/>
-         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" onMouseReleased="#handleSoundSet" prefWidth="150.0" value="100.0"/>
+         <Button fx:id="SoundEffectReset" mnemonicParsing="false" onAction="#handleSoundMute" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" />
+         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" onMouseReleased="#handleSoundSet" prefWidth="150.0" value="100.0" />
       </HBox>
    </VBox>
 
@@ -49,7 +48,7 @@
       <VBox alignment="CENTER" spacing="8.0">
          <Label styleClass="standardText" text="Player 1" />
          <TextField fx:id="Name1" prefHeight="150.0" prefWidth="400.0" promptText="[name]" styleClass="standardTextInput" />
-         <CheckBox fx:id="AiCheckbox1" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" styleClass="standardCheckbox" text="AI Player" />
+         <CheckBox fx:id="AiCheckbox1" disable="true" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" styleClass="standardCheckbox" text="AI Player" />
       </VBox>
    </VBox>
    <VBox fx:id="Player2CanonSelector" AnchorPane.rightAnchor="256.0" AnchorPane.topAnchor="160.0">
@@ -63,7 +62,7 @@
       <VBox alignment="CENTER" spacing="8.0">
          <Label styleClass="standardText" text="Player 2" />
          <TextField fx:id="Name2" prefHeight="150.0" prefWidth="400.0" promptText="[name]" styleClass="standardTextInput" />
-         <CheckBox fx:id="AiCheckbox2" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" styleClass="standardCheckbox" text="AI Player" />
+         <CheckBox fx:id="AiCheckbox2" mnemonicParsing="false" onAction="#activateAiButton" onMouseEntered="#handleMouseEntered" styleClass="standardCheckbox" text="AI Player" />
       </VBox>
    </VBox>
 

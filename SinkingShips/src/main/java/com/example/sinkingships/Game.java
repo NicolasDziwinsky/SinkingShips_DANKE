@@ -1,5 +1,9 @@
 package com.example.sinkingships;
 
+import javafx.concurrent.Task;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,6 +16,7 @@ public class Game {
     static private Player Player2;
     static public AiBrain aiBrain1;
     static public AiBrain aiBrain2;
+    static public StackPane winningScreen;
 
     // Standardizes the cell Size, so it can be applied from anywhere
     static public int cellSize = 70;
@@ -56,17 +61,19 @@ public class Game {
             //Player vs Ai
         if(Player2.isAI() && !Player1.isAI() && !gameOver){
             System.out.println(turn);
-
+            checkWinningPlayer();
             if (turn % 2 != 0) {
                 turn += 1;
                 //Player 1 turn
+                System.out.println("Player 1 Turn");
                 toggleField(Player2, true);
                 toggleField(Player1, false);
 
             } else {
                 turn += 1;
                 //Player 2 turn
-                aiBrain2.hitCell();
+                System.out.println("Player 2 Turn");
+                aiBrain2.hitCell(false);
             }
 
             return true;
@@ -80,22 +87,23 @@ public class Game {
             if (turn % 2 != 0) {
                 turn += 1;
                 //Player 1 turn
-
-                aiBrain1.hitCell();
+                aiBrain1.hitCell(true);
 
             } else {
                 turn += 1;
                 //Player 2 turn
 
-                aiBrain2.hitCell();
+                aiBrain2.hitCell(true);
             }
             return true;
 
             //Player vs Player
         }else if (!gameOver) {
+            checkWinningPlayer();
 
             System.out.println("Hit Happened ");
             System.out.println(turn);
+            checkWinningPlayer();
             if (turn % 2 != 0) {
                 toggleField(Player2, true);
                 toggleField(Player1, false);
@@ -150,11 +158,29 @@ public class Game {
         if (Player1.checkIfLost()) {
             System.out.println("Player 2 Won");
             gameOver = true;
+            winningScreen.visibleProperty().set(true);
+            //show end screen
         } else if (Player2.checkIfLost()) {
             System.out.println("Player 1 Won");
             gameOver = true;
+            winningScreen.visibleProperty().set(true);
+            //show end screen
         }
     }
 
+    public static void delay(long millis, Runnable continuation) {
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try { Thread.sleep(millis); }
+                catch (InterruptedException e) { }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(event -> continuation.run());
+        new Thread(sleeper).start();
+    }
+
+    //shows screen(Player)
 
 }

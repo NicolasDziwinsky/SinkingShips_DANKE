@@ -157,9 +157,7 @@ public class GameGrid {
             Thread animationThread = new Thread(() -> {
                 Image oldImage = cellToAnimate.image.getImage();
                 cellToAnimate.image.setImage(null);
-                if(currentPlayer.isAI()){
-                    letCurrentThreadWait(2000);
-                }
+
                 cellToAnimate.image.setImage(new Image(String.valueOf(getClass().getResource("/img/cursor_shoot.png"))));
                 if (currentPlayer == Game.getPlayer1()) {
                     mainController.playCanonTargetHit(false, isHit, true, true);
@@ -174,9 +172,10 @@ public class GameGrid {
                 cellToAnimate.image.setImage(oldImage);
 
                 // Swtich out the active gun
-                if(currentPlayer == Game.getPlayer1()){
+
+                if(currentPlayer == Game.getPlayer1() && !Game.getPlayer2().isAI()){
                     mainController.switchActiveCanon(true);
-                } else {
+                } else if(!Game.getPlayer2().isAI()) {
                     mainController.switchActiveCanon(false);
                 }
             });
