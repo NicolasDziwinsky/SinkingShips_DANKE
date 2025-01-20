@@ -20,7 +20,6 @@
     -fx-background-size: 100%;
     -fx-background-position: center;
     -fx-font-family: "Rubik";
-    /*-fx-font-size: 27px;*/
     -fx-font-weight: 400;
 }
 
@@ -120,28 +119,28 @@
 }
 
 /* New Game Stuff */
-#Image1Back,
-#Image2Back {
+#CanonImage1Back,
+#CanonImage2Back {
     -fx-background-image: url("img/arrow_left.png");
     -fx-background-color: none;
     -fx-background-position: center;
     -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
 }
-#Image1Back:hover,
-#Image2Back:hover {
+#CanonImage1Back:hover,
+#CanonImage2Back:hover {
     -fx-background-image: url("img/arrow_left_hover.png");
 }
-#Image1Forward,
-#Image2Forward {
+#CanonImage1Forward,
+#CanonImage2Forward {
     -fx-background-image: url("img/arrow_right.png");
     -fx-background-color: none;
     -fx-background-position: center;
     -fx-background-size: 100%;
     -fx-background-repeat: no-repeat;
 }
-#Image1Forward:hover,
-#Image2Forward:hover {
+#CanonImage1Forward:hover,
+#CanonImage2Forward:hover {
     -fx-background-image: url("img/arrow_right_hover.png");
 }
 .standardText {
@@ -215,6 +214,14 @@
 #Map1,
 #Map2 {
     -fx-background-image: url("img/grid.png");
+    -fx-background-color: none;
+    -fx-background-position: center;
+    -fx-background-size: 100%;
+    -fx-background-repeat: no-repeat;
+}
+
+#WinningScreen {
+    -fx-background-image: url("img/paperBg.png");
     -fx-background-color: none;
     -fx-background-position: center;
     -fx-background-size: 100%;
