@@ -59,8 +59,4 @@ public class Player {
         }
         return true;
     }
-
-    public void takeTurn(GameBoard OpponentBoard) {
-        //i dont know how or where to implement the actual game logic oopsie
-    }
 }

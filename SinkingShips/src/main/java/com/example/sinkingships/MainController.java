@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
 
 //all major logic should happen here, because in here all created objects can interact with one another
 public class MainController {
@@ -668,14 +669,15 @@ public class MainController {
         SceneSwitcher.switchToMainMenu(event);
         gridCounter = 0;
     }
+
     public void switchToNewGame(ActionEvent event) throws IOException {
         SceneSwitcher.switchToNewGame(event);
     }
+
     public void switchToShipPlacement(ActionEvent event) throws IOException, InterruptedException {
         generatePlayers();
         SceneSwitcher.switchToShipPlacement(event);
     }
-
 
 
     /**
@@ -683,15 +685,9 @@ public class MainController {
      * //Potential for improvement
      */
     public void initPlacementGrid(int Player) {
-        if (Player == 0) {
-            Game.getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.getPlayer1().getGameBoard(), ShipPreview, this);
-            PlayerNamePlacement.setText(Game.getPlayer1().getName() + "\r\n... place your ships");
-            Game.getPlayer1().getGameBoard().placementGrid.setShipPreview(Game.getPlayer1().getGameBoard().placementShips[0].shipImage);
-        } else {
-            Game.getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.getPlayer2().getGameBoard(), ShipPreview, this);
-            Game.getPlayer2().getGameBoard().placementGrid.setShipPreview(Game.getPlayer1().getGameBoard().placementShips[0].shipImage);
-            PlayerNamePlacement.setText(Game.getPlayer2().getName() + "\r\n... place your ships");
-        }
+        currentPlayer.getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, currentPlayer.getGameBoard(), ShipPreview, this);
+        PlayerNamePlacement.setText(currentPlayer.getName() + "\r\n... place your ships");
+        currentPlayer.getGameBoard().placementGrid.setShipPreview(currentPlayer.getGameBoard().placementShips[0].shipImage);
     }
     /**
      * //Sets up the Placement Grid for the User, the first one is for player 1, second one for player 2
@@ -762,5 +758,13 @@ public class MainController {
         Game.winningScreen = WinningScreen;
         Game.HitHappened();
         StartGame.disableProperty().set(true);
+    }
+
+    public void closeWindow() {
+        if (SceneSwitcher.stage != null) {
+            SceneSwitcher.stage.close();
+        } else {
+            System.out.println("The provided stage is null. Cannot close the window.");
+        }
     }
 }

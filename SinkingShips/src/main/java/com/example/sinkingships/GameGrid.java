@@ -111,6 +111,7 @@ public class GameGrid {
         }
         return 0;
     }
+
     private void addImageToGridPane(Image image, Cell cell, int x, int y) {
         cell.image = new ImageView();
         cell.image.setImage(image);

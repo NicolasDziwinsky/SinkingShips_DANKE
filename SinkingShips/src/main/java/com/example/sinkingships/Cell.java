@@ -19,6 +19,7 @@ public class Cell {
     public void setOccupied() {
         this.isOccupied = true;
     }
+
     public boolean setIsHit() {
         if (isHit == true) {
             return false;
