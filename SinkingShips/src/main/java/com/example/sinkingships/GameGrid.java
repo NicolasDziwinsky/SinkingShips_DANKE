@@ -84,6 +84,7 @@ public class GameGrid {
         int y = cell.getY();
         return onPressContainer(cell, x, y, player);
     }
+
     private int onPressContainer(Cell cell, int x, int y, Player player) {
         Random rand = new Random();
         int randIntTill5 = rand.nextInt(6);

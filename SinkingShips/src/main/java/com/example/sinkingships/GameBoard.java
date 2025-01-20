@@ -21,10 +21,10 @@ public class GameBoard {
 
         int x = 1;
         int y = 1;
+
         int i = 0;
 
         while (i < 100) {
-
             grid[i] = new Cell(x, y);
 
             if (x == 10) {
@@ -101,6 +101,7 @@ public class GameBoard {
 
         int X = targetCell.getX();
         int Y = targetCell.getY();
+
         int i = 0;
 
         //pre-checks if target cells are valid for placement

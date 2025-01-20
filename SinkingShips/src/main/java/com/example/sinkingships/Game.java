@@ -23,8 +23,6 @@ public class Game {
 
     private static int turn = 1;
     public static boolean gameOver = false;
-    private static Cell lastCellHit;
-    private static ArrayList<Cell> cellsHit = new ArrayList<Cell>();
     public static Random rand = new Random();
     static boolean placedRandom = false;
     /**
@@ -56,7 +54,6 @@ public class Game {
     public static boolean HitHappened() {
         //0 = occupied
         //1 = nicht occupied aber valid
-        //2 = nicht valid
 
             //Player vs Ai
         if(Player2.isAI() && !Player1.isAI() && !gameOver){
@@ -115,22 +112,6 @@ public class Game {
             return true;
         }
         return true;
-    }
-
-    public static void showShips(Player player, boolean shown){
-        GameBoard gameBoard = player.getGameBoard();
-
-        for(Ship ship:gameBoard.ShipList){
-            for(Cell cell:ship.coordinates){
-                if(shown){
-                    cell.fxButton.setOpacity(100);
-                }else {
-                    cell.fxButton.setOpacity(0);
-                }
-
-            }
-        }
-
     }
 
     public static void toggleField(Player player, boolean activate){

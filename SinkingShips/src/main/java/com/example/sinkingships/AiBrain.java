@@ -2,27 +2,42 @@ package com.example.sinkingships;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Random;
 
 public class AiBrain {
     public Player targetPlayer;
     public Player correspondingPlayer;
+    /**
+     * The Last cell hit and occupied
+     */
     public Cell lastCellHit;
-    public ArrayList<Cell> cellsHit = new ArrayList<Cell>();
+    /**
+     * All the cells on the field of the
+     * target player
+     */
+    public ArrayList<Cell> cellsNotHit = new ArrayList<Cell>();
     public Random rand = new Random();
+    /**
+     * Current state of the ai
+     * 0: Hitting randomly, until hit cell is occupied
+     * 1: Last Cell hit was occupied, tries surrounding cells
+     */
     public int currentState;
 
     AiBrain(Player targetPlayer, Player correspondingPlayer) {
         this.targetPlayer = targetPlayer;
         this.correspondingPlayer = correspondingPlayer;
-        cellsHit.addAll(Arrays.asList(targetPlayer.getGameBoard().getCells()));
+        cellsNotHit.addAll(Arrays.asList(targetPlayer.getGameBoard().getCells()));
     }
 
+    /**
+     * hits a cell in the cellsNotHit list (with or without delay)
+     */
     public void hitCell(Boolean withDelay) {
         Cell cellToHit = DecideCellToHit();
         System.out.println(cellToHit.getX() + "/" + cellToHit.getY());
-        cellsHit.remove(cellToHit);
+        cellsNotHit.remove(cellToHit);
+
         if (withDelay) {
             Game.delay(500, () ->targetPlayer.gameGrid.onPress(cellToHit, targetPlayer) );
         } else {
@@ -30,9 +45,11 @@ public class AiBrain {
         }
     }
 
-
+    /**
+     * Decides which cell to hit, depends on the current state
+     */
     public Cell DecideCellToHit() {
-        Object randResult[] = randomCell(cellsHit.toArray(new Cell[cellsHit.size()]));
+        Object randResult[] = randomCell(cellsNotHit.toArray(new Cell[cellsNotHit.size()]));
         Cell randCell = (Cell) randResult[0];
         int randInt = (int) randResult[1];
         System.out.println(correspondingPlayer.getName() + " Current State: " + currentState);
@@ -53,19 +70,18 @@ public class AiBrain {
             case 1:
                 int x = lastCellHit.getX();
                 int y = lastCellHit.getY();
-                int randAxisDecision = rand.nextInt(1,3);
                 ArrayList<Cell> possibleNextMoves = new ArrayList<>();
 
-                if (cellsHit.contains(targetPlayer.getGameBoard().getCell(x+1, y))) {
+                if (cellsNotHit.contains(targetPlayer.getGameBoard().getCell(x+1, y))) {
                     possibleNextMoves.add(targetPlayer.getGameBoard().getCell(x+1, y));
                 }
-                if (cellsHit.contains(targetPlayer.getGameBoard().getCell(x-1, y))) {
+                if (cellsNotHit.contains(targetPlayer.getGameBoard().getCell(x-1, y))) {
                     possibleNextMoves.add(targetPlayer.getGameBoard().getCell(x-1, y));
                 }
-                if (cellsHit.contains(targetPlayer.getGameBoard().getCell(x, y+1))) {
+                if (cellsNotHit.contains(targetPlayer.getGameBoard().getCell(x, y+1))) {
                     possibleNextMoves.add(targetPlayer.getGameBoard().getCell(x, y+1));
                 }
-                if (cellsHit.contains(targetPlayer.getGameBoard().getCell(x, y-1))) {
+                if (cellsNotHit.contains(targetPlayer.getGameBoard().getCell(x, y-1))) {
                     possibleNextMoves.add(targetPlayer.getGameBoard().getCell(x, y-1));
                 }
 
@@ -95,9 +111,18 @@ public class AiBrain {
         return randCell;
     }
 
+    /**
+     * Returns an Array of objects, [0] is the random cell generated out of
+     * the passed Array, [1] is the numeric value generated.
+     *
+     * Generates Number, that can only be as large as the Cell array length - 1
+     * Returns cell from array with the random number as the index for the array
+     */
     public Object[] randomCell(Object[] cells) {
         int maxValue = cells.length;
+
         Object[] returnObjects;
+
         if (maxValue == 0) {
             returnObjects = new Object[]{new Cell(1, 1), 0};
             return returnObjects;
