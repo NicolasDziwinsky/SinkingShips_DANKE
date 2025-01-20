@@ -84,7 +84,6 @@ public class GameGrid {
         int y = cell.getY();
         return onPressContainer(cell, x, y, player);
     }
-
     private int onPressContainer(Cell cell, int x, int y, Player player) {
         Random rand = new Random();
         int randIntTill5 = rand.nextInt(6);
@@ -111,6 +110,13 @@ public class GameGrid {
         }
         return 0;
     }
+    /**
+     * Adds a given image into a grid pane in the given cell.
+     * @param image The image to add.
+     * @param cell The cell to add the image to.
+     * @param x The x coordinate of the cell.
+     * @param y The y coordinate of the cell.
+     */
     private void addImageToGridPane(Image image, Cell cell, int x, int y) {
         cell.image = new ImageView();
         cell.image.setImage(image);
@@ -122,22 +128,33 @@ public class GameGrid {
     }
 
     // Methods to handle the mouse over shooting cursor on cells
+    /**
+     * Sets up the ImageView that will be displayed over a game cell the mouse cursor is hovering over.
+     */
     private void setUpHoverDisplay(){
         Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_shoot.png")));
         ivToDisplayHover = new ImageView();
         ivToDisplayHover.setImage(imageForCursor);
         ivToDisplayHover.setMouseTransparent(true);
     }
-    private void handleCellMouseEnter(MouseEvent event) {
-        Button thisButton = (Button) event.getSource();
-        mainController.autoRotateInGameCanons((Button)event.getSource());
+    /**
+     * Places the ImageView over the game cell the mouse cursor just entered.
+     * @param eventForMouse The mouse event that triggered the method.
+     */
+    private void handleCellMouseEnter(MouseEvent eventForMouse) {
+        Button thisButton = (Button) eventForMouse.getSource();
+        mainController.rotateInGameCanons((Button)eventForMouse.getSource());
         ivToDisplayHover.setFitHeight(Game.cellSize);
         ivToDisplayHover.setFitWidth(Game.cellSize);
         ivToDisplayHover.setLayoutX(thisButton.localToScene(0,0).getX());
         ivToDisplayHover.setLayoutY(thisButton.localToScene(0,0).getY());
         mainController.RootPane.getChildren().add(ivToDisplayHover);
     }
-    private void handleCellMouseExit(MouseEvent event) {
+    /**
+     * Removes the ImageView that displays the hover image over a game cell.
+     * @param eventForMouse The mouse event that triggered the method.
+     */
+    private void handleCellMouseExit(MouseEvent eventForMouse) {
         mainController.RootPane.getChildren().remove(ivToDisplayHover);
     }
 
@@ -153,21 +170,23 @@ public class GameGrid {
                 Image oldImage = cellToAnimate.image.getImage();
                 cellToAnimate.image.setImage(null);
 
+                // Display the visor image for the cell that was just hit
                 cellToAnimate.image.setImage(new Image(String.valueOf(getClass().getResource("/img/cursor_shoot.png"))));
                 if (currentPlayer == Game.getPlayer1()) {
                     mainController.playCanonTargetHit(false, isHit, true, true);
                 } else if (currentPlayer == Game.getPlayer2()) {
                     mainController.playCanonTargetHit(true, isHit, true, true);
                 }
-                letCurrentThreadWait(600);
+                letCurrentThreadWait();
+
+                // Display an explosion image when a cell with a ship was hit
                 if (isHit) {
                     cellToAnimate.image.setImage(new Image(String.valueOf(getClass().getResource("/img/boom_glow.png"))));
-                    letCurrentThreadWait(600);
+                    letCurrentThreadWait();
                 }
                 cellToAnimate.image.setImage(oldImage);
 
-                // Swtich out the active gun
-
+                // Switch out the active gun in the GUI
                 if(currentPlayer == Game.getPlayer1() && !Game.getPlayer2().isAI()){
                     mainController.switchActiveCanon(true);
                 } else if(!Game.getPlayer2().isAI()) {
@@ -177,9 +196,12 @@ public class GameGrid {
             animationThread.start();
         }
     }
-    private void letCurrentThreadWait(int milliseconds){
+    /**
+     * Makes the current thread sleep for a given time.
+     */
+    private void letCurrentThreadWait(){
         try {
-            Thread.sleep(milliseconds);
+            Thread.sleep(600);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

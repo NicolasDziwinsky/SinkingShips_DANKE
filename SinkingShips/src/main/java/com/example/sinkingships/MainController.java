@@ -86,18 +86,24 @@ public class MainController {
 
 
 
-    // Everything in this block is to try out stuff with the moving canons and playing sounds
+    // Initialization stuff
+    /**
+     * Initializes the main controller
+     */
     @FXML public void initialize() {
         if(CanonImage1 != null && CanonImage2 != null) {
+            // Set the currently selected guns in the 'New Game' window
             currentGunPlayer1 = 1;
             currentGunPlayer2 = 1;
         }
         if(GunMenu1 != null && GunMenu2 != null && GunMenu3 != null) {
+            // Set up the canons in the main menu
             GunMenu1.setPickOnBounds(false);
             GunMenu2.setPickOnBounds(false);
             GunMenu3.setPickOnBounds(false);
         }
         if(GunPlayer1 != null && GunPlayer2 != null) {
+            // Set up the canons in-game
             player1GunEnabled = true;
             GunPlayer1.setPickOnBounds(false);
             GunPlayer1.setImage(player1GunDefault);
@@ -107,10 +113,6 @@ public class MainController {
             GunPlayer2.setImage(Game.getPlayer2().gunDefaultImage);
             formatEnabledCanons();
         }
-        canonIsHovered = false;
-        setCurrentGunImages();
-        setUpGameBoardSize();
-
         if(SceneSwitcher.stage != null) {
             // Adds Listeners to adjust the size of elements when the screen size changes
             SceneSwitcher.stage.widthProperty().addListener((obs, oldScene, newScene) -> {
@@ -120,16 +122,18 @@ public class MainController {
                 setUpGameBoardSize();
             });
         }
-
         if(WinningScreen != null) {
+            // Set up a listener that formats the winning screen correctly when it's set to visible
             WinningScreen.visibleProperty().addListener((obs, oldScene, newScene) -> {
                 setUpGameBoardSize();
             });
         }
 
+        canonIsHovered = false;
+        setCurrentCanonImages();
+        setUpGameBoardSize();
         setUpSoundControls();
     }
-
     /**
      * Sets up the size of the game boards so they fit the screen well
      */
@@ -212,28 +216,46 @@ public class MainController {
 
 
     // Methods to handle the gun selection menu
+    /**
+     * Selects next gun for Player 1
+     */
     @FXML public void handleNextCanonPlayer1(){
         currentGunPlayer1++;
         currentGunPlayer1 = checkRotationInt(currentGunPlayer1);
         displayCurrentCanon(CanonImage1, currentGunPlayer1, "");
     }
+    /**
+     * Selects previous gun for Player 1
+     */
     @FXML public void handlePrevCanonPlayer1(){
         currentGunPlayer1--;
         currentGunPlayer1 = checkRotationInt(currentGunPlayer1);
         displayCurrentCanon(CanonImage1, currentGunPlayer1, "");
     }
+    /**
+     * Selects next gun for Player 2
+     */
     @FXML public void handleNextCanonPlayer2(){
         currentGunPlayer2++;
         currentGunPlayer2 = checkRotationInt(currentGunPlayer2);
         displayCurrentCanon(CanonImage2, currentGunPlayer2, "_flip");
     }
+    /**
+     * Selects previous gun for Player 2
+     */
     @FXML public void handlePrevCanonPlayer2(){
         currentGunPlayer2--;
         currentGunPlayer2 = checkRotationInt(currentGunPlayer2);
         displayCurrentCanon(CanonImage2, currentGunPlayer2, "_flip");
     }
-    private void displayCurrentCanon(ImageView ivForCanon, int currentGunNumber, String flipString){
-        switch (currentGunNumber){
+    /**
+     * Displays the currently selected canon for a player.
+     * @param ivForCanon The ImageView for the player's canon.
+     * @param currentCanonNumber The current number of the canon to display.
+     * @param flipString Either empty if the canon looks left to right or "_flip" if the canon looks right to left.
+     */
+    private void displayCurrentCanon(ImageView ivForCanon, int currentCanonNumber, String flipString){
+        switch (currentCanonNumber){
             case 1:
                 ivForCanon.setImage(new Image(String.valueOf(getClass().getResource("/img/canon/canon_1" + flipString + "_paper_square.png"))));
                 break;
@@ -246,8 +268,15 @@ public class MainController {
             default:
                 break;
         }
-        setCurrentGunImages();
+        setCurrentCanonImages();
     }
+    /**
+     * Handle the cycling of the current number of the canon.
+     * If the given number is 0, it will be set to the number of the highest canon.
+     * If the given number is higher than the number of the highest canon, it will be set to 1.
+     * @param rotatingInt The current number for the canon.
+     * @return The correctly cycled number for the canon.
+     */
     private int checkRotationInt(int rotatingInt){
         if(rotatingInt < 0){
             return 3;
@@ -257,7 +286,10 @@ public class MainController {
         }
         return rotatingInt;
     }
-    private void setCurrentGunImages(){
+    /**
+     * Sets the correct image for the canon preview
+     */
+    private void setCurrentCanonImages(){
         switch (currentGunPlayer1){
             case 1:
                 player1GunDefault = new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_paper.png")));
@@ -288,50 +320,50 @@ public class MainController {
         }
     }
 
-    // Methods to handle standard mouse over stuff
-    @FXML public void handleMouseEntered(MouseEvent mouseEvent) {
+
+
+    /**
+     * Handles what happens when the mouse enters a clickable element.
+     * Sets up a 'pointing finger' cursor for the mouse cursor when the element is clickable.
+     */
+    @FXML public void handleClickableElementOnMouseEntered(MouseEvent mouseEvent) {
         Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_finger.png")));
         ((Node) mouseEvent.getSource()).setCursor(new ImageCursor(imageForCursor, 48, 48));
     }
 
-    // Handle the gun shooting at random places
-    @FXML public void handleMouseClicked(MouseEvent mouseEvent) {
-        if(!canonIsHovered) {
-            if(GunPlayer1 != null && GunPlayer2 != null) {
-                setUpShootingInGame(mouseEvent);
-            }
-            if(GunMenu1 != null && GunMenu2 != null && GunMenu3 != null) {
-                setUpShootingInMenu(mouseEvent);
-            }
-        }
-    }
-    @FXML public void handleMouseMoved(MouseEvent mouseEvent) {
-        if(GunMenu1 != null && GunMenu2 != null && GunMenu3 != null) {
-            autoRotateAllMenuCanons(mouseEvent);
-        }
-        if(GunPlayer1 != null && player1GunEnabled) {
-            autoRotateLeftCanon(mouseEvent);
-        }
-        if(GunPlayer2 != null && player2GunEnabled) {
-            autoRotateRightCanon(mouseEvent);
-        }
-    }
 
-    // Handle the canons making cat noises when you click on them
-    @FXML public void handleCatClick(MouseEvent mouseEvent) {
+
+    // Methods to handle the canons making cat noises
+    /**
+     * Handles a canon making cat noises when a canon is clicked
+     */
+    @FXML public void handleCatClick() {
         Soundboard meowingSoundboard = new Soundboard();
         meowingSoundboard.playCatNoise();
     }
+    /**
+     * Handles a canon being entered by the mouse cursor.
+     * Sets a variable to keep the canons from shooting when the mouse cursor hovers the canon.
+     */
     @FXML public void handleCatEntered(MouseEvent mouseEvent) {
-        handleMouseEntered(mouseEvent);
+        handleClickableElementOnMouseEntered(mouseEvent);
         canonIsHovered = true;
     }
-    @FXML public void handleCatExited(MouseEvent mouseEvent) {
+    /**
+     * Handles a canon being exited by the mouse cursor.
+     * Sets a variable to allow the canons to shoot again.
+     */
+    @FXML public void handleCatExited() {
         canonIsHovered = false;
     }
 
-    // Set the Volume
-    @FXML public void handleSoundMute(ActionEvent actionEvent) {
+
+
+    // Methods to handle the volume controls
+    /**
+     * Handles the sound mute button. Switches between mute and not mute as needed.
+     */
+    @FXML public void handleSoundMute() {
         if(Soundboard.effectsIsMuted){
             Soundboard.effectsIsMuted = false;
             SoundEffectSlider.setValue(1);
@@ -341,7 +373,10 @@ public class MainController {
         }
         setUpSoundControls();
     }
-    @FXML public void handleSoundSet(MouseEvent mouseEvent) {
+    /**
+     * Handles the setting of the current volume for the sound board
+     */
+    @FXML public void handleSoundSet() {
         if(Soundboard.effectsIsMuted){
             Soundboard.effectsIsMuted = false;
         }
@@ -349,6 +384,9 @@ public class MainController {
         Soundboard.setVolume(floatToSet);
         setUpSoundControls();
     }
+    /**
+     * Sets up the GUI elements of the soundboard to have the same value set in the actual soundboard.
+     */
     private void setUpSoundControls(){
         if(Soundboard.effectsIsMuted){
             SoundEffectReset.getParent().getStyleClass().clear();
@@ -361,89 +399,109 @@ public class MainController {
         }
     }
 
-    // Methods to make the canons shoot on mouse click
-    public void setUpShootingInGame(MouseEvent mouseEvent) {
+
+
+    // Methods to handle the shooting canons
+    /**
+     * Handles the canon shooting when the window is clicked.
+     */
+    @FXML public void handleCanonShootingOnMouseClicked() {
+        if(!canonIsHovered) {
+            if(GunPlayer1 != null && GunPlayer2 != null) {
+                setUpShootingInGame();
+            }
+            if(GunMenu1 != null && GunMenu2 != null && GunMenu3 != null) {
+                setUpShootingInMenu();
+            }
+        }
+    }
+
+    /**
+     * Starts threads for the enabled player guns, which handle the shooting of the gun.
+     */
+    public void setUpShootingInGame() {
         if(player1GunEnabled) {
-            Thread leftPlayerGunThread = new Thread(this::shootingThreadPlayerCanonLeft);
+            Thread leftPlayerGunThread = new Thread(() -> {
+                setUpShootingCanonForThread(GunPlayer1, Game.getPlayer1().gunDefaultImage, Game.getPlayer1().gunShootingImage);
+            });
             leftPlayerGunThread.start();
         }
         if(player2GunEnabled) {
-            Thread rightPlayerGunThread = new Thread(this::shootingThreadPlayerCanonRight);
+            Thread rightPlayerGunThread = new Thread(() -> {
+                setUpShootingCanonForThread(GunPlayer2, Game.getPlayer2().gunDefaultImage, Game.getPlayer2().gunShootingImage);
+            });
             rightPlayerGunThread.start();
         }
     }
-    public void setUpShootingInMenu(MouseEvent mouseEvent) {
+    /**
+     * Starts a thread for a random canon in the main menu to shoot when clicked.
+     */
+    public void setUpShootingInMenu() {
         Random rnd = new Random();
         int randomNumber = rnd.nextInt(3);
         switch (randomNumber) {
             case 0:
-                Thread menuGunAThread = new Thread(this::shootingThreadMenuCanonA);
+                Thread menuGunAThread = new Thread(() -> {
+                    Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper_boom.png")));
+                    Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper.png")));
+                    setUpShootingCanonForThread(GunMenu1, defaultImage, shootingImage);
+                });
                 menuGunAThread.start();
                 break;
             case 1:
-                Thread menuGunBThread = new Thread(this::shootingThreadMenuCanonB);
+                Thread menuGunBThread = new Thread(() -> {
+                    Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper_boom.png")));
+                    Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper.png")));
+                    setUpShootingCanonForThread(GunMenu2, defaultImage, shootingImage);
+                });
                 menuGunBThread.start();
                 break;
             case 2:
-                Thread menuGunCThread = new Thread(this::shootingThreadMenuCanonC);
+                Thread menuGunCThread = new Thread(() -> {
+                    Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper_boom.png")));
+                    Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper.png")));
+                    setUpShootingCanonForThread(GunMenu3, defaultImage, shootingImage);
+                });
                 menuGunCThread.start();
                 break;
-
         }
     }
-    private void shootingThreadPlayerCanonLeft(){
-        setUpShootingCanon(GunPlayer1, Game.getPlayer1().gunDefaultImage, Game.getPlayer1().gunShootingImage, false);
-    }
-    private void shootingThreadPlayerCanonRight(){
-        setUpShootingCanon(GunPlayer2, Game.getPlayer2().gunDefaultImage, Game.getPlayer2().gunShootingImage, false);
-    }
-    private void shootingThreadMenuCanonA(){
-        Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper_boom.png")));
-        Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_1_flip_paper.png")));
-        setUpShootingCanon(GunMenu1, defaultImage, shootingImage, false);
-    }
-    private void shootingThreadMenuCanonB(){
-        Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper_boom.png")));
-        Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_2_flip_paper.png")));
-        setUpShootingCanon(GunMenu2, defaultImage, shootingImage, false);
-    }
-    private void shootingThreadMenuCanonC(){
-        Image shootingImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper_boom.png")));
-        Image defaultImage = new Image(String.valueOf(getClass().getResource("/img/canon/canon_3_paper.png")));
-        setUpShootingCanon(GunMenu3, defaultImage, shootingImage, false);
-    }
+
+    /**
+     * Starts a thread that makes the canon shoot when a target is hit.
+     * @param isLeftPlayer If true, the canon of the left player shoots.
+     * @param isHit If true, the sound cue for an exploding ship is played.
+     * @param playShot If true, the sound cue for a shooting canon is played.
+     * @param playImpact If true, a sound is played when a target has been hit.
+     */
     public void playCanonTargetHit(boolean isLeftPlayer, boolean isHit, boolean playShot, boolean playImpact){
         Thread newGunThread = new Thread(() -> {
-            setUpShootingCanon(isLeftPlayer, isHit, playShot, playImpact);
+            setUpShootingCanonForThread(isLeftPlayer, isHit, playShot, playImpact);
         });
         newGunThread.start();
     }
-    private void setUpShootingCanon(boolean isLeftPlayer, boolean isHit, boolean playShot, boolean playImpact){
+
+    /**
+     * Animates the shooting of a canon and plays the corresponding audio files.
+     * @param isLeftPlayer If true, the canon of the left player shoots.
+     * @param isHit If true, the sound cue for an exploding ship is played.
+     * @param playShot If true, the sound cue for a shooting canon is played.
+     * @param playImpact If true, a sound is played when a target has been hit.
+     */
+    private void setUpShootingCanonForThread(boolean isLeftPlayer, boolean isHit, boolean playShot, boolean playImpact){
         Soundboard soundboardForGun = new Soundboard();
         if(playShot) {
             if (isLeftPlayer) {
                 GunPlayer1.setImage(Game.getPlayer1().gunShootingImage);
                 soundboardForGun.playCanonShot();
 
-                // Waiting for 600 milliseconds before switching out the sprite again
-                try {
-                    Thread.sleep(600);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-
+                letCurrentThreadWait();
                 GunPlayer1.setImage(Game.getPlayer1().gunDefaultImage);
             } else {
                 GunPlayer2.setImage(Game.getPlayer2().gunShootingImage);
                 soundboardForGun.playCanonShot();
 
-                // Waiting for 600 milliseconds before switching out the sprite again
-                try {
-                    Thread.sleep(600);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-
+                letCurrentThreadWait();
                 GunPlayer2.setImage(Game.getPlayer2().gunDefaultImage);
             }
         }
@@ -455,44 +513,68 @@ public class MainController {
             }
         }
     }
-    private void setUpShootingCanon(ImageView theGun, Image standardGun, Image shootingGun, boolean playImpact){
+    /**
+     * Animates the shooting of a canon and plays the corresponding audio files.
+     * @param theGun The ImageView of the canon that is shooting.
+     * @param standardGun The Image of the canon when it is not shooting.
+     * @param shootingGun The Image of the canon when it is shooting.
+     */
+    private void setUpShootingCanonForThread(ImageView theGun, Image standardGun, Image shootingGun){
         theGun.setImage(shootingGun);
         Soundboard soundboardForGun = new Soundboard();
         soundboardForGun.playCanonShot();
 
-        // Waiting for 600 milliseconds before switching out the sprite again
+        letCurrentThreadWait();
+        theGun.setImage(standardGun);
+        soundboardForGun.playImpactBoom();
+    }
+    /**
+     * Makes the current thread sleep for a given time.
+     */
+    private void letCurrentThreadWait(){
         try {
             Thread.sleep(600);
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        theGun.setImage(standardGun);
-        if (playImpact) {
-            soundboardForGun.playImpactBoom();
+            throw new RuntimeException(e);
         }
     }
 
-    // Methods to the canons rotate to always look at the mouse cursor
-    public void autoRotateInGameCanons(Button buttonToLookTowards) {
+
+
+    // Methods to handle the moving canons
+    /**
+     * Handles the canon looking at the mouse cursor, when the cursor is moved.
+     */
+    @FXML public void handleCanonMovingOnMouseMoved(MouseEvent mouseEvent) {
+        if(GunMenu1 != null && GunMenu2 != null && GunMenu3 != null) {
+            rotateCanon(150, -120, false, GunMenu1, mouseEvent);
+            rotateCanon(120, -150, false, GunMenu2, mouseEvent);
+            rotateCanon(40, -70, true, GunMenu3, mouseEvent);
+        }
+        if(GunPlayer1 != null && player1GunEnabled) {
+            rotateCanon(80, -80, true, GunPlayer1, mouseEvent);
+        }
+        if(GunPlayer2 != null && player2GunEnabled) {
+            rotateCanon(80, -80, false, GunPlayer2, mouseEvent);
+        }
+    }
+
+    /**
+     * Rotates enabled guns in-game to look towards a given button element.
+     * @param buttonToLookTowards The button element to look towards.
+     */
+    public void rotateInGameCanons(Button buttonToLookTowards) {
         if(player1GunEnabled) {
-            autoRotateCanon(80, -80, true, true, buttonToLookTowards);
+            rotateCanon(80, -80, true, true, buttonToLookTowards);
         }
         if(player2GunEnabled) {
-            autoRotateCanon(80, -80, false, false, buttonToLookTowards);
+            rotateCanon(80, -80, false, false, buttonToLookTowards);
         }
     }
-    private void autoRotateLeftCanon(MouseEvent eventFromMouse) {
-        autoRotateCanon(80, -80, true, GunPlayer1, eventFromMouse);
-    }
-    private void autoRotateRightCanon(MouseEvent eventFromMouse) {
-        autoRotateCanon(80, -80, false, GunPlayer2, eventFromMouse);
-    }
-    private void autoRotateAllMenuCanons(MouseEvent eventFromMouse) {
-        autoRotateCanon(150, -120, false, GunMenu1, eventFromMouse);
-        autoRotateCanon(120, -150, false, GunMenu2, eventFromMouse);
-        autoRotateCanon(40, -70, true, GunMenu3, eventFromMouse);
-    }
+    /**
+     * Switches out which of the 2 player canons is activated.
+     * @param isLeftPlayer If true, the left canon gets enabled.
+     */
     public void switchActiveCanon(boolean isLeftPlayer){
         if(isLeftPlayer) {
             player1GunEnabled = true;
@@ -503,6 +585,9 @@ public class MainController {
         }
         formatEnabledCanons();
     }
+    /**
+     * Format the player canons based on if they are enabled or not
+     */
     private void formatEnabledCanons(){
         if(player1GunEnabled){
             GunPlayer1.setOpacity(1);
@@ -517,16 +602,48 @@ public class MainController {
             GunPlayer2.setRotate(0);
         }
     }
-    public void autoRotateCanon(double angleUpper, double angleLower, boolean leftToRight, boolean isLeftPlayer, Button buttonToLookTowards){
+
+    /**
+     * Rotates a canon to look towards a button element.
+     * @param angleUpper The upper angle the canon can rotate to.
+     * @param angleLower The lower angle the canon can rotate to.
+     * @param leftToRight If true, the canon looks from left to right.
+     * @param isLeftPlayer If ture, the canon is the left player's canon.
+     * @param buttonToLookTowards The button element the canon should look towards.
+     */
+    public void rotateCanon(double angleUpper, double angleLower, boolean leftToRight, boolean isLeftPlayer, Button buttonToLookTowards){
         ImageView ivToRotate = GunPlayer1;
         if(!isLeftPlayer){
             ivToRotate = GunPlayer2;
         }
-
         double gunCenterX = ivToRotate.getLayoutX() + ivToRotate.getFitWidth() / 2;
         double gunCenterY = ivToRotate.getLayoutY() + ivToRotate.getFitHeight() / 2;
         double gunAngle = getAngleForImage(gunCenterX, gunCenterY, buttonToLookTowards);
-
+        rotateCanonEnforceThreshold(ivToRotate, angleUpper, angleLower, gunAngle, leftToRight);
+    }
+    /**
+     * Rotates the given canon to look towards the mouse cursor, from a certain upper and lower threshold for the angle.
+     * @param angleUpper Highest angle.
+     * @param angleLower Lowest angle.
+     * @param leftToRight True if image looks from left to right by default. False if it looks right to left.
+     * @param ivToRotate The ImageView to rotate.
+     * @param eventFromMouse The mouse event of the cursor to use to calculate the angle towards.
+     */
+    public void rotateCanon(double angleUpper, double angleLower, boolean leftToRight, ImageView ivToRotate, MouseEvent eventFromMouse) {
+        double gunCenterX = ivToRotate.getLayoutX() + ivToRotate.getFitWidth() / 2;
+        double gunCenterY = ivToRotate.getLayoutY() + ivToRotate.getFitHeight() / 2;
+        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
+        rotateCanonEnforceThreshold(ivToRotate, angleUpper, angleLower, gunAngle, leftToRight);
+    }
+    /**
+     * Rotates the gun within the given threshold
+     * @param ivToRotate The ImageView to rotate.
+     * @param angleUpper Highest angle.
+     * @param angleLower Lowest angle.
+     * @param gunAngle The angle the gun wants to point towards.
+     * @param leftToRight True if image looks from left to right by default. False if it looks right to left.
+     */
+    private void rotateCanonEnforceThreshold(ImageView ivToRotate, double angleUpper, double angleLower, double gunAngle, boolean leftToRight){
         // Rotates the gun inside the given threshold angles
         if(leftToRight) {
             if (gunAngle > angleUpper) {
@@ -547,38 +664,6 @@ public class MainController {
         }
     }
     /**
-     * Rotates the given image to look towards the mouse cursor, from a certain upper and lower threshold for the angle.
-     * @param angleUpper Highest angle.
-     * @param angleLower Lowest angle.
-     * @param leftToRight True if image looks from left to right by default. False if it looks right to left.
-     * @param ivToRotate The ImageView to rotate.
-     * @param eventFromMouse The mouse event of the cursor to use to calculate the angle towards.
-     */
-    public void autoRotateCanon(double angleUpper, double angleLower, boolean leftToRight, ImageView ivToRotate, MouseEvent eventFromMouse) {
-        double gunCenterX = ivToRotate.getLayoutX() + ivToRotate.getFitWidth() / 2;
-        double gunCenterY = ivToRotate.getLayoutY() + ivToRotate.getFitHeight() / 2;
-        double gunAngle = getAngleForImage(gunCenterX, gunCenterY, eventFromMouse);
-
-        // Rotates the gun inside the given threshold angles
-        if(leftToRight) {
-            if (gunAngle > angleUpper) {
-                gunAngle = angleUpper;
-            }
-            if (gunAngle < angleLower) {
-                gunAngle = angleLower;
-            }
-            ivToRotate.setRotate(gunAngle);
-        } else {
-            if (gunAngle < angleUpper && gunAngle >= 0){
-                gunAngle = angleUpper;
-            }
-            if (gunAngle > angleLower && gunAngle < 0){
-                gunAngle = angleLower;
-            }
-            ivToRotate.setRotate(gunAngle + 180);
-        }
-    }
-    /***
      * Calculates the angle at which an image has to be rotated so it follows the mouse cursor.
      * @param imageCenterX Center of the image to rotate.
      * @param imageCenterY Center of the image to rotate.
@@ -588,8 +673,7 @@ public class MainController {
     private double getAngleForImage(double imageCenterX, double imageCenterY, MouseEvent eventFromMouse) {
         double deltaX = eventFromMouse.getX() - imageCenterX;
         double deltaY = eventFromMouse.getY() - imageCenterY;
-        double imageAngle = Math.toDegrees(Math.atan2(deltaY, deltaX));
-        return imageAngle;
+        return Math.toDegrees(Math.atan2(deltaY, deltaX));
     }
     /**
      * Calculates the angle at which an image has to be rotated so it looks towards the cell.
@@ -601,9 +685,9 @@ public class MainController {
     private double getAngleForImage(double imageCenterX, double imageCenterY, Button buttonToLookTowards) {
         double deltaX = buttonToLookTowards.localToScene(0,0).getX() - imageCenterX;
         double deltaY = buttonToLookTowards.localToScene(0,0).getY() - imageCenterY;
-        double imageAngle = Math.toDegrees(Math.atan2(deltaY, deltaX));
-        return imageAngle;
+        return Math.toDegrees(Math.atan2(deltaY, deltaX));
     }
+
 
 
 

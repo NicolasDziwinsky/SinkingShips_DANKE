@@ -16,17 +16,50 @@ import javafx.stage.Stage;
 
 public class SceneSwitcher {
 
+    /**
+     * The current stage.
+     */
     public static Stage stage;
+    /**
+     * The current scene.
+     */
     public static Scene scene;
+    /**
+     * The current root.
+     */
     public static Parent root;
 
-    public static double currentWindowWidth, currentWindowHeight;
+    /**
+     * Stores the current width of the current window.
+     */
+    public static double currentWindowWidth;
+    /**
+     * Stores the current height of the current window.
+     */
+    public static double currentWindowHeight;
+    /**
+     * Stores the minimum width for displayed windows.
+     */
     public static int minWindowWidth = 1400;
+    /**
+     * Store the minimum height for display windows.
+     */
     public static int minWindowHeight = 800;
+    /**
+     * Tells you if the current window is currently maximized.
+     */
     public static boolean windowIsMaximized;
 
+    /**
+     * A soundboard object to play the sound cues for new scenes with.
+     */
     private static final Soundboard soundboardForIntros = new Soundboard();
 
+
+
+    /**
+     * Switch to the main menu scene.
+     */
     public static void switchToMainMenu(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneSwitcher.class.getResource("MainMenu.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -35,14 +68,18 @@ public class SceneSwitcher {
         // Plays random 'Krizelshiff' soundbyte
         soundboardForIntros.playKrizelshiff();
     }
-
+    /**
+     * Switch to the new game scene.
+     */
     public static void switchToNewGame(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneSwitcher.class.getResource("NewGame.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         setUpNewScene();
         soundboardForIntros.playPaper();
     }
-
+    /**
+     * Switch to the ship placement scene.
+     */
     public static void switchToShipPlacement(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneSwitcher.class.getResource("ShipPlacement.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -51,7 +88,9 @@ public class SceneSwitcher {
         // Plays random 'Ran an's gekrizel' soundbyte
         soundboardForIntros.playCueGo();
     }
-
+    /**
+     * Switch to the game scene.
+     */
     public static void switchToGame(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(SceneSwitcher.class.getResource("Game.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -69,6 +108,9 @@ public class SceneSwitcher {
 
     }
 
+    /**
+     * Set up everything that needs to be set up when the game switches to a new scene.
+     */
     public static void setUpNewScene(){
         calculateCellAndFontSize();
 
@@ -96,13 +138,16 @@ public class SceneSwitcher {
         stage.setMinWidth(minWindowWidth);
         stage.setTitle("KRIZLSHIFF");
     }
+
+    /**
+     * Stores the current screen size into variables and recalculates the new sizing for GUI elements.
+     */
     public static void adjustScreenSizeChange(){
         currentWindowHeight = stage.getHeight();
         currentWindowWidth = stage.getWidth();
         windowIsMaximized = stage.isMaximized();
         calculateCellAndFontSize();
     }
-
     /**
      * Calculates the ideal cell size for the current window size and saves it in the game class
      */

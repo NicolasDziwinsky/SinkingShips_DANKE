@@ -81,7 +81,27 @@ public class PlacementGrid {
         shipPreview.setImage(image);
     }
 
-    // Methods to handle the mouse over ship preview
+    // Sets up the display of the current ship on mouse over
+    /**
+     * Handles the mouse enter of cell. Displays the current ship on mouse over.
+     */
+    private void handleCellMouseEnter(MouseEvent event) {
+        setUpHoverDisplay();
+        Button thisButton = (Button) event.getSource();
+        mainController.rotateInGameCanons((Button)event.getSource());
+        shipPreviewHover.setLayoutX(thisButton.localToScene(0,0).getX());
+        shipPreviewHover.setLayoutY(thisButton.localToScene(0,0).getY());
+        mainController.RootPane.getChildren().add(shipPreviewHover);
+    }
+    /**
+     * Handles the mouse exit of cell. Removes the ImageView that displays te current ship on mouse over.
+     */
+    private void handleCellMouseExit(MouseEvent event) {
+        mainController.RootPane.getChildren().remove(shipPreviewHover);
+    }
+    /**
+     * Sets up the ImageView that displays the ship on mouseOver, that will be placed next.
+     */
     private void setUpHoverDisplay() {
         shipPreviewHover = new ImageView();
         shipPreviewHover.setFitHeight(Game.cellSize);
@@ -96,16 +116,5 @@ public class PlacementGrid {
         } else {
             shipPreviewHover.getTransforms().clear();
         }
-    }
-    private void handleCellMouseEnter(MouseEvent event) {
-        setUpHoverDisplay();
-        Button thisButton = (Button) event.getSource();
-        mainController.autoRotateInGameCanons((Button)event.getSource());
-        shipPreviewHover.setLayoutX(thisButton.localToScene(0,0).getX());
-        shipPreviewHover.setLayoutY(thisButton.localToScene(0,0).getY());
-        mainController.RootPane.getChildren().add(shipPreviewHover);
-    }
-    private void handleCellMouseExit(MouseEvent event) {
-        mainController.RootPane.getChildren().remove(shipPreviewHover);
     }
 }

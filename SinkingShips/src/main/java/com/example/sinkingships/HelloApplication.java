@@ -55,7 +55,7 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        // setProperty lines are added to deal with font rendering issues
+        // setProperty is added to deal with font rendering issues
         System.setProperty("prism.lcdtext", "false");
         System.setProperty("prism.text", "t2k");
         launch();
