@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="RootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="800.0" onMouseClicked="#handleMouseClicked" onMouseMoved="#handleMouseMoved" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
+<AnchorPane fx:id="RootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="800.0" onMouseClicked="#handleCanonShootingOnMouseClicked" onMouseMoved="#handleCanonMovingOnMouseMoved" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
 
    <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="decorations" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="100.0">
       <Image backgroundLoading="true" url="@../../../img/deco/deco_cools.png" />
@@ -33,11 +33,11 @@
    </ImageView>
 
    <VBox prefHeight="720.0" prefWidth="694.0" spacing="8.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="96.0">
-      <Button fx:id="NewGame" mnemonicParsing="false" onAction="#switchToNewGame" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="New Game" />
-      <Button fx:id="LoadGame" disable="true" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="Load Game" />
-      <Button fx:id="Tutorial" disable="true" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="Tutorial" />
-      <Button fx:id="Scoreboard" disable="true" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="Scoreboard" />
-      <Button fx:id="Exit" mnemonicParsing="false" onAction="#closeWindow" onMouseEntered="#handleMouseEntered" styleClass="mainMenuButton" text="Exit" />
+      <Button fx:id="NewGame" mnemonicParsing="false" onAction="#switchToNewGame" onMouseEntered="#handleClickableElementOnMouseEntered" styleClass="mainMenuButton" text="New Game" />
+      <Button fx:id="LoadGame" disable="true" mnemonicParsing="false" onMouseEntered="#handleClickableElementOnMouseEntered" styleClass="mainMenuButton" text="Load Game" />
+      <Button fx:id="Tutorial" disable="true" mnemonicParsing="false" onMouseEntered="#handleClickableElementOnMouseEntered" styleClass="mainMenuButton" text="Tutorial" />
+      <Button fx:id="Scoreboard" disable="true" mnemonicParsing="false" onMouseEntered="#handleClickableElementOnMouseEntered" styleClass="mainMenuButton" text="Scoreboard" />
+      <Button fx:id="Exit" mnemonicParsing="false" onAction="#closeWindow" onMouseEntered="#handleClickableElementOnMouseEntered" styleClass="mainMenuButton" text="Exit" />
    </VBox>
 
    <ImageView fx:id="Title" fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="48.0">
@@ -47,8 +47,8 @@
 
    <VBox AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0">
       <HBox styleClass="soundSettings">
-         <Button fx:id="SoundEffectReset" mnemonicParsing="false" onAction="#handleSoundMute" onMouseEntered="#handleMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" />
-         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleMouseEntered" onMouseReleased="#handleSoundSet" prefWidth="150.0" value="100.0" />
+         <Button fx:id="SoundEffectReset" mnemonicParsing="false" onAction="#handleSoundMute" onMouseEntered="#handleClickableElementOnMouseEntered" prefHeight="32.0" prefWidth="32.0" styleClass="volumeButton" />
+         <Slider fx:id="SoundEffectSlider" onMouseEntered="#handleClickableElementOnMouseEntered" onMouseReleased="#handleSoundSet" prefWidth="150.0" value="100.0" />
       </HBox>
    </VBox>
 
@@ -62,7 +62,7 @@
       <Image url="@../../../img/canon/canon_3_paper.png" />
    </ImageView>
 
-   <Button fx:id="Credits" mnemonicParsing="false" onMouseEntered="#handleMouseEntered" text="Credits" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="24.0" />
+   <Button fx:id="Credits" disable="true" mnemonicParsing="false" onMouseEntered="#handleClickableElementOnMouseEntered" text="Credits" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="24.0" />
    <ImageView fx:id="SubTitle" fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="24.0">
       <Image backgroundLoading="true" url="@../../../img/title_danke.png" />
    </ImageView>

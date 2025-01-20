@@ -22,7 +22,6 @@
     -fx-font-family: "Rubik";
     -fx-font-weight: 400;
 }
-
 .decorations {
     z-index: 1000;
 }
@@ -184,30 +183,6 @@
 .standardCheckbox:selected .box {
     -fx-background-image: url("img/check_true.png");
 }
-
-/*
-#GunPlayer2 {
-    -fx-opacity: 0.5;
-}*/
-
-/*.gameCellButton,
-.placementCellButton {
-    -fx-pref-height: 70px;
-    -fx-pref-width: 70px;
-    -fx-background-image: url("img/target_hit1.png");
-    -fx-background-color: none;
-    -fx-background-position: center;
-    -fx-background-size: 100%;
-    -fx-background-repeat: no-repeat;
-}
-.gameCellButton:hover,
-.placementCellButton:hover {
-    -fx-background-image: url("img/cursor_shoot.png");
-    -fx-background-color: none;
-    -fx-background-position: center;
-    -fx-background-size: 100%;
-    -fx-background-repeat: no-repeat;
-}*/
 
 #PlacementGridFX,
 #ContainerGrid,
