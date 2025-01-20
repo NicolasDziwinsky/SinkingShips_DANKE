@@ -6,9 +6,14 @@ import java.net.URL;
 import java.util.Random;
 
 public class Soundboard {
+    /**
+     * The volume of the played sound effects. 1.0f is the maximum. 0.0f is the minimum.
+     */
     private static float volumeEffects = 1.0f;
+    /**
+     * This value tells you if the sound is muted. If true, sounds won't be played.
+     */
     public static boolean effectsIsMuted = false;
-
 
     /**
      * Sets the Volume of the soundboard.
@@ -26,30 +31,57 @@ public class Soundboard {
         return volumeEffects;
     }
 
+    /**
+     * Plays one of the 'Krizelshiff' soundbites available at random.
+     */
     public void playKrizelshiff(){
         playRndSoundsInRange("/audio/Kritzlschiff", 10);
     }
+    /**
+     * Plays one of the 'Jetzt krizeln wir sie uns' soundbites available at random.
+     */
     public void playCueGo(){
         playRndSoundsInRange("/audio/Go", 3);
     }
+    /**
+     * Plays one of the 'Wir haben sie weggekrizelt' soundbites available at random.
+     */
     public void playCueWon(){
         playRndSoundsInRange("/audio/Won", 3);
     }
+    /**
+     * Plays one of the 'Wir haben verloren' soundbites available at random.
+     */
     public void playCueLost(){
         playRndSoundsInRange("/audio/Lost", 3);
     }
+    /**
+     * Plays one of the shooting canon soundbites available at random.
+     */
     public void playCanonShot(){
         playRndSoundsInRange("/audio/Peng", 15);
     }
+    /**
+     * Plays one of the impacting projectile soundbites available at random.
+     */
     public void playImpactBoom(){
         playRndSoundsInRange("/audio/Boom", 8);
     }
+    /**
+     * Plays one of the available soundbites for when an empty game cell is hit at random.
+     */
     public void playMissed(){
         playRndSoundsInRange("/audio/Water", 6);
     }
+    /**
+     * Plays one of the available soundbites for when a page is turned at random.
+     */
     public void playPaper(){
         playRndSoundsInRange("/audio/Paper", 3);
     }
+    /**
+     * Plays one of the available soundbites for cat noises at random.
+     */
     public void playCatNoise(){
         playRndSoundsInRange("/audio/Cat", 4);
     }
@@ -65,9 +97,9 @@ public class Soundboard {
         Random random = new Random();
         int fileNumber = random.nextInt(range) + 1;
         if(fileNumber >= 10){
-            audioFile = getClass().getResource(fileLinkStart + String.valueOf(fileNumber) + ".wav");
+            audioFile = getClass().getResource(fileLinkStart + fileNumber + ".wav");
         } else {
-            audioFile = getClass().getResource(fileLinkStart + "0" + String.valueOf(fileNumber) + ".wav");
+            audioFile = getClass().getResource(fileLinkStart + "0" + fileNumber + ".wav");
         }
         this.playSpecificSoundFile(audioFile);
     }

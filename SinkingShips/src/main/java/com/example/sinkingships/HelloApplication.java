@@ -32,8 +32,6 @@ public class HelloApplication extends Application {
 
         SceneSwitcher.setUpNewScene();
 
-        System.out.println(stage.getHeight() + " " + stage.getWidth());
-
         // Set up listeners for screen size changes
         SceneSwitcher.stage.widthProperty().addListener((observable, oldValue, newValue) -> {
             SceneSwitcher.adjustScreenSizeChange();
@@ -49,7 +47,7 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        // setProperty lines are added to deal with font rendering issues
+        // setProperty is added to deal with font rendering issues
         System.setProperty("prism.lcdtext", "false");
         System.setProperty("prism.text", "t2k");
         launch();
