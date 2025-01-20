@@ -88,7 +88,7 @@ public class PlacementGrid {
     private void handleCellMouseEnter(MouseEvent event) {
         setUpHoverDisplay();
         Button thisButton = (Button) event.getSource();
-        mainController.rotateInGameCanons((Button)event.getSource());
+        mainController.rotateInGameCanons(thisButton);
         shipPreviewHover.setLayoutX(thisButton.localToScene(0,0).getX());
         shipPreviewHover.setLayoutY(thisButton.localToScene(0,0).getY());
         mainController.RootPane.getChildren().add(shipPreviewHover);

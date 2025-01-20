@@ -1,17 +1,15 @@
 package com.example.sinkingships;
 
-import com.sun.tools.javac.Main;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * //Singleton
- *     //used to share data between scenes
+ * Singleton
+ * used to share data between scenes
  */
 public class Game {
     private static Player Player1;
