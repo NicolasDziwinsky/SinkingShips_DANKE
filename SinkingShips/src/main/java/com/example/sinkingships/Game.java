@@ -212,6 +212,11 @@ public class Game {
         new Thread(sleeper).start();
     }
 
+    public static void resetGame() {
+        turn = 1;
+        gameOver = false;
+    }
+
     //shows screen(Player)
 
 }

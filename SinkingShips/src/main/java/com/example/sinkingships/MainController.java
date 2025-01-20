@@ -664,7 +664,9 @@ public class MainController {
 
     //This block abstracts the scene switching, which is actually handled by the SceneSwitcher
     public void switchToMainMenu(ActionEvent event) throws IOException {
+        Game.resetGame();
         SceneSwitcher.switchToMainMenu(event);
+        gridCounter = 0;
     }
     public void switchToNewGame(ActionEvent event) throws IOException {
         SceneSwitcher.switchToNewGame(event);
@@ -697,6 +699,7 @@ public class MainController {
      */
     public void nextGrid(ActionEvent event) throws IOException {
         if (gridCounter == 0) {
+            Game.placedRandom = false;
             currentPlayer = Game.getPlayer1();
             StartGame.setText("Next Player");
         } else if (gridCounter == 1) {
