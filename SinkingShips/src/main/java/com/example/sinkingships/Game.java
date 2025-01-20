@@ -1,8 +1,10 @@
 package com.example.sinkingships;
 
+import com.sun.tools.javac.Main;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,48 +14,48 @@ import java.util.Random;
  *     //used to share data between scenes
  */
 public class Game {
-    static private Player Player1;
-    static private Player Player2;
-    static public AiBrain aiBrain1;
-    static public AiBrain aiBrain2;
-    static public StackPane winningScreen;
+    private static Player Player1;
+    private static Player Player2;
+    public static AiBrain aiBrain1;
+    public static AiBrain aiBrain2;
+    public static VBox winningScreen;
 
     // Standardizes the cell Size, so it can be applied from anywhere
-    static public int cellSize = 70;
+    public static int cellSize = 70;
 
-    static private int turn = 1;
-    static public boolean gameOver = false;
-    static private Cell lastCellHit;
-    static private ArrayList<Cell> cellsHit = new ArrayList<Cell>();
-    static public Random rand = new Random();
+    private static int turn = 1;
+    public static boolean gameOver = false;
+    private static Cell lastCellHit;
+    private static ArrayList<Cell> cellsHit = new ArrayList<Cell>();
+    public static Random rand = new Random();
     static boolean placedRandom = false;
     /**
      *     //used to access the object
      */
 
-    static public Player getPlayer1() {
+    public static Player getPlayer1() {
         return Player1;
     }
 
-    static public Player getPlayer2() {
+    public static Player getPlayer2() {
         return Player2;
     }
 
-    static public void setPlayer1(Player player) {
+    public static void setPlayer1(Player player) {
         Player1 = player;
     }
 
-    static public void setPlayer2(Player player) {
+    public static void setPlayer2(Player player) {
         Player2 = player;
     }
 
-    static public int getTurn(){
+    public static int getTurn(){
         return turn;
     }
 
 
 
-    static public boolean HitHappened() {
+    public static boolean HitHappened() {
         //0 = occupied
         //1 = nicht occupied aber valid
         //2 = nicht valid
@@ -99,8 +101,6 @@ public class Game {
 
             //Player vs Player
         }else if (!gameOver) {
-            checkWinningPlayer();
-
             System.out.println("Hit Happened ");
             System.out.println(turn);
             checkWinningPlayer();
@@ -119,7 +119,7 @@ public class Game {
         return true;
     }
 
-    static public void showShips(Player player, boolean shown){
+    public static void showShips(Player player, boolean shown){
         GameBoard gameBoard = player.getGameBoard();
 
         for(Ship ship:gameBoard.ShipList){
@@ -135,7 +135,7 @@ public class Game {
 
     }
 
-    static public void toggleField(Player player, boolean activate){
+    public static void toggleField(Player player, boolean activate){
         GameBoard gameBoard = player.getGameBoard();
 
         for(Cell cell:gameBoard.getCells()){
@@ -147,24 +147,55 @@ public class Game {
         }
     }
 
-    static public Object[] randomCell(Object[] cells) {
+    public static Object[] randomCell(Object[] cells) {
         int maxValue = cells.length;
         int value = rand.nextInt(maxValue);
-        Object[] returnObjects = new Object[]{cells[value], value};
-        return returnObjects;
+        return new Object[]{cells[value], value};
     }
 
-    static public void checkWinningPlayer() {
+    public static void checkWinningPlayer() {
         if (Player1.checkIfLost()) {
             System.out.println("Player 2 Won");
             gameOver = true;
-            winningScreen.visibleProperty().set(true);
+            setWinningScreen(Player2, Player1);
             //show end screen
         } else if (Player2.checkIfLost()) {
             System.out.println("Player 1 Won");
             gameOver = true;
-            winningScreen.visibleProperty().set(true);
+            setWinningScreen(Player1, Player2);
             //show end screen
+        }
+    }
+    private static void setWinningScreen(Player winningPlayer, Player losingPlayer){
+        if(winningScreen != null) {
+            // Set up finish screen
+            Label playerLabel = (Label) winningScreen.lookup("#WinningScreenPlayer");
+            playerLabel.setText(winningPlayer.getName() + " Won");
+            Label turnLabel = (Label) winningScreen.lookup("#WinningScreenTurns");
+            turnLabel.setText("in " + turn + " turns");
+
+            Thread animationThread = new Thread(() -> {
+                try {
+                    // Wait a while so the soundbites aren't overlapping with canon shots
+                    Thread.sleep(600);
+                    winningScreen.visibleProperty().set(true);
+
+                    // Play 'won' or 'lost' soundbite
+                    Soundboard sbToPlaySound = new Soundboard();
+                    if(winningPlayer.isAI() && losingPlayer.isAI()){
+                        sbToPlaySound.playCueWon();
+                    } else if(winningPlayer.isAI() && !losingPlayer.isAI()){
+                        sbToPlaySound.playCueLost();
+                    } else if(!winningPlayer.isAI() && losingPlayer.isAI()){
+                        sbToPlaySound.playCueWon();
+                    } else if(!winningPlayer.isAI() && !losingPlayer.isAI()){
+                        sbToPlaySound.playCueWon();
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            animationThread.start();
         }
     }
 

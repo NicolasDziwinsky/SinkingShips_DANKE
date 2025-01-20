@@ -8,7 +8,6 @@ import java.util.Random;
 public class Soundboard {
     private static float volumeEffects = 1.0f;
     public static boolean effectsIsMuted = false;
-    private AudioInputStream audioInputStream;
 
 
     /**
@@ -28,53 +27,47 @@ public class Soundboard {
     }
 
     public void playKrizelshiff(){
-        playRndSoundsInRange("/audio/Kritzlschiff", 10, ".wav");
+        playRndSoundsInRange("/audio/Kritzlschiff", 10);
     }
     public void playCueGo(){
-        playRndSoundsInRange("/audio/Go", 3, ".wav");
+        playRndSoundsInRange("/audio/Go", 3);
     }
     public void playCueWon(){
-        playRndSoundsInRange("/audio/Won", 3, ".wav");
+        playRndSoundsInRange("/audio/Won", 3);
     }
     public void playCueLost(){
-        playRndSoundsInRange("/audio/Lost", 3, ".wav");
+        playRndSoundsInRange("/audio/Lost", 3);
     }
     public void playCanonShot(){
-        playRndSoundsInRange("/audio/Peng", 15, ".wav");
+        playRndSoundsInRange("/audio/Peng", 15);
     }
     public void playImpactBoom(){
-        playRndSoundsInRange("/audio/Boom", 8, ".wav");
+        playRndSoundsInRange("/audio/Boom", 8);
     }
     public void playMissed(){
-        playRndSoundsInRange("/audio/Water", 6, ".wav");
-    }
-    public void playScribble(){
-        playRndSoundsInRange("/audio/Scribble", 2, ".wav");
-    }
-    public void playClick(){
-        playRndSoundsInRange("/audio/ClickBig", 1, ".wav");
+        playRndSoundsInRange("/audio/Water", 6);
     }
     public void playPaper(){
-        playRndSoundsInRange("/audio/Paper", 3, ".wav");
+        playRndSoundsInRange("/audio/Paper", 3);
     }
     public void playCatNoise(){
-        playRndSoundsInRange("/audio/Cat", 4, ".wav");
+        playRndSoundsInRange("/audio/Cat", 4);
     }
 
     /**
      * Plays a sound from a random set of sounds
+     *
      * @param fileLinkStart Start of the link for the random sounds
-     * @param range The inclusive range of file numbers. The file numbers start at 1
-     * @param fileLinkEnd End of the link for the random sounds after the number
+     * @param range         The inclusive range of file numbers. The file numbers start at 1
      */
-    private void playRndSoundsInRange(String fileLinkStart, int range, String fileLinkEnd){
+    private void playRndSoundsInRange(String fileLinkStart, int range){
         URL audioFile;
         Random random = new Random();
         int fileNumber = random.nextInt(range) + 1;
         if(fileNumber >= 10){
-            audioFile = getClass().getResource(fileLinkStart + String.valueOf(fileNumber) + fileLinkEnd);
+            audioFile = getClass().getResource(fileLinkStart + String.valueOf(fileNumber) + ".wav");
         } else {
-            audioFile = getClass().getResource(fileLinkStart + "0" + String.valueOf(fileNumber) + fileLinkEnd);
+            audioFile = getClass().getResource(fileLinkStart + "0" + String.valueOf(fileNumber) + ".wav");
         }
         this.playSpecificSoundFile(audioFile);
     }
@@ -85,7 +78,7 @@ public class Soundboard {
      */
     private void playSpecificSoundFile(URL audioFile){
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(audioFile);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile);
             Clip audioClip = AudioSystem.getClip();
             audioClip.open(audioInputStream);
 

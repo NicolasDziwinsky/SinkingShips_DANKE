@@ -1,14 +1,8 @@
 package com.example.sinkingships;
 
-import com.sun.tools.javac.Main;
-import javafx.scene.ImageCursor;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.image.ImageView;
 

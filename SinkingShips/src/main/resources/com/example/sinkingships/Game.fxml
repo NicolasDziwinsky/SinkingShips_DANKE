@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="RootPane" minHeight="800.0" minWidth="800.0" onMouseClicked="#handleMouseClicked" onMouseMoved="#handleMouseMoved" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
+<AnchorPane fx:id="RootPane" minHeight="800.0" minWidth="800.0" onMouseClicked="#handleMouseClicked" onMouseMoved="#handleMouseMoved"
+            prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sinkingships.MainController">
 
    <VBox AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="24.0">
       <HBox styleClass="soundSettings">
@@ -85,14 +85,11 @@
       <Image url="@../../../img/canon/canon_2_flip.png" />
    </ImageView>
 
-   <Button fx:id="StartGame" mnemonicParsing="false" onAction="#StartGame" styleClass="mainMenuButton" text="Start" AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="24.0" />
-   <StackPane fx:id="WinningScreen" layoutX="633.0" layoutY="136.0" prefHeight="589.0" prefWidth="719.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 5px;" visible="false">
-      <children>
-         <Label fx:id="WinningScreenLabel" prefHeight="103.0" prefWidth="448.0" textAlignment="CENTER">
-            <font>
-               <Font name="Comic Sans MS" size="50.0" />
-            </font>
-         </Label>
-      </children>
-   </StackPane>
+   <Button fx:id="StartGame" mnemonicParsing="false" onAction="#StartGame" styleClass="mainMenuButton" onMouseEntered="#handleMouseEntered" text="Start" AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="24.0" />
+
+   <VBox fx:id="WinningScreen" alignment="CENTER" prefHeight="400.0" prefWidth="500.0" visible="false">
+      <Label fx:id="WinningScreenPlayer" styleClass="standardText" textAlignment="CENTER" text="Player won"/>
+      <Label fx:id="WinningScreenTurns" styleClass="standardText" textAlignment="CENTER" text="in X turns"/>
+      <Button fx:id="WinningScreenExit" onAction="#switchToMainMenu" onMouseEntered="#handleMouseEntered" mnemonicParsing="false" text="back to menu" styleClass="mainMenuButton"/>
+   </VBox>
 </AnchorPane>

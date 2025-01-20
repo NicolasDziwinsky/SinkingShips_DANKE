@@ -123,7 +123,11 @@ public class SceneSwitcher {
             Game.cellSize = idealHeight/10;
         }
         if(root != null){
-            root.setStyle("-fx-font-size: " + String.valueOf(Game.cellSize/2) + "px;");
+            int fontSize = Game.cellSize/2;
+            if(Game.cellSize > 90){
+                fontSize = 45;
+            }
+            root.setStyle("-fx-font-size: " + fontSize + "px;");
         }
     }
 

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Random;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.ImageCursor;
@@ -15,15 +14,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Rotate;
 
 //all major logic should happen here, because in here all created objects can interact with one another
 public class MainController {
     // General
     @FXML public AnchorPane RootPane;
     @FXML public GridPane PlacementGridFX;
-    @FXML public GridPane ContainerGrid;
     @FXML public Label PlayerNamePlacement;
     @FXML public Button StartGame;
     @FXML public Button RandomPlacement;
@@ -34,19 +32,22 @@ public class MainController {
     @FXML public ImageView GunMenu1;
     @FXML public ImageView GunMenu2;
     @FXML public ImageView GunMenu3;
-    @FXML public Button SoundMusicReset;
     @FXML public Button SoundEffectReset;
-    @FXML public Slider SoundMusicSlider;
     @FXML public Slider SoundEffectSlider;
     @FXML public Button Back;
     @FXML public ImageView ShipPreview;
-    @FXML public StackPane WinningScreen;
+    @FXML public VBox WinningScreen;
+    @FXML public Label WinningScreenPlayer;
+    @FXML public Label WinningScreenTurns;
+    @FXML public Button WinningScreenExit;
+    @FXML public ImageView Title;
 
     // New Game
     @FXML public TextField Name1;
     @FXML public TextField Name2;
     @FXML public CheckBox AiCheckbox1;
     @FXML public CheckBox AiCheckbox2;
+    @FXML public ImageView TicTacToeDeco;
 
     // Main Menu
     @FXML public Button NewGame;
@@ -55,33 +56,39 @@ public class MainController {
     @FXML public Button Scoreboard;
     @FXML public Button Exit;
     @FXML public Button Credits;
+    @FXML public ImageView SubTitle;
 
-    // Everything to do with the canons
-    public boolean canonIsHovered;
-    public boolean player1GunEnabled;
-    public boolean player2GunEnabled;
-    @FXML public ImageView Image1;
-    @FXML public Button Image1Back;
-    @FXML public Button Image1Forward;
-    @FXML public ImageView Image2;
-    @FXML public Button Image2Back;
-    @FXML public Button Image2Forward;
+    // Canons
     @FXML public VBox Player1CanonSelector;
     @FXML public VBox Player2CanonSelector;
-    @FXML public ImageView TicTacToeDeco;
+    @FXML public ImageView CanonImage1;
+    @FXML public Button CanonImage1Back;
+    @FXML public Button CanonImage1Forward;
+    @FXML public ImageView CanonImage2;
+    @FXML public Button CanonImage2Back;
+    @FXML public Button CanonImage2Forward;
+    private boolean canonIsHovered;
+    private boolean player1GunEnabled;
+    private boolean player2GunEnabled;
     private Image player1GunDefault;
     private Image player1GunShooting;
     private Image player2GunDefault;
     private Image player2GunShooting;
+    private int currentGunPlayer1;
+    private int currentGunPlayer2;
 
-    public int gridCounter = 0;
-    public Player currentPlayer;
+    // Placement Grid
+    @FXML public Button RotateButton;
+
+    // Game
+    private int gridCounter = 0;
+    private Player currentPlayer;
 
 
 
     // Everything in this block is to try out stuff with the moving canons and playing sounds
     @FXML public void initialize() {
-        if(Image1 != null && Image2 != null) {
+        if(CanonImage1 != null && CanonImage2 != null) {
             currentGunPlayer1 = 1;
             currentGunPlayer2 = 1;
         }
@@ -107,25 +114,30 @@ public class MainController {
         if(SceneSwitcher.stage != null) {
             // Adds Listeners to adjust the size of elements when the screen size changes
             SceneSwitcher.stage.widthProperty().addListener((obs, oldScene, newScene) -> {
-                resizeGUI();
+                setUpGameBoardSize();
             });
             SceneSwitcher.stage.heightProperty().addListener((obs, oldScene, newScene) -> {
-                resizeGUI();
+                setUpGameBoardSize();
             });
         }
+
+        if(WinningScreen != null) {
+            WinningScreen.visibleProperty().addListener((obs, oldScene, newScene) -> {
+                setUpGameBoardSize();
+            });
+        }
+
         setUpSoundControls();
     }
 
-    public void resizeGUI(){
-        setUpGameBoardSize();
-    }
     /**
      * Sets up the size of the game boards so they fit the screen well
      */
     private void setUpGameBoardSize(){
         // Resize the Game Boards
-        double newMapSize = (double)(Game.cellSize*10+Game.cellSize/5+Game.cellSize/5);
-        Insets newMapPadding = new Insets((double)(Game.cellSize/5));
+        double newMapSize = Game.cellSize*10+ (double) Game.cellSize /5+ (double) Game.cellSize /5;
+        Insets newMapPadding = new Insets((double) Game.cellSize /5);
+        Insets newTextFieldPadding = new Insets((double) Game.cellSize /5, Game.cellSize, (double) Game.cellSize /5, Game.cellSize);
         if(Map1 != null && Map2 != null) {
             Map1.setPrefSize(newMapSize,newMapSize);
             Map1.setPadding(newMapPadding);
@@ -137,66 +149,88 @@ public class MainController {
             PlacementGridFX.setPadding(newMapPadding);
         }
 
+        // Ship Placement Window
+        if(PlacementGridFX != null) {
+            ShipPreview.setFitHeight(Game.cellSize*2);
+            ShipPreview.setFitWidth(Game.cellSize*10);
+            AnchorPane.setTopAnchor(ShipPreview, 80.0);
+            AnchorPane.setLeftAnchor(ShipPreview, (double)Game.cellSize*10+Game.cellSize/2+80.0);
+            AnchorPane.setTopAnchor(RotateButton, (double)Game.cellSize*2+80.0);
+            AnchorPane.setLeftAnchor(RotateButton, (double)Game.cellSize*13+80.0);
+            AnchorPane.setTopAnchor(RandomPlacement, (double)Game.cellSize*10+Game.cellSize/5*2+80.0);
+            AnchorPane.setLeftAnchor(RandomPlacement, 90.0);
+            AnchorPane.setLeftAnchor(PlayerNamePlacement, (double)Game.cellSize*13+84.0);
+            AnchorPane.setTopAnchor(PlayerNamePlacement, (double)Game.cellSize*4+Game.cellSize/2+80.0);
+        }
+
         // Reposition the guns
         if(GunPlayer1 != null && GunPlayer2 != null) {
-            AnchorPane.setTopAnchor(GunPlayer1, (double)Game.cellSize*5+80-GunPlayer1.getFitHeight()/2);
+            AnchorPane.setTopAnchor(GunPlayer1, (double)Game.cellSize*3+80-GunPlayer1.getFitHeight()/2);
             AnchorPane.setLeftAnchor(GunPlayer1, (double)Game.cellSize*10+48-GunPlayer1.getFitWidth()/4);
-            AnchorPane.setTopAnchor(GunPlayer2, (double)Game.cellSize*5+80-GunPlayer1.getFitHeight()/2);
+            AnchorPane.setTopAnchor(GunPlayer2, (double)Game.cellSize*7+80-GunPlayer1.getFitHeight()/2);
             AnchorPane.setRightAnchor(GunPlayer2, (double)Game.cellSize*10+48-GunPlayer1.getFitWidth()/4);
         }
 
         // Resize "New Game" Window
-        if(Image1 != null && Image2 != null) {
-            if(SceneSwitcher.currentWindowHeight < 950){
+        if(CanonImage1 != null && CanonImage2 != null) {
+            if(SceneSwitcher.currentWindowWidth/SceneSwitcher.currentWindowHeight > 1.8){
                 TicTacToeDeco.setOpacity(0);
             } else {
                 TicTacToeDeco.setOpacity(1);
             }
-            Image1.setFitHeight(Game.cellSize * 4);
-            Image1.setFitWidth(Game.cellSize * 4);
-            Image1Back.setPrefHeight(Game.cellSize * 4);
-            Image1Back.setPrefWidth(Game.cellSize * 2);
-            Image1Forward.setPrefHeight(Game.cellSize * 4);
-            Image1Forward.setPrefWidth(Game.cellSize * 2);
-            Image2.setFitHeight(Game.cellSize * 4);
-            Image2.setFitWidth(Game.cellSize * 4);
-            Image2Back.setPrefHeight(Game.cellSize * 4);
-            Image2Back.setPrefWidth(Game.cellSize * 2);
-            Image2Forward.setPrefHeight(Game.cellSize * 4);
-            Image2Forward.setPrefWidth(Game.cellSize * 2);
+            CanonImage1.setFitHeight(Game.cellSize * 4);
+            CanonImage1.setFitWidth(Game.cellSize * 4);
+            CanonImage1Back.setPrefHeight(Game.cellSize * 4);
+            CanonImage1Back.setPrefWidth(Game.cellSize * 2);
+            CanonImage1Forward.setPrefHeight(Game.cellSize * 4);
+            CanonImage1Forward.setPrefWidth(Game.cellSize * 2);
+            CanonImage2.setFitHeight(Game.cellSize * 4);
+            CanonImage2.setFitWidth(Game.cellSize * 4);
+            CanonImage2Back.setPrefHeight(Game.cellSize * 4);
+            CanonImage2Back.setPrefWidth(Game.cellSize * 2);
+            CanonImage2Forward.setPrefHeight(Game.cellSize * 4);
+            CanonImage2Forward.setPrefWidth(Game.cellSize * 2);
             Name1.setPrefWidth(Game.cellSize * 8);
             Name1.setPrefHeight(Game.cellSize * 3);
+            Name1.setPadding(newTextFieldPadding);
             Name2.setPrefWidth(Game.cellSize * 8);
             Name2.setPrefHeight(Game.cellSize * 3);
+            Name2.setPadding(newTextFieldPadding);
             AnchorPane.setLeftAnchor(Player1CanonSelector, (double)Game.cellSize * 3);
             AnchorPane.setTopAnchor(Player1CanonSelector, (double)Game.cellSize * 2);
             AnchorPane.setRightAnchor(Player2CanonSelector, (double)Game.cellSize * 3);
             AnchorPane.setTopAnchor(Player2CanonSelector, (double)Game.cellSize * 2);
         }
+
+        // Reposition Winning Screen
+        if(WinningScreen != null) {
+            AnchorPane.setLeftAnchor(WinningScreen, RootPane.getWidth() / 2 - WinningScreen.getWidth() / 2);
+            AnchorPane.setTopAnchor(WinningScreen, RootPane.getHeight() / 2 - WinningScreen.getHeight() / 2);
+        }
     }
 
+
+
     // Methods to handle the gun selection menu
-    private int currentGunPlayer1;
-    private int currentGunPlayer2;
     @FXML public void handleNextCanonPlayer1(){
         currentGunPlayer1++;
         currentGunPlayer1 = checkRotationInt(currentGunPlayer1);
-        displayCurrentCanon(Image1, currentGunPlayer1, "");
+        displayCurrentCanon(CanonImage1, currentGunPlayer1, "");
     }
     @FXML public void handlePrevCanonPlayer1(){
         currentGunPlayer1--;
         currentGunPlayer1 = checkRotationInt(currentGunPlayer1);
-        displayCurrentCanon(Image1, currentGunPlayer1, "");
+        displayCurrentCanon(CanonImage1, currentGunPlayer1, "");
     }
     @FXML public void handleNextCanonPlayer2(){
         currentGunPlayer2++;
         currentGunPlayer2 = checkRotationInt(currentGunPlayer2);
-        displayCurrentCanon(Image2, currentGunPlayer2, "_flip");
+        displayCurrentCanon(CanonImage2, currentGunPlayer2, "_flip");
     }
     @FXML public void handlePrevCanonPlayer2(){
         currentGunPlayer2--;
         currentGunPlayer2 = checkRotationInt(currentGunPlayer2);
-        displayCurrentCanon(Image2, currentGunPlayer2, "_flip");
+        displayCurrentCanon(CanonImage2, currentGunPlayer2, "_flip");
     }
     private void displayCurrentCanon(ImageView ivForCanon, int currentGunNumber, String flipString){
         switch (currentGunNumber){
@@ -573,7 +607,6 @@ public class MainController {
 
 
 
-
     /**
      * Test Function
      */
@@ -640,11 +673,6 @@ public class MainController {
         generatePlayers();
         SceneSwitcher.switchToShipPlacement(event);
     }
-    public EventHandler<ActionEvent> switchToGame(ActionEvent event) throws IOException {
-        SceneSwitcher.switchToGame(event);
-        return null;
-    }
-
 
 
 
@@ -655,12 +683,12 @@ public class MainController {
     public void initPlacementGrid(int Player) {
         if (Player == 0) {
             Game.getPlayer1().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.getPlayer1().getGameBoard(), ShipPreview, this);
-            PlayerNamePlacement.setText(Game.getPlayer1().getName());
+            PlayerNamePlacement.setText(Game.getPlayer1().getName() + "\r\n... place your ships");
             Game.getPlayer1().getGameBoard().placementGrid.setShipPreview(Game.getPlayer1().getGameBoard().placementShips[0].shipImage);
         } else {
             Game.getPlayer2().getGameBoard().placementGrid = new PlacementGrid(PlacementGridFX, Game.getPlayer2().getGameBoard(), ShipPreview, this);
             Game.getPlayer2().getGameBoard().placementGrid.setShipPreview(Game.getPlayer1().getGameBoard().placementShips[0].shipImage);
-            PlayerNamePlacement.setText(Game.getPlayer2().getName());
+            PlayerNamePlacement.setText(Game.getPlayer2().getName() + "\r\n... place your ships");
         }
     }
     /**
@@ -678,7 +706,7 @@ public class MainController {
             StartGame.setText("Start Game");
             RandomPlacement.setOpacity(1);
         } else if (gridCounter == 2) {
-            switchToGame(event);
+            SceneSwitcher.switchToGame(event);
         }
         initPlacementGrid(gridCounter);
         gridCounter++;
@@ -703,10 +731,11 @@ public class MainController {
             ship.turnShip();
         }
 
-        if (ShipPreview.getRotate() == 90) {
-            ShipPreview.rotateProperty().set(0);
+        if (ShipPreview.getTransforms().isEmpty()) {
+            Rotate rotateImage = new Rotate(90, ShipPreview.getTranslateX()+ (double) Game.cellSize, ShipPreview.getTranslateY()+ (double) Game.cellSize);
+            ShipPreview.getTransforms().add(rotateImage);
         } else {
-            ShipPreview.rotateProperty().set(90);
+            ShipPreview.getTransforms().clear();
         }
     }
 

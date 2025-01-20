@@ -90,8 +90,12 @@ public class PlacementGrid {
         shipPreviewHover.setMouseTransparent(true);
         shipPreviewHover.setOpacity(0.5);
 
-        Rotate rotateImage = new Rotate(shipPreview.getRotate(), shipPreviewHover.getTranslateX()+Game.cellSize/2, shipPreviewHover.getTranslateY()+Game.cellSize/2);
-        shipPreviewHover.getTransforms().add(rotateImage);
+        if(!shipPreview.getTransforms().isEmpty()){
+            Rotate rotateImage = new Rotate(90, shipPreviewHover.getTranslateX()+ (double) Game.cellSize /2, shipPreviewHover.getTranslateY()+ (double) Game.cellSize /2);
+            shipPreviewHover.getTransforms().add(rotateImage);
+        } else {
+            shipPreviewHover.getTransforms().clear();
+        }
     }
     private void handleCellMouseEnter(MouseEvent event) {
         setUpHoverDisplay();
