@@ -88,7 +88,6 @@ public class PlacementGrid {
     private void handleCellMouseEnter(MouseEvent event) {
         setUpHoverDisplay();
         Button thisButton = (Button) event.getSource();
-        mainController.rotateInGameCanons(thisButton);
         shipPreviewHover.setLayoutX(thisButton.localToScene(0,0).getX());
         shipPreviewHover.setLayoutY(thisButton.localToScene(0,0).getY());
         mainController.RootPane.getChildren().add(shipPreviewHover);
@@ -111,7 +110,7 @@ public class PlacementGrid {
         shipPreviewHover.setOpacity(0.5);
 
         if(!shipPreview.getTransforms().isEmpty()){
-            Rotate rotateImage = new Rotate(90, shipPreviewHover.getTranslateX()+ (double) Game.cellSize /2, shipPreviewHover.getTranslateY()+ (double) Game.cellSize /2);
+            Rotate rotateImage = new Rotate(90, (double) Game.cellSize /2, (double) Game.cellSize /2);
             shipPreviewHover.getTransforms().add(rotateImage);
         } else {
             shipPreviewHover.getTransforms().clear();

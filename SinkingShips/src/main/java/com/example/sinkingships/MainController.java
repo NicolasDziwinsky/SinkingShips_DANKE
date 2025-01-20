@@ -106,10 +106,8 @@ public class MainController {
             // Set up the canons in-game
             player1GunEnabled = true;
             GunPlayer1.setPickOnBounds(false);
-            GunPlayer1.setImage(player1GunDefault);
             GunPlayer1.setImage(Game.getPlayer1().gunDefaultImage);
             GunPlayer2.setPickOnBounds(false);
-            GunPlayer2.setImage(player2GunDefault);
             GunPlayer2.setImage(Game.getPlayer2().gunDefaultImage);
             formatEnabledCanons();
         }
@@ -142,6 +140,7 @@ public class MainController {
         double newMapSize = Game.cellSize*10+ (double) Game.cellSize /5+ (double) Game.cellSize /5;
         Insets newMapPadding = new Insets((double) Game.cellSize /5);
         Insets newTextFieldPadding = new Insets((double) Game.cellSize /5, Game.cellSize, (double) Game.cellSize /5, Game.cellSize);
+
         if(Map1 != null && Map2 != null) {
             Map1.setPrefSize(newMapSize,newMapSize);
             Map1.setPadding(newMapPadding);
@@ -687,7 +686,6 @@ public class MainController {
         double deltaY = buttonToLookTowards.localToScene(0,0).getY() - imageCenterY;
         return Math.toDegrees(Math.atan2(deltaY, deltaX));
     }
-
 
 
 

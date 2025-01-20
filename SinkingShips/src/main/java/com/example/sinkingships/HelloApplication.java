@@ -32,14 +32,6 @@ public class HelloApplication extends Application {
 
         SceneSwitcher.setUpNewScene();
 
-        SceneSwitcher.scene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.F) {
-                System.out.println("Enter key was pressed in the scene!");
-            }
-        });
-
-        System.out.println(stage.getHeight() + " " + stage.getWidth());
-
         // Set up listeners for screen size changes
         SceneSwitcher.stage.widthProperty().addListener((observable, oldValue, newValue) -> {
             SceneSwitcher.adjustScreenSizeChange();

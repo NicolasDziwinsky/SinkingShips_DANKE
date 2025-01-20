@@ -97,9 +97,9 @@ public class Soundboard {
         Random random = new Random();
         int fileNumber = random.nextInt(range) + 1;
         if(fileNumber >= 10){
-            audioFile = getClass().getResource(fileLinkStart + String.valueOf(fileNumber) + ".wav");
+            audioFile = getClass().getResource(fileLinkStart + fileNumber + ".wav");
         } else {
-            audioFile = getClass().getResource(fileLinkStart + "0" + String.valueOf(fileNumber) + ".wav");
+            audioFile = getClass().getResource(fileLinkStart + "0" + fileNumber + ".wav");
         }
         this.playSpecificSoundFile(audioFile);
     }

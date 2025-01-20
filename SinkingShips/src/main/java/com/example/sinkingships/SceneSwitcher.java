@@ -96,16 +96,8 @@ public class SceneSwitcher {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         setUpNewScene();
 
-        scene.setOnKeyPressed(event2 -> {
-            if (event2.getCode() == KeyCode.F) {
-                System.out.println("Enter key was pressed in the scene!");
-                Game.HitHappened();
-            }
-        });
-
         // Plays random 'Ran an's gekrizel' soundbyte
         soundboardForIntros.playCueGo();
-
     }
 
     /**

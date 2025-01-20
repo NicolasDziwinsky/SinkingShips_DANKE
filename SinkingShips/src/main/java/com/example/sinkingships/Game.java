@@ -168,7 +168,7 @@ public class Game {
         if(winningScreen != null) {
             // Set up finish screen
             Label playerLabel = (Label) winningScreen.lookup("#WinningScreenPlayer");
-            playerLabel.setText(winningPlayer.getName() + " Won");
+            playerLabel.setText(winningPlayer.getName() + " won");
             Label turnLabel = (Label) winningScreen.lookup("#WinningScreenTurns");
             turnLabel.setText("in " + turn + " turns");
 

@@ -129,21 +129,12 @@ public class GameGrid {
 
     // Methods to handle the mouse over shooting cursor on cells
     /**
-     * Sets up the ImageView that will be displayed over a game cell the mouse cursor is hovering over.
-     */
-    private void setUpHoverDisplay(){
-        Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_shoot.png")));
-        ivToDisplayHover = new ImageView();
-        ivToDisplayHover.setImage(imageForCursor);
-        ivToDisplayHover.setMouseTransparent(true);
-    }
-    /**
      * Places the ImageView over the game cell the mouse cursor just entered.
      * @param eventForMouse The mouse event that triggered the method.
      */
     private void handleCellMouseEnter(MouseEvent eventForMouse) {
         Button thisButton = (Button) eventForMouse.getSource();
-        mainController.rotateInGameCanons((Button)eventForMouse.getSource());
+        mainController.rotateInGameCanons(thisButton);
         ivToDisplayHover.setFitHeight(Game.cellSize);
         ivToDisplayHover.setFitWidth(Game.cellSize);
         ivToDisplayHover.setLayoutX(thisButton.localToScene(0,0).getX());
@@ -156,6 +147,15 @@ public class GameGrid {
      */
     private void handleCellMouseExit(MouseEvent eventForMouse) {
         mainController.RootPane.getChildren().remove(ivToDisplayHover);
+    }
+    /**
+     * Sets up the ImageView that will be displayed over a game cell the mouse cursor is hovering over.
+     */
+    private void setUpHoverDisplay(){
+        Image imageForCursor = new Image(String.valueOf(getClass().getResource("/img/cursor_shoot.png")));
+        ivToDisplayHover = new ImageView();
+        ivToDisplayHover.setImage(imageForCursor);
+        ivToDisplayHover.setMouseTransparent(true);
     }
 
     /**
