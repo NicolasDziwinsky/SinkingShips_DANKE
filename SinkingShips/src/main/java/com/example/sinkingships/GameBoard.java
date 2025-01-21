@@ -158,6 +158,9 @@ public class GameBoard {
         return true;
     }
 
+    /**
+     * Places the next ship in the PlacementShips array
+     */
     public boolean placeNextShip(Cell targetCell) {
         boolean returnMessage = placeShip(placementShips[shipCounter], targetCell);
         if (returnMessage) {
@@ -170,6 +173,9 @@ public class GameBoard {
         return returnMessage;
     }
 
+    /**
+     * Places all ships in the placement ships array randomly on the gameboard
+     */
     public void placeShipsRandomly() {
         Random rand = new Random();
         shipCounter = 4;

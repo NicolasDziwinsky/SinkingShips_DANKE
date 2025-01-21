@@ -126,12 +126,6 @@ public class Game {
         }
     }
 
-    public static Object[] randomCell(Object[] cells) {
-        int maxValue = cells.length;
-        int value = rand.nextInt(maxValue);
-        return new Object[]{cells[value], value};
-    }
-
     public static void checkWinningPlayer() {
         if (Player1.checkIfLost()) {
             System.out.println("Player 2 Won");

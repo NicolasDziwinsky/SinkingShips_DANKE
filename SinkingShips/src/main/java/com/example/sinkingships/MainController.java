@@ -736,7 +736,7 @@ public class MainController {
         Game.getPlayer1().getGameBoard().outputTextVersion();
     }
     /**
-     * Generates two players and adds them to the Game object
+     * Generates two players and two aiBrains and adds them to the Game object
      */
     public void generatePlayers() {
         Game.setPlayer1(new Player(Name1.getText(), AiCheckbox1.isSelected(), "GunPlayer1", player1GunDefault, player1GunShooting));
@@ -802,8 +802,9 @@ public class MainController {
 
     }
 
-
-
+    /**
+     * Rotates all the ships in PlacementShips list
+     */
     public void RotateShip() {
         for (Ship ship:Game.getPlayer1().getGameBoard().placementShips) {
             ship.turnShip();
@@ -820,6 +821,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Used to ensure the correct selection of the "IsAi" Buttons in the new game screen
+     */
     public void activateAiButton() {
         if (AiCheckbox1.isDisabled()) {
             AiCheckbox1.disableProperty().set(false);
@@ -832,7 +836,7 @@ public class MainController {
     }
 
     /**
-     * Initializes both gamefields
+     * Initializes both gamefields, the winning screen, and starts the game
      */
     public void StartGame() {
         Game.getPlayer1().gameGrid = new GameGrid(Map1, Game.getPlayer1(), this);
