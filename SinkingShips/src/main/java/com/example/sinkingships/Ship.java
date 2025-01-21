@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Ship {
 
-
     public List<Cell> coordinates = new ArrayList<Cell>();
 
     private int length;
@@ -100,7 +99,6 @@ public class Ship {
     public int getLength() {
         return length;
     }
-
     public boolean getOrrientation() {
         return orientation;
     }

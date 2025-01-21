@@ -59,7 +59,6 @@ public class PlacementGrid {
         }
     }
 
-
     /**
      * The code to be run when a cell is pressed, in this case the cell will be marked as occupied
      */
@@ -76,7 +75,10 @@ public class PlacementGrid {
             if (cell.image != null) cell.image.imageProperty().set(null);
         }
     }
-
+    /**
+     * Sets the image for the ship preview on the side
+     * @param image The image to set
+     */
     public void setShipPreview(Image image) {
         shipPreview.setImage(image);
     }

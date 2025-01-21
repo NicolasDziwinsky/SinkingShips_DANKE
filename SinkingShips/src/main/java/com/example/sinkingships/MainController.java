@@ -751,16 +751,13 @@ public class MainController {
         SceneSwitcher.switchToMainMenu(event);
         gridCounter = 0;
     }
-
     public void switchToNewGame(ActionEvent event) throws IOException {
         SceneSwitcher.switchToNewGame(event);
     }
-
     public void switchToShipPlacement(ActionEvent event) throws IOException, InterruptedException {
         generatePlayers();
         SceneSwitcher.switchToShipPlacement(event);
     }
-
 
     /**
      * //Sets up the Placement Grid for the User, the first one is for player 1, second one for player 2
@@ -793,7 +790,10 @@ public class MainController {
         gridCounter++;
     }
 
-    public void PlaceRandom()throws IOException {
+    /**
+     * Places the ships randomly
+     */
+    public void PlaceRandom() {
         if (!Game.placedRandom) {
             currentPlayer.getGameBoard().placeShipsRandomly();
             RandomPlacement.setOpacity(0.6);
@@ -801,7 +801,6 @@ public class MainController {
         }
 
     }
-
     /**
      * Rotates all the ships in PlacementShips list
      */
@@ -820,7 +819,6 @@ public class MainController {
             ShipPreview.getTransforms().clear();
         }
     }
-
     /**
      * Used to ensure the correct selection of the "IsAi" Buttons in the new game screen
      */
@@ -845,7 +843,9 @@ public class MainController {
         Game.HitHappened();
         StartGame.disableProperty().set(true);
     }
-
+    /**
+     * Closes the window
+     */
     public void closeWindow() {
         if (SceneSwitcher.stage != null) {
             SceneSwitcher.stage.close();

@@ -28,11 +28,9 @@ public class Player {
     public String getName() {
         return name;
     }
-
     public GameBoard getGameBoard() {
         return gameBoard;
     }
-
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
