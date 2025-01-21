@@ -4,13 +4,8 @@ import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Singleton
- * used to share data between scenes
- */
 public class Game {
     private static Player Player1;
     private static Player Player2;
@@ -25,9 +20,6 @@ public class Game {
     public static boolean gameOver = false;
     public static Random rand = new Random();
     static boolean placedRandom = false;
-    /**
-     *     //used to access the object
-     */
 
     public static Player getPlayer1() {
         return Player1;
@@ -189,7 +181,5 @@ public class Game {
         turn = 1;
         gameOver = false;
     }
-
-    //shows screen(Player)
 
 }

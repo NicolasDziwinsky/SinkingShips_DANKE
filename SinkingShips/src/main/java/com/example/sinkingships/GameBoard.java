@@ -1,7 +1,6 @@
 package com.example.sinkingships;
 
 import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

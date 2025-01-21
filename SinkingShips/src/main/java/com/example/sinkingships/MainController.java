@@ -16,7 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Rotate;
-import javafx.stage.Stage;
 
 //all major logic should happen here, because in here all created objects can interact with one another
 public class MainController {
