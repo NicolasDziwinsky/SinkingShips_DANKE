@@ -68,6 +68,6 @@
 
    <VBox alignment="BOTTOM_RIGHT" spacing="8.0" AnchorPane.bottomAnchor="24.0" AnchorPane.rightAnchor="24.0">
       <Button fx:id="StartShortGame" mnemonicParsing="false" onAction="#switchToShipPlacement" onMouseEntered="#handleClickableElementOnMouseEntered" styleClass="mainMenuButton" text="Start Short Game" />
-      <Button fx:id="StartLongGame" mnemonicParsing="false" onAction="#generatePlayersTest" onMouseEntered="#handleClickableElementOnMouseEntered" styleClass="mainMenuButton" text="Start Long Game" />
+      <Button fx:id="StartLongGame" disable="true" mnemonicParsing="false" onAction="#generatePlayersTest" onMouseEntered="#handleClickableElementOnMouseEntered" styleClass="mainMenuButton" text="Start Long Game" />
    </VBox>
 </AnchorPane>
