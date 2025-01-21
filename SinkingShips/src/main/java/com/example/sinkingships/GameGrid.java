@@ -16,7 +16,6 @@ public class GameGrid {
     private ImageView ivToDisplayHover;
     public List<Image> HitImages = new ArrayList<Image>();
     public List<Image> MissImages = new ArrayList<Image>();
-    //boolean hidden
 
     /**
      * Initializes the Gamefield for the specified player
